@@ -1,0 +1,69 @@
+version: "3.7"
+services:
+  bookstack-app:
+    image: tiredofit/bookstack
+    container_name: bookstack-app
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.bookstack.rule=Host(`bookstack.example.com`)
+      - traefik.http.services.bookstack.loadbalancer.server.port=80
+    volumes:
+      - ./data:/data
+      - ./logs:/www/logs/
+    environment:
+      - ZABBIX_HOSTNAME=bookstack-app
+
+      - DB_HOST=bookstack-db
+      - DB_PORT=3306
+      - DB_NAME=bookstack
+      - DB_USER=bookstack
+      - DB_PASS=bookstackpass
+
+      - SITE_URL=https://bookstack.example.com
+    networks:
+      - proxy
+      - services
+    restart: always
+
+  bookstack-db:
+    image: tiredofit/mariadb
+    container_name: bookstack-db
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - ROOT_PASS=password
+      - DB_NAME=bookstack
+      - DB_USER=bookstack
+      - DB_PASS=bookstackpass
+    networks:
+      - services
+    restart: always
+
+  bookstack-db-backup:
+    image: tiredofit/db-backup
+    container_name: bookstack-db-backup
+    links:
+      - bookstack-db
+    volumes:
+      - ./dbbackup:/backup
+    environment:
+      - ZABBIX_HOSTNAME=bookstack-db-backup
+      - DB_HOST=bookstack-db
+      - DB_TYPE=mariadb
+      - DB_NAME=bookstack
+      - DB_USER=bookstack
+      - DB_PASS=bookstackpass
+      - DB_DUMP_FREQ=1440
+      - DB_DUMP_BEGIN=0000
+      - DB_CLEANUP_TIME=8640
+      - COMPRESSION=BZ
+      - MD5=TRUE
+    networks:
+      - services
+    restart: always
+
+networks:
+  proxy:
+    external: true
+  services:
+    external: true
