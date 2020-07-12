@@ -81,9 +81,6 @@ The following directories are used for configuration and can be mapped for persi
 | Directory                | Description                                                                                                                   |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
 | `/www/logs`              | Nginx and PHP Log files                                                                                                       |
-| `/assets/custom`         | (Optional) Copy source code over existing source code in /www/bookstack upon container start. Use exact file/folder structure |
-| `/assets/custom-scripts` | (Optional) If you want to execute custom scripting, place scripts here with extension `.sh`                                   |
-| `/assets/modules`        | (Optional) If you want to add additional modules outside of the source tree, add them here                                    |
 | `/www/bookstack`         | (Optional) If you want to expose the bookstack sourcecode expose this volume                                                  |
 | **OR**                   |                                                                                                                               |
 | `/data`                  | Hold onto your persistent sessions and cache between container restarts                                                       |
