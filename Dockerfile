@@ -34,7 +34,7 @@ RUN set -x && \
     composer install && \
     \
     cd /assets/install/ && \
-    rm -rf *.yml composer.json dev php*.xml tests && \
+    rm -rf *.yml dev php*.xml tests && \
     rm -rf /root/.composer && \
     rm -rf /var/cache/apk/*
 
