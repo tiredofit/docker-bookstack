@@ -39,4 +39,4 @@ RUN set -x && \
     rm -rf /var/cache/apk/*
 
 ### Assets
-  ADD install /
+ADD install /
