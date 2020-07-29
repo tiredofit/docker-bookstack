@@ -78,12 +78,12 @@ Login to the web server and enter in your admin email address, admin password an
 
 The following directories are used for configuration and can be mapped for persistent storage.
 
-| Directory                | Description                                                                                                                   |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `/www/logs`              | Nginx and PHP Log files                                                                                                       |
-| `/www/bookstack`         | (Optional) If you want to expose the bookstack sourcecode expose this volume                                                  |
-| **OR**                   |                                                                                                                               |
-| `/data`                  | Hold onto your persistent sessions and cache between container restarts                                                       |
+| Directory        | Description                                                                  |
+| ---------------- | ---------------------------------------------------------------------------- |
+| `/www/logs`      | Nginx and PHP Log files                                                      |
+| `/www/bookstack` | (Optional) If you want to expose the bookstack sourcecode expose this volume |
+| **OR**           |                                                                              |
+| `/data`          | Hold onto your persistent sessions and cache between container restarts      |
 
 ### Environment Variables
 
@@ -110,23 +110,24 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 
 #### Bookstack Options
 
-| Parameter                    | Description                                             | Default |
-| ---------------------------- | ------------------------------------------------------- | ------- |
-| `ALLOW_CONTENT_SCRIPTS`      | Allow javascript within content                         | `false` |
-| `ALLOW_ROBOTS`               | Allow robots to Index site                              | `false` |
-| `API_DEFAULT_ITEM_COUNT`     | API Default Return Items Count                          | `100`   |
-| `API_DEFAULT_MAX_ITEM_COUNT` | API Default Maximum Items Count                         | `500`   |
-| `API_REQUESTS_PER_MIN`       | API Requests per minute limit                           | `180`   |
-| `AVATAR_URL`                 | Set URL for external Avatar fetching                    |         |
-| `DISABLE_EXTERNAL_SERVICES`  | Disable every external service                          | `false` |
-| `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default |         |
-| `ENABLE_DRAWIO`              | Enable DrawIO Functionality                             | `false` |
-| `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                             | `false` |
-| `QUEUE_CONNECTION`           | Queue Connection                                        | `sync`  |
-| `REVISION_LIMIT`             | Default Revision Limit for pages                        | `50`    |
-| `THEME`                      | Drop themes in /data/themes and set value here          | `false` |
-| `VIEW_BOOKS`                 | View books in either `list` or `grid` format            | `list`  |
-| `VIEW_SHELVES`               | View shelves in either `list` or `grid` format          | `grid`  |
+| Parameter                    | Description                                                    | Default    |
+| ---------------------------- | -------------------------------------------------------------- | ---------- |
+| `ALLOW_CONTENT_SCRIPTS`      | Allow javascript within content                                | `false`    |
+| `ALLOW_ROBOTS`               | Allow robots to Index site                                     | `false`    |
+| `API_DEFAULT_ITEM_COUNT`     | API Default Return Items Count                                 | `100`      |
+| `API_DEFAULT_MAX_ITEM_COUNT` | API Default Maximum Items Count                                | `500`      |
+| `API_REQUESTS_PER_MIN`       | API Requests per minute limit                                  | `180`      |
+| `AVATAR_URL`                 | Set URL for external Avatar fetching                           |            |
+| `DISABLE_EXTERNAL_SERVICES`  | Disable every external service                                 | `false`    |
+| `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default        |            |
+| `ENABLE_DRAWIO`              | Enable DrawIO Functionality                                    | `false`    |
+| `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                                    | `false`    |
+| `PDF_EXPORT`                 | Use `internal` domPDF functions or `external` wkhtmltopdf tool | `internal` |
+| `QUEUE_CONNECTION`           | Queue Connection                                               | `sync`     |
+| `REVISION_LIMIT`             | Default Revision Limit for pages                               | `50`       |
+| `THEME`                      | Drop themes in /data/themes and set value here                 | `false`    |
+| `VIEW_BOOKS`                 | View books in either `list` or `grid` format                   | `list`     |
+| `VIEW_SHELVES`               | View shelves in either `list` or `grid` format                 | `grid`     |
 
 #### Authentication Settings
 

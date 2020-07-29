@@ -443,6 +443,16 @@ EOF
         ;;
     esac
 
+    ### PDF Export Options
+    case "$PDF_EXPORT" in
+        "internal" | "INTERNAL" | "dompdf" | "DOMPDF" )
+            pdf_export=""
+        ;;
+        "external" | "EXTERNAL" | "wkhtmltopdf" | "WKHTMLTOPDF" )
+            pdf_export="WKHTMLTOPDF=/usr/bin/wkhtmltopdf"
+        ;;
+    esac
+
     ### Write the Configuration File
     cat >"${NGINX_WEBROOT}/.env" <<EOF
 ## Custom Generated Bookstack Configuration! Do not edit, instead set ENV Vars
@@ -481,9 +491,9 @@ ALLOW_ROBOTS=${ALLOW_ROBOTS}
 API_DEFAULT_ITEM_COUNT=${API_DEFAULT_ITEM_COUNT}
 API_MAX_ITEM_COUNT=${API_DEFAULT_MAX_ITEM_COUNT}
 API_REQUESTS_PER_MIN=${API_REQUESTS_PER_MIN}
-WKHTMLTOPDF=/usr/bin/wkhtmltopdf
 ${storage}
 ${authentication}
+${pdf_export}
 ${login}
 ${avatar}
 EOF
@@ -551,9 +561,24 @@ expect "successfully created!"
 EOD
 fi
 
+## Copy over any custom files overtop of source
+if [ -d "/assets/custom" ]; then
+  print_warn "Detected Custom Source - Copying over to application"
+  cp -R /assets/custom/* "${NGINX_WEBROOT}"/
+  chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"
+fi
+
+## Execute Custom Scripts
+if [ -d /assets/custom-scripts/ ] ; then
+  print_warn "Found Custom Scripts to Execute"
+  for f in $(find /assets/custom-scripts/ -name \*.sh -type f); do
+    print_warn "Running Script ${f}"
+    chmod +x "${f}"
+    ${f}
+  done
+fi
+
 cd "${NGINX_WEBROOT}"
-#chown -R "${NGINX_USER}":"${NGINX_GROUP}" storage bootstrap/cache public/css/builds public/js/builds
-#chmod -R ug+rwx storage bootstrap/cache public/css/builds public/js/builds
 chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"
 chmod ug+rwx "${NGINX_WEBROOT}"
 
