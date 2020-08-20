@@ -101,8 +101,13 @@ LDAP_DUMP_USER_DETAILS=${LDAP_DUMP_USER_DETAILS}
 LDAP_USER_TO_GROUPS=${LDAP_USER_TO_GROUPS}
 LDAP_GROUP_ATTRIBUTE=${LDAP_ATTRIBUTE_GROUP}
 LDAP_REMOVE_FROM_GROUPS=${LDAP_REMOVE_FROM_GROUPS}
+LDAP_SYNC_FILTER=${LDAP_FILTER_SYNC}
 EOF
         )
+    if var_true "${ENABLE_LDAP_SYNC_USER}" ; then
+        print_debug "Setting up Cron Expression for LDAP User sync filtering"
+        echo "${LDAP_SYNC_CRON_EXP} sudo -u nginx php /www/html/artisan bookstack:ldapsync >> /dev/null 2>&1"
+    fi
         ;;
     "SAML" | "saml" | "SAML2" | "saml2")
         print_debug "Setting Standard/Local Authentication"

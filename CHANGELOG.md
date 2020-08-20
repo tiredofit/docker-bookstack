@@ -1,3 +1,10 @@
+## 1.1.0 2020-08-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pull version from customizable GIT source and branch
+      - Add routines to support upcoming LDAP_SYNC_USER functionality
+
+
 ## 1.0.2 2020-07-29 <dave at tiredofit dot ca>
 
    ### Added

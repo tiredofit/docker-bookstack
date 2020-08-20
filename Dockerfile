@@ -2,7 +2,8 @@ FROM tiredofit/nginx-php-fpm:7.3
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=0.29.3 \
+ENV BOOKSTACK_VERSION=v0.29.3 \
+    BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
     PHP_ENABLE_SIMPLEXML=TRUE \
@@ -23,14 +24,16 @@ RUN set -x && \
     apk add -t .bookstack-run-deps \
                 expect \
                 fontconfig \
+                git \
                 libmemcached \
                 ttf-freefont \
                 wkhtmltopdf \
                 && \
     \
     mkdir -p /assets/install && \
-    curl -sSL https://github.com/BookStackApp/BookStack/archive/v${BOOKSTACK_VERSION}.tar.gz | tar xvfz - --strip 1 -C /assets/install && \
+    git clone ${BOOKSTACK_REPO_URL} /assets/install && \
     cd /assets/install && \
+    git checkout ${BOOKSTACK_VERSION} && \
     composer install && \
     \
     cd /assets/install/ && \
