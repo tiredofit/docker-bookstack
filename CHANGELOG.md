@@ -1,3 +1,9 @@
+## 1.1.2 2020-09-03 <dave at tiredofit dot ca>
+
+   ### Added
+      - Adjustment to Sync User Filter name in .env
+
+
 ## 1.1.1 2020-09-03 <dave at tiredofit dot ca>
 
    ### Changed
