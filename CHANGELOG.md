@@ -1,3 +1,9 @@
+## 1.1.1 2020-09-03 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fixes for LDAP support
+
+
 ## 1.1.0 2020-08-20 <dave at tiredofit dot ca>
 
    ### Added
