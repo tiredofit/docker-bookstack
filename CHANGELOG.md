@@ -1,3 +1,9 @@
+## 1.1.3 2020-09-05 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Stop looking for custom assets twice
+
+
 ## 1.1.2 2020-09-03 <dave at tiredofit dot ca>
 
    ### Added
