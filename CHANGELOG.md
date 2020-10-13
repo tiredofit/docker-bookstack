@@ -1,3 +1,9 @@
+## 1.1.7 2020-10-13 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack v0.30.3
+
+
 ## 1.1.6 2020-09-30 <dave at tiredofit dot ca>
 
    ### Added
