@@ -1,3 +1,9 @@
+## 1.2.0 2020-10-18 <dave at tiredofit dot ca>
+
+   ### Added
+      - Redo LDAP Sync routines to have better scheduling support
+
+
 ## 1.1.10 2020-10-18 <dave at tiredofit dot ca>
 
    ### Changed

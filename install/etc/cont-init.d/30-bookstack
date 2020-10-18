@@ -90,9 +90,6 @@ LDAP_SYNC_USER_FILTER=${LDAP_FILTER_SYNC}
 LDAP_SYNC_USER_RECURSIVE_GROUPS=${LDAP_SYNC_RECURSIVE}
 EOF
         )
-
-            print_debug "Setting up Cron Expression for LDAP User sync filtering"
-            echo "${LDAP_SYNC_CRON_EXP} sudo -u nginx php ${NGINX_WEBROOT}/artisan bookstack:ldapsync >> /dev/null 2>&1"
         fi
 
         authentication=$(
@@ -595,12 +592,5 @@ silent sudo -u "${NGINX_USER}" php artisan migrate --no-ansi --force
 
 ### Add alias for running artisan
 echo "alias artisan='cd ${NGINX_WEBROOT}; sudo -u ${NGINX_USER} php artisan'" >/root/.bashrc
-
-### Perform LDAP Sync to populate user table
-if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; then
-    print_notice "Synchronizing LDAP"
-    cd ${NGINX_WEBROOT}
-    sudo -u ${NGINX_USER} php artisan bookstack:syncldap
-fi
 
 liftoff
