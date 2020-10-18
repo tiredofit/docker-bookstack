@@ -1,3 +1,11 @@
+## 1.1.10 2020-10-18 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for auto upgrade function
+      - Fix for Cron LDAP Sync routines
+      - Cleanup extra fi
+
+
 ## 1.1.9 2020-10-18 <dave at tiredofit dot ca>
 
    ### Added
