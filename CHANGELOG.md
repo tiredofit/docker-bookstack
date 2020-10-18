@@ -1,3 +1,9 @@
+## 1.1.9 2020-10-18 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add initial LDAP synchronization routine on startup of container if Auth set to LDAP and Sync enabled
+
+
 ## 1.1.8 2020-10-18 <dave at tiredofit dot ca>
 
    ### Added

@@ -597,4 +597,11 @@ silent sudo -u "${NGINX_USER}" php artisan migrate --no-ansi --force
 ### Add alias for running artisan
 echo "alias artisan='cd ${NGINX_WEBROOT}; sudo -u ${NGINX_USER} php artisan'" >/root/.bashrc
 
+### Perform LDAP Sync to populate user table
+if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; then
+    print_notice "Synchronizing LDAP"
+    cd ${NGINX_WEBROOT}
+    sudo -u ${NGINX_USER} php artisan bookstack:syncldap
+fi
+
 liftoff
