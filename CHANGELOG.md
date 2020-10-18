@@ -1,3 +1,9 @@
+## 1.1.8 2020-10-18 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add SSO support for out of tree modification
+
+
 ## 1.1.7 2020-10-13 <dave at tiredofit dot ca>
 
    ### Added

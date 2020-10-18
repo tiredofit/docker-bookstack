@@ -83,6 +83,18 @@ EOF
         sanity_var LDAP_BASE_DN "LDAP Base DN"
         sanity_var LDAP_BIND_USER "LDAP Bind User"
         sanity_var LDAP_BIND_PASS "LDAP Bind Password"
+        if var_true "${ENABLE_LDAP_SYNC_USER}" ; then
+            authentication_ldap_sync=$(
+                cat <<EOF
+LDAP_SYNC_USER_FILTER=${LDAP_FILTER_SYNC}
+LDAP_SYNC_USER_RECURSIVE_GROUPS=${LDAP_SYNC_RECURSIVE}
+EOF
+        )
+
+            print_debug "Setting up Cron Expression for LDAP User sync filtering"
+            echo "${LDAP_SYNC_CRON_EXP} sudo -u nginx php /www/html/artisan bookstack:ldapsync >> /dev/null 2>&1"
+        fi
+
         authentication=$(
             cat <<EOF
 AUTH_METHOD=ldap
@@ -101,12 +113,10 @@ LDAP_DUMP_USER_DETAILS=${LDAP_DUMP_USER_DETAILS}
 LDAP_USER_TO_GROUPS=${LDAP_USER_TO_GROUPS}
 LDAP_GROUP_ATTRIBUTE=${LDAP_ATTRIBUTE_GROUP}
 LDAP_REMOVE_FROM_GROUPS=${LDAP_REMOVE_FROM_GROUPS}
-LDAP_SYNC_USER_FILTER=${LDAP_FILTER_SYNC}
+${authentication_ldap_sync}
+
 EOF
         )
-    if var_true "${ENABLE_LDAP_SYNC_USER}" ; then
-        print_debug "Setting up Cron Expression for LDAP User sync filtering"
-        echo "${LDAP_SYNC_CRON_EXP} sudo -u nginx php /www/html/artisan bookstack:ldapsync >> /dev/null 2>&1"
     fi
         ;;
     "SAML" | "saml" | "SAML2" | "saml2")
@@ -159,6 +169,15 @@ EOF
         )
         ;;
     esac
+
+        if var_true "${ENABLE_SSO}" ; then
+            sso=$(
+                cat <<EOF
+APP_SSO_KEY=${SSO_HEADER}
+APP_SSO_DISCOVER=${SSO_ATTRIBUTE}
+EOF
+            )
+        fi
 
     ### Avatars
     if [ -n "$AVATAR_URL" ]; then
@@ -498,6 +517,7 @@ API_MAX_ITEM_COUNT=${API_DEFAULT_MAX_ITEM_COUNT}
 API_REQUESTS_PER_MIN=${API_REQUESTS_PER_MIN}
 ${storage}
 ${authentication}
+${sso}
 ${pdf_export}
 ${login}
 ${avatar}
