@@ -1,3 +1,9 @@
+## 1.2.1 2020-10-18 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add MAP_THEMES environment variable to map it to /data for persistence
+
+
 ## 1.2.0 2020-10-18 <dave at tiredofit dot ca>
 
    ### Added

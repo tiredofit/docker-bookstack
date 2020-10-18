@@ -32,11 +32,13 @@ if [ ! -f "${NGINX_WEBROOT}/server.php" ]; then
         fi
         rm -rf "${NGINX_WEBROOT}"/public/uploads
         ln -s /data/uploads "${NGINX_WEBROOT}"/public/uploads
-        if [ ! -d "/data/themes" ]; then
-            cp -R "${NGINX_WEBROOT}"/themes /data
+        if var_true "${MAP_THEMES}" ; then
+            if [ ! -d "/data/themes" ]; then
+                cp -R "${NGINX_WEBROOT}"/themes /data
+            fi
+            rm -rf "${NGINX_WEBROOT}"/themes
+            ln -s /data/themes "${NGINX_WEBROOT}"/themes
         fi
-        rm -rf "${NGINX_WEBROOT}"/themes
-        ln -s /data/themes "${NGINX_WEBROOT}"/themes
 
         ln -sf /data/config "${NGINX_WEBROOT}"/.env
         touch /data/config
