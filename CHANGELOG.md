@@ -1,3 +1,9 @@
+## 1.2.2 2020-10-18 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Tweaks to LDAP Sync routine scheduler
+
+
 ## 1.2.1 2020-10-18 <dave at tiredofit dot ca>
 
    ### Added

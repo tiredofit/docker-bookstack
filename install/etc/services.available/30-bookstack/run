@@ -11,6 +11,7 @@ liftoff
 ### Perform LDAP Sync to populate user table
 if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; then
   date >/dev/null
+  LDAP_SYNC_BEGIN=+0
   print_debug "LDAP Sync routines Initialized on $(date)"
 
 ### Wait for Next time to start Syncing
@@ -27,7 +28,7 @@ if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; 
     waittime=$(($target_time - $current_time))
   fi
 
-  print_notice "Next Sync at $(date -d @${target_time} +"%Y-%m-%d %T %Z")"
+  #print_notice "Next Sync at $(date -d @${target_time} +"%Y-%m-%d %T %Z")"
   sleep $waittime
 
 ### Commence LDAP Sync

@@ -147,8 +147,7 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 | `LDAP_FILTER_SYNC`            | Filter for syncing users from LDAP               | `false`                              |
 | `LDAP_FOLLOW_REFERRALS`       | Follow LDAP Referrals                            | `true`                               |
 | `LDAP_HOST`                   | LDAP Hostname                                    |                                      |
-| `LDAP_SYNC_BEGIN`             | At what time to start LDAP Sync routines         | `+0`                                 |
-| `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync |
+| `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync | 60                                   |
 | `LDAP_REMOVE_FROM_GROUPS`     | Remove user from Groups                          | `false`                              |
 | `LDAP_TLS_INSECURE`           | Use TLS without verifying                        | `false`                              |
 | `LDAP_USER_TO_GROUPS`         | Add user to Groups                               | `false`                              |
