@@ -1,3 +1,9 @@
+## 1.2.3 2020-10-19 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add excluding from LDAP Sync command
+
+
 ## 1.2.2 2020-10-18 <dave at tiredofit dot ca>
 
    ### Changed

@@ -145,6 +145,7 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 | `LDAP_DUMP_USER_DETAILS`      | Used for Debugging                               | `false`                              |
 | `LDAP_FILTER_USER`            | User Filter                                      | `(&(${LDAP_ATTRIBUTE_ID}=\${user}))` |
 | `LDAP_FILTER_SYNC`            | Filter for syncing users from LDAP               | `false`                              |
+| `LDAP_SYNC_EXCLUDE_EMAIL`     | Comma seperated values of emails to ignore when syncing | |
 | `LDAP_FOLLOW_REFERRALS`       | Follow LDAP Referrals                            | `true`                               |
 | `LDAP_HOST`                   | LDAP Hostname                                    |                                      |
 | `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync | 60                                   |
