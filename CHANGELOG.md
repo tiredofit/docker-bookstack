@@ -1,3 +1,9 @@
+## 1.3.5 2020-10-20 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix Exclude email once and for all
+
+
 ## 1.3.4 2020-10-20 <dave at tiredofit dot ca>
 
    ### Changed

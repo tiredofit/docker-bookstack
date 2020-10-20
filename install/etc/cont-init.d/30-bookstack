@@ -85,7 +85,7 @@ EOF
         sanity_var LDAP_BASE_DN "LDAP Base DN"
         sanity_var LDAP_BIND_USER "LDAP Bind User"
         sanity_var LDAP_BIND_PASS "LDAP Bind Password"
-        if [ -n "$LDAP_SYNC_EXLUDE_EMAIL" ] ; then
+        if [ -n "$LDAP_SYNC_EXCLUDE_EMAIL" ] ; then
             authentication_ldap_sync_exclude=$(
                 cat <<EOF
 LDAP_SYNC_EXCLUDE_EMAIL="${LDAP_SYNC_EXCLUDE_EMAIL}"
