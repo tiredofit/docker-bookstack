@@ -1,3 +1,9 @@
+## 1.3.2 2020-10-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add LDAP_SYNC_BEGIN argument to schedule LDAP syncing to start
+
+
 ## 1.3.1 2020-10-20 <dave at tiredofit dot ca>
 
    ### Added
