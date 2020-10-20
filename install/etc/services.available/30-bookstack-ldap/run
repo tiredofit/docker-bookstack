@@ -36,9 +36,10 @@ if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; 
     now=$(date +"%Y%m%d-%H%M%S")
     now_time=$(date +"%H:%M:%S")
     now_date=$(date +"%Y-%m-%d")
-    print_notice "Synchronizing LDAP"
+    print_notice "Synchronizing LDAP at $(date)"
     cd ${NGINX_WEBROOT}
     silent sudo -u ${NGINX_USER} php artisan bookstack:syncldap
+    print_notice "Completed synchronizing LDAP at $(date)"
 
     ### Go back to Sleep until next Backup time
     sleep $(($LDAP_SYNC_INTERVAL*60))

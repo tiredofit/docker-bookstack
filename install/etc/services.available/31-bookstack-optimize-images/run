@@ -11,7 +11,6 @@ liftoff
 ### Perform Image Optimization on uploaded assets
 if var_true "${ENABLE_OPTIMIZE_IMAGES}" ] ; then
   date >/dev/null
-  OPTIMIZE_IMAGES_BEGIN=+0
   print_debug "Image Optimization routines initialized on $(date)"
 
 ### Wait for Next time to start Syncing
@@ -28,7 +27,7 @@ if var_true "${ENABLE_OPTIMIZE_IMAGES}" ] ; then
     waittime=$(($target_time - $current_time))
   fi
 
-  #print_notice "Next Sync at $(date -d @${target_time} +"%Y-%m-%d %T %Z")"
+  print_notice "Next Sync at $(date -d @${target_time} +"%Y-%m-%d %T %Z")"
   sleep $waittime
 
 ### Commence LDAP Sync
@@ -39,7 +38,7 @@ if var_true "${ENABLE_OPTIMIZE_IMAGES}" ] ; then
     print_notice "Optimizing Images starting at $(date)"
     find /data/uploads/images/ -maxdepth 4 -type d -print0 | while IFS= read -rd '' dir; do cd $dir ; optipng *.png > /dev/null 2>&1 ; done
     find /data/uploads/images/ -maxdepth 4 -type d -print0 | while IFS= read -rd '' dir; do cd $dir ; jpegoptim *.jpeg > /dev/null 2>&1 ; done
-    print_notice "Optimiziing Images completed at $(date)"
+    print_notice "Optimizing Images completed at $(date)"
 
     ### Go back to Sleep until next Backup time
     sleep $(($OPTIMIZE_IMAGES_INTERVAL*60))

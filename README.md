@@ -102,6 +102,7 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 | `DB_PORT`                  | MariaDB Port                                                     | `3306`            |
 | `DB_USER`                  | MariaDB Username for above Database e.g. `bookstack`             |                   |
 | `ENABLE_OPTMIZE_IMAGES`    | Enable automatic image optimizations using optipng and jpegoptim | `TRUE`            |
+| `OPTIMIZE_IMAGES_BEGIN`    | When to start image optimization use military time HHMM          | `0300`            |
 | `OPTIMIZE_IMAGES_INTERVAL` | How often to perform image optimization in minutes               | `1440`            |
 | `LANGUAGE`                 | Language for Application                                         | `en`              |
 | `SETUP_TYPE`               | `AUTO` generate configuration. `MANUAL` don't do anything        | `AUTO`            |

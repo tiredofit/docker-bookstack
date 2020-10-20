@@ -1,3 +1,9 @@
+## 1.3.1 2020-10-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add option to start optimizing images at specific time along with interval
+
+
 ## 1.3.0 2020-10-20 <dave at tiredofit dot ca>
 
    ### Added
