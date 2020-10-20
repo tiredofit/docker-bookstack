@@ -1,3 +1,9 @@
+## 1.3.4 2020-10-20 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for LDAP_SYNC_EXCLUDE_EMAIL
+
+
 ## 1.3.3 2020-10-20 <dave at tiredofit dot ca>
 
    ### Added
