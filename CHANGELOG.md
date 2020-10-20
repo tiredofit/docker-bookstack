@@ -1,3 +1,9 @@
+## 1.3.3 2020-10-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add custom script support for LDAP sync
+
+
 ## 1.3.2 2020-10-20 <dave at tiredofit dot ca>
 
    ### Added
