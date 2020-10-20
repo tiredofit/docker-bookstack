@@ -1,3 +1,9 @@
+## 1.3.0 2020-10-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add automatic image optimization schedule via optipng and jpegoptim
+
+
 ## 1.2.3 2020-10-19 <dave at tiredofit dot ca>
 
    ### Added

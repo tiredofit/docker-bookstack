@@ -91,20 +91,22 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 
 #### Core Options
 
-| Parameter     | Description                                                  | Default           |
-| ------------- | ------------------------------------------------------------ | ----------------- |
-| `ADMIN_NAME`  | Full name of Administrator Account                           | `BookStack Admin` |
-| `ADMIN_PASS`  | Password of Administrator account                            | `password`        |
-| `ADMIN_EMAIL` | Email address of Administrator Account                       | `admin@admin.com` |
-| `DB_HOST`     | Host or container name of MariaDB Server e.g. `bookstack-db` |                   |
-| `DB_NAME`     | MariaDB Database name e.g. `bookstack`                       |                   |
-| `DB_PASS`     | MariaDB Password for above Database e.g. `password`          |                   |
-| `DB_PORT`     | MariaDB Port                                                 | `3306`            |
-| `DB_USER`     | MariaDB Username for above Database e.g. `bookstack`         |                   |
-| `LANGUAGE`    | Language for Application                                     | `en`              |
-| `SETUP_TYPE`  | `AUTO` generate configuration. `MANUAL` don't do anything    | `AUTO`            |
-| `SITE_URL`    | The full URL that you are serving this application from      | `null`            |
-| `TIMEZONE`    | Timezone - Use Unix Style                                    | `Etc/UTC`         |
+| Parameter                  | Description                                                      | Default           |
+| -------------------------- | ---------------------------------------------------------------- | ----------------- |
+| `ADMIN_NAME`               | Full name of Administrator Account                               | `BookStack Admin` |
+| `ADMIN_PASS`               | Password of Administrator account                                | `password`        |
+| `ADMIN_EMAIL`              | Email address of Administrator Account                           | `admin@admin.com` |
+| `DB_HOST`                  | Host or container name of MariaDB Server e.g. `bookstack-db`     |                   |
+| `DB_NAME`                  | MariaDB Database name e.g. `bookstack`                           |                   |
+| `DB_PASS`                  | MariaDB Password for above Database e.g. `password`              |                   |
+| `DB_PORT`                  | MariaDB Port                                                     | `3306`            |
+| `DB_USER`                  | MariaDB Username for above Database e.g. `bookstack`             |                   |
+| `ENABLE_OPTMIZE_IMAGES`    | Enable automatic image optimizations using optipng and jpegoptim | `TRUE`            |
+| `OPTIMIZE_IMAGES_INTERVAL` | How often to perform image optimization in minutes               | `1440`            |
+| `LANGUAGE`                 | Language for Application                                         | `en`              |
+| `SETUP_TYPE`               | `AUTO` generate configuration. `MANUAL` don't do anything        | `AUTO`            |
+| `SITE_URL`                 | The full URL that you are serving this application from          | `null`            |
+| `TIMEZONE`                 | Timezone - Use Unix Style                                        | `Etc/UTC`         |
 
 - <https://www.bookstackapp.com/docs/admin/language-config>
 
@@ -131,40 +133,41 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 
 #### Authentication Settings
 
-| Parameter                     | Description                                      | Default                              |
-| ----------------------------- | ------------------------------------------------ | ------------------------------------ |
-| `AUTHENTICATION_TYPE`         | `STANDARD`, `LDAP`, `SAML`                       | `STANDARD`                           |
-| `ENABLE_LDAP_USER_SYNC`       | Enable Scheduled Syncing of LDAP User list       | `TRUE`                               |
-| `LDAP_ATTRIBUTE_DISPLAY_NAME` | Display Name Attribute                           | `cn`                                 |
-| `LDAP_ATTRIBUTE_GROUP`        | Group Attribute                                  | `memberOf`                           |
-| `LDAP_ATTRIBUTE_ID`           | Unique Identifier Attribute                      | `uid`                                |
-| `LDAP_ATTRIBUTE_MAIL`         | Mail Attribute                                   | `mail`                               |
-| `LDAP_BASE_DN`                | Base DN to search                                |                                      |
-| `LDAP_BIND_PASS`              | Bind password for authentication                 |                                      |
-| `LDAP_BIND_USER`              | Bind User for authentication                     |                                      |
-| `LDAP_DUMP_USER_DETAILS`      | Used for Debugging                               | `false`                              |
-| `LDAP_FILTER_USER`            | User Filter                                      | `(&(${LDAP_ATTRIBUTE_ID}=\${user}))` |
-| `LDAP_FILTER_SYNC`            | Filter for syncing users from LDAP               | `false`                              |
-| `LDAP_SYNC_EXCLUDE_EMAIL`     | Comma seperated values of emails to ignore when syncing | |
-| `LDAP_FOLLOW_REFERRALS`       | Follow LDAP Referrals                            | `true`                               |
-| `LDAP_HOST`                   | LDAP Hostname                                    |                                      |
-| `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync | 60                                   |
-| `LDAP_REMOVE_FROM_GROUPS`     | Remove user from Groups                          | `false`                              |
-| `LDAP_TLS_INSECURE`           | Use TLS without verifying                        | `false`                              |
-| `LDAP_USER_TO_GROUPS`         | Add user to Groups                               | `false`                              |
-| `LDAP_VERSION`                | Version of LDAP                                  | `3`                                  |
-| `SAML2_IDP_ENTITYID`          | URL of SAML IDP entity                           |                                      |
-| `SAML2_IDP_SLO`               | SAML Single Log off URL                          |                                      |
-| `SAML2_IDP_SSO`               | SAML Single Sign on URL                          |                                      |
-| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute                      | `givenName|sn`                       |
-| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute                             | `groups`                             |
-| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute                              | `mail`                               |
-| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute                       | `uid`                                |
-| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP                 | `true`                               |
-| `SAML_DUMP_USER_DETAILS`      | Used for debugging                               | `false`                              |
-| `SAML_NAME`                   | SAML Public Service Name                         | `SSO`                                |
-| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups                          | `false`                              |
-| `SAML_USER_TO_GROUPS`         | Add user to Groups                               | `true`                               |
+| Parameter                     | Description                                             | Default                              |
+| ----------------------------- | ------------------------------------------------------- | ------------------------------------ |
+| `AUTHENTICATION_TYPE`         | `STANDARD`, `LDAP`, `SAML`                              | `STANDARD`                           |
+| `ENABLE_LDAP_USER_SYNC`       | Enable Scheduled Syncing of LDAP User list              | `TRUE`                               |
+| `LDAP_ATTRIBUTE_DISPLAY_NAME` | Display Name Attribute                                  | `cn`                                 |
+| `LDAP_ATTRIBUTE_GROUP`        | Group Attribute                                         | `memberOf`                           |
+| `LDAP_ATTRIBUTE_ID`           | Unique Identifier Attribute                             | `uid`                                |
+| `LDAP_ATTRIBUTE_MAIL`         | Mail Attribute                                          | `mail`                               |
+| `LDAP_BASE_DN`                | Base DN to search                                       |                                      |
+| `LDAP_BIND_PASS`              | Bind password for authentication                        |                                      |
+| `LDAP_BIND_USER`              | Bind User for authentication                            |                                      |
+| `LDAP_DUMP_USER_DETAILS`      | Used for Debugging                                      | `false`                              |
+| `LDAP_FILTER_USER`            | User Filter                                             | `(&(${LDAP_ATTRIBUTE_ID}=\${user}))` |
+| `LDAP_FILTER_SYNC`            | Filter for syncing users from LDAP                      | `false`                              |
+| `LDAP_FOLLOW_REFERRALS`       | Follow LDAP Referrals                                   | `true`                               |
+| `LDAP_HOST`                   | LDAP Hostname                                           |                                      |
+| `LDAP_SYNC_EXCLUDE_EMAIL`     | Comma seperated values of emails to ignore when syncing |                                      |
+| `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync        | 60                                   |
+| `LDAP_SYNC_RECURSIVE`         | Recursively search through LDAP Groups `true`           |
+| `LDAP_REMOVE_FROM_GROUPS`     | Remove user from Groups                                 | `false`                              |
+| `LDAP_TLS_INSECURE`           | Use TLS without verifying                               | `false`                              |
+| `LDAP_USER_TO_GROUPS`         | Add user to Groups                                      | `false`                              |
+| `LDAP_VERSION`                | Version of LDAP                                         | `3`                                  |
+| `SAML2_IDP_ENTITYID`          | URL of SAML IDP entity                                  |                                      |
+| `SAML2_IDP_SLO`               | SAML Single Log off URL                                 |                                      |
+| `SAML2_IDP_SSO`               | SAML Single Sign on URL                                 |                                      |
+| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute                             | `givenName|sn`                       |
+| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute                                    | `groups`                             |
+| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute                                     | `mail`                               |
+| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute                              | `uid`                                |
+| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP                        | `true`                               |
+| `SAML_DUMP_USER_DETAILS`      | Used for debugging                                      | `false`                              |
+| `SAML_NAME`                   | SAML Public Service Name                                | `SSO`                                |
+| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups                                 | `false`                              |
+| `SAML_USER_TO_GROUPS`         | Add user to Groups                                      | `true`                               |
 
 - <https://www.bookstackapp.com/docs/admin/ldap-auth>
 - <https://www.bookstackapp.com/docs/admin/saml2-auth>

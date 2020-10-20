@@ -2,10 +2,10 @@
 
 source /assets/functions/00-container
 prepare_service defaults 30-bookstack
-PROCESS_NAME="bookstack"
+PROCESS_NAME="bookstack-ldap-sync"
 
 check_container_initialized
-check_service_initialized init
+check_service_initialized init 30-bookstack
 liftoff
 
 ### Perform LDAP Sync to populate user table
@@ -44,5 +44,5 @@ if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; 
     sleep $(($LDAP_SYNC_INTERVAL*60))
   done
 else
-  s6-svc -d /var/run/s6/services/30-bookstack
+  s6-svc -d /var/run/s6/services/30-bookstack-ldap
 fi

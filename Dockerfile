@@ -25,7 +25,9 @@ RUN set -x && \
                 expect \
                 fontconfig \
                 git \
+                jpegoptim \
                 libmemcached \
+                optipng \
                 ttf-freefont \
                 wkhtmltopdf \
                 && \
