@@ -1,3 +1,9 @@
+## 1.4.0 2020-12-12 <dave at tiredofit dot ca>
+
+   ### Added
+      - Switch to PHP 7.4
+
+
 ## 1.3.7 2020-12-06 <dave at tiredofit dot ca>
 
    ### Added
