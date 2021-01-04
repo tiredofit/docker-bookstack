@@ -2,7 +2,7 @@ FROM tiredofit/nginx-php-fpm:7.3
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=v0.30.7 \
+ENV BOOKSTACK_VERSION=v0.31.1 \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
@@ -10,7 +10,6 @@ ENV BOOKSTACK_VERSION=v0.30.7 \
     PHP_ENABLE_MEMCACHED=TRUE \
     PHP_ENABLE_PDO=TRUE \
     PHP_ENABLE_PDO_MYSQL=TRUE \
-    PHP_ENABLE_TIDY=TRUE \
     PHP_ENABLE_FILEINFO=TRUE \
     PHP_ENABLE_TOKENIZER=TRUE \
     PHP_ENABLE_XMLWRITER=TRUE \

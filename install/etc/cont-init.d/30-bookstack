@@ -484,6 +484,11 @@ EOF
         ;;
     esac
 
+    ### IFrame Security
+    if [ -n "${ALLOWED_IFRAME_HOSTS} "] ; then
+        iframehosts="ALLOWED_IFRAME_HOSTS=${ALLOWED_IFRAME_HOSTS}"
+    fi
+
     ### Write the Configuration File
     cat >"${NGINX_WEBROOT}/.env" <<EOF
 ## Custom Generated Bookstack Configuration! Do not edit, instead set ENV Vars
@@ -529,6 +534,7 @@ ${sso}
 ${pdf_export}
 ${login}
 ${avatar}
+{iframehosts}
 EOF
 
     chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"/.env

@@ -1,3 +1,10 @@
+## 1.5.0 2021-01-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 0.31.1
+      - Added environment variable ALLOWED_IFRAME_HOSTS to support loading as an IFrame from other domains
+
+
 ## 1.4.2 2020-12-18 <dave at tiredofit dot ca>
 
    ### Added
