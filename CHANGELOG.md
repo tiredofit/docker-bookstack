@@ -1,3 +1,9 @@
+## 1.5.2 2021-01-09 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Additional Iframe Hosts fix
+
+
 ## 1.5.1 2021-01-09 <dave at tiredofit dot ca>
 
    ### Changed
