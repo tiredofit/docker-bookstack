@@ -1,3 +1,9 @@
+## 1.5.1 2021-01-09 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Bugfix with ALLOWED_IFRAME_HOSTS
+
+
 ## 1.5.0 2021-01-04 <dave at tiredofit dot ca>
 
    ### Added

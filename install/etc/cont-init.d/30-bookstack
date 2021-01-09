@@ -485,7 +485,7 @@ EOF
     esac
 
     ### IFrame Security
-    if [ -n "${ALLOWED_IFRAME_HOSTS} "] ; then
+    if [ -n "${ALLOWED_IFRAME_HOSTS}" ] ; then
         iframehosts="ALLOWED_IFRAME_HOSTS=${ALLOWED_IFRAME_HOSTS}"
     fi
 
