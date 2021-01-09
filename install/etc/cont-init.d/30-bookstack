@@ -534,7 +534,7 @@ ${sso}
 ${pdf_export}
 ${login}
 ${avatar}
-{iframehosts}
+${iframehosts}
 EOF
 
     chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"/.env
