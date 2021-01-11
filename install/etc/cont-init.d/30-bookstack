@@ -595,7 +595,6 @@ if [ -d /assets/custom-scripts/ ] ; then
   print_warn "Found Custom Scripts to Execute"
   for f in $(find /assets/custom-scripts/ -name \*.sh -type f); do
     print_warn "Running Script ${f}"
-    chmod +x "${f}"
     ${f}
   done
 fi
