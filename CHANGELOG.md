@@ -1,3 +1,9 @@
+## 1.5.5 2021-02-02 <dave at tiredofit dot ca>
+
+   ### Added
+      - Booksack 0.31.5
+
+
 ## 1.5.4 2021-01-16 <dave at tiredofit dot ca>
 
    ### Added
