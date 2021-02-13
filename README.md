@@ -122,6 +122,7 @@ Along with the Environment Variables from the [Base image](https://hub.docker.co
 | `API_DEFAULT_MAX_ITEM_COUNT` | API Default Maximum Items Count                                                                                     | `500`      |
 | `API_REQUESTS_PER_MIN`       | API Requests per minute limit                                                                                       | `180`      |
 | `AVATAR_URL`                 | Set URL for external Avatar fetching                                                                                |            |
+| `DEFAULT_DARK_MODE`          | Use Dark mode by default                                                                                            | `false`    |
 | `DISABLE_EXTERNAL_SERVICES`  | Disable every external service                                                                                      | `false`    |
 | `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default                                                             |            |
 | `ENABLE_DRAWIO`              | Enable DrawIO Functionality                                                                                         | `false`    |
