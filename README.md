@@ -1,6 +1,5 @@
 # hub.docker.com/r/tiredofit/bookstack
 
-[![Build Status](https://img.shields.io/docker/build/tiredofit/bookstack.svg)](https://hub.docker.com/r/tiredofit/bookstack)
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/bookstack.svg)](https://hub.docker.com/r/tiredofit/bookstack)
 [![Docker Stars](https://img.shields.io/docker/stars/tiredofit/bookstack.svg)](https://hub.docker.com/r/tiredofit/bookstack)
 [![Docker Layers](https://images.microbadger.com/badges/image/tiredofit/bookstack.svg)](https://microbadger.com/images/tiredofit/bookstack)
