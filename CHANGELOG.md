@@ -1,3 +1,10 @@
+## 1.6.0 2021-04-09 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 21.04
+      - PHP 8.0.x
+
+
 ## 1.5.8 2021-03-13 <dave at tiredofit dot ca>
 
    ### Added
