@@ -1,34 +1,38 @@
-# hub.docker.com/r/tiredofit/bookstack
+# github.com/tiredofit/docker-bookstack
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/bookstack.svg)](https://hub.docker.com/r/tiredofit/bookstack)
-[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/bookstack.svg)](https://hub.docker.com/r/tiredofit/bookstack)
-[![Docker Layers](https://images.microbadger.com/badges/image/tiredofit/bookstack.svg)](https://microbadger.com/images/tiredofit/bookstack)
+[![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-bookstack?style=flat-square)](https://github.com/tiredofit/docker-bookstack/releases/latest)
+[![Build Status](https://img.shields.io/github/workflow/status/tiredofit/docker-bookstack/build?style=flat-square)](https://github.com/tiredofit/docker-bookstack/actions?query=workflow%3Abuild)
+[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/bookstack.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/bookstack/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/bookstack.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/bookstack/)
+[![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
+[![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
 
-## Introduction
+* * *
 
-This will build a container for [bookstack](https://bookstackapp.com/) - A Knowledge Base/Information Manager.
+## About
+
+This will build a Docker image for [Bookstack](https://bookstackapp.com/) - A Knowledge Base/Information Manager.
 
 - Automatically installs and sets up installation upon first start
 
-- This Container uses a [customized Alpine base](https://hub.docker.com/r/tiredofit/alpine) which includes [s6 overlay](https://github.com/just-containers/s6-overlay) enabled for PID 1 Init capabilities, [zabbix-agent](https://zabbix.org) for individual container monitoring, Cron also installed along with other tools (bash,curl, less, logrotate, nano, vim) for easier management. It also supports sending to external SMTP servers..
-
-[Changelog](CHANGELOG.md)
-
-## Authors
+## Maintainer
 
 - [Dave Conroy](https://github.com/tiredofit)
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Authors](#authors)
+- [About](#about)
+- [Maintainer](#maintainer)
 - [Table of Contents](#table-of-contents)
-- [Prerequisites](#prerequisites)
+- [Prerequisites and Assumptions](#prerequisites-and-assumptions)
 - [Installation](#installation)
-  - [Quick Start](#quick-start)
+  - [Build from Source](#build-from-source)
+  - [Prebuilt Images](#prebuilt-images)
 - [Configuration](#configuration)
-  - [Data-Volumes](#data-volumes)
+  - [Quick Start](#quick-start)
+  - [Persistent Storage](#persistent-storage)
   - [Environment Variables](#environment-variables)
+    - [Base Images used](#base-images-used)
     - [Core Options](#core-options)
     - [Bookstack Options](#bookstack-options)
     - [Authentication Settings](#authentication-settings)
@@ -39,25 +43,34 @@ This will build a container for [bookstack](https://bookstackapp.com/) - A Knowl
   - [Networking](#networking)
 - [Maintenance](#maintenance)
   - [Shell Access](#shell-access)
+- [Support](#support)
+  - [Usage](#usage)
+  - [Bugfixes](#bugfixes)
+  - [Feature Requests](#feature-requests)
+  - [Updates](#updates)
+- [License](#license)
 - [References](#references)
 
-## Prerequisites
-
-This image assumes that you are using a reverse proxy such as
-[jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy) and optionally the [Let's Encrypt Proxy
-Companion @
-https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion)
-in order to serve your pages. However, it will run just fine on it's own if you map appropriate ports. See the examples folder for a docker-compose.yml that does not rely on a reverse proxy.
-
-You will also need an external MariaDB container
+## Prerequisites and Assumptions
+*  Assumes you are using some sort of SSL terminating reverse proxy such as:
+   *  [Traefik](https://github.com/tiredofit/docker-traefik)
+   *  [Nginx](https://github.com/jc21/nginx-proxy-manager)
+   *  [Caddy](https://github.com/caddyserver/caddy)
+* Requires access to a MySQL/MariaDB Database server
 
 ## Installation
 
-Automated builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/bookstack) and is the recommended method of installation.
+### Build from Source
+Clone this repository and build the image with `docker build <arguments> (imagename) .`
+
+### Prebuilt Images
+Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/bookstack) and is the recommended method of installation.
 
 ```bash
-docker pull tiredofit/bookstack
+docker pull tiredofit/bookstack:(imagetag)
 ```
+
+## Configuration
 
 ### Quick Start
 
@@ -69,11 +82,10 @@ docker pull tiredofit/bookstack
 
 **The first boot can take from 2 minutes - 5 minutes depending on your CPU to setup the proper schemas.**
 
-Login to the web server and enter in your admin email address, admin password and start configuring the system!
+- Login to the web server and enter in your admin email address, admin password and start configuring the system!
 
-## Configuration
 
-### Data-Volumes
+### Persistent Storage
 
 The following directories are used for configuration and can be mapped for persistent storage.
 
@@ -86,8 +98,17 @@ The following directories are used for configuration and can be mapped for persi
 
 ### Environment Variables
 
-Along with the Environment Variables from the [Base image](https://hub.docker.com/r/tiredofit/alpine), and [Web Image](https://hub.docker.com/r/tiredofit/nginx), and [PHP Image](https://hub.docker.com/r/tiredofit/nginx-php-fpm) below is the complete list of available options that can be used to customize your installation.
+#### Base Images used
 
+This image relies on an [Alpine Linux](https://hub.docker.com/r/tiredofit/alpine) or [Debian Linux](https://hub.docker.com/r/tiredofit/debian) base image that relies on an [init system](https://github.com/just-containers/s6-overlay) for added capabilities. Outgoing SMTP capabilities are handlded via `msmtp`. Individual container performance monitoring is performed by [zabbix-agent](https://zabbix.org). Additional tools include: `bash`,`curl`,`less`,`logrotate`,`nano`,`vim`.
+
+Be sure to view the following repositories to understand all the customizable options:
+
+| Image                                                  | Description                            |
+| ------------------------------------------------------ | -------------------------------------- |
+| [OS Base](https://github.com/tiredofit/docker-alpine/) | Customized Image based on Alpine Linux |
+| [Nginx](https://github.com/tiredofit/docker-nginx/)    | Nginx webserver                        |
+| [PHP-FPM](https://github.com/tiredofit/docker-bookstack/)    | PHP Interpreter                        |
 #### Core Options
 
 | Parameter                  | Description                                                      | Default           |
@@ -294,15 +315,35 @@ The following ports are exposed.
 | ---- | ----------- |
 | `80` | HTTP        |
 
+* * *
 ## Maintenance
 
 ### Shell Access
 
 For debugging and maintenance purposes you may want access the containers shell.
 
-```bash
-docker exec -it (whatever your container name is e.g. bookstack) bash
-```
+``bash
+docker exec -it (whatever your container name is) bash
+``
+## Support
+
+These images were built to serve a specific need in a production environment and gradually have had more functionality added based on requests from the community.
+### Usage
+- The [Discussions board](../../discussions) is a great place for working with the community on tips and tricks of using this image.
+- Consider [sponsoring me](https://github.com/sponsors/tiredofit) personalized support.
+### Bugfixes
+- Please, submit a [Bug Report](issues/new) if something isn't working as expected. I'll do my best to issue a fix in short order.
+
+### Feature Requests
+- Feel free to submit a feature request, however there is no guarantee that it will be added, or at what timeline.
+- Consider [sponsoring me](https://github.com/sponsors/tiredofit) regarding development of features.
+
+### Updates
+- Best effort to track upstream changes, More priority if I am actively using the image in a production environment.
+- Consider [sponsoring me](https://github.com/sponsors/tiredofit) for up to date releases.
+
+## License
+MIT. See [LICENSE](LICENSE) for more details.
 
 ## References
 
