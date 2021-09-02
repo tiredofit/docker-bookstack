@@ -11,7 +11,7 @@ services:
       - ./data:/data
       - ./logs:/www/logs/
     environment:
-      - ZABBIX_HOSTNAME=bookstack-app
+      - CONTAINER_NAME=bookstack-app
 
       - DB_HOST=bookstack-db
       - DB_PORT=3306
@@ -47,7 +47,7 @@ services:
     volumes:
       - ./dbbackup:/backup
     environment:
-      - ZABBIX_HOSTNAME=bookstack-db-backup
+      - CONTAINER_NAME=bookstack-db-backup
       - DB_HOST=bookstack-db
       - DB_TYPE=mariadb
       - DB_NAME=bookstack

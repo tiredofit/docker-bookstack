@@ -2,7 +2,7 @@ FROM tiredofit/nginx-php-fpm:8.0
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=v21.05.4 \
+ENV BOOKSTACK_VERSION=v21.08.1 \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
@@ -15,7 +15,7 @@ ENV BOOKSTACK_VERSION=v21.05.4 \
     PHP_ENABLE_XMLWRITER=TRUE \
     NGINX_WEBROOT=/www/bookstack \
     CONTAINER_ENABLE_MESSAGING=TRUE \
-    ZABBIX_HOSTNAME=bookstack-app
+    CONTAINER_NAME=bookstack-app
 
 RUN set -x && \
     apk update && \
