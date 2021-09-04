@@ -8,10 +8,12 @@ sanity_db
 db_ready mariadb
 
 ### Logfile redirection
-mkdir -p /www/logs/bookstack
-chown -R "${NGINX_USER}":"${NGINX_GROUP}" /www/logs/bookstack
+create_logrotate bookstack ${LOG_PATH}/${LOG_FILE} none ${NGINX_USER} ${NGINX_GROUP}
+mkdir -p ${LOG_PATH}
+touch ${LOG_PATH}/${LOG_FILE}
+chown -R "${NGINX_USER}":"${NGINX_GROUP}" ${LOG_PATH}
 rm -rf "${NGINX_WEBROOT}"/storage/logs
-ln -sf /www/logs/bookstack "${NGINX_WEBROOT}"/storage/logs
+ln -sf ${LOG_PATH} "${NGINX_WEBROOT}"/storage/logs
 
 ### Check if New Install
 if [ ! -f "${NGINX_WEBROOT}/server.php" ]; then

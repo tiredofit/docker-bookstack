@@ -1,3 +1,12 @@
+## 1.6.13 2021-09-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add LOG_PATH and LOG_FILE variables
+
+   ### Changed
+      - Change the way logroation config is generated
+
+
 ## 1.6.12 2021-09-04 <dave at tiredofit dot ca>
 
    ### Added
