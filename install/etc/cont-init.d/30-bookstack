@@ -611,6 +611,6 @@ cd "${NGINX_WEBROOT}"
 silent sudo -u "${NGINX_USER}" php artisan migrate --no-ansi --force
 
 ### Add alias for running artisan
-echo "alias artisan='cd ${NGINX_WEBROOT}; sudo -u ${NGINX_USER} php artisan'" >/root/.bashrc
+echo "alias artisan='export oldpwd="\$\(pwd\)"; cd ${NGINX_WEBROOT}; sudo -u ${NGINX_USER} php artisan ; cd \${oldpwd}'" >/root/.bashrc
 
 liftoff

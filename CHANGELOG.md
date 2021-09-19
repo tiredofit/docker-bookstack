@@ -1,3 +1,9 @@
+## 1.6.15 2021-09-19 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Artisan command reverts to previous directory after running
+
+
 ## 1.6.14 2021-09-12 <dave at tiredofit dot ca>
 
    ### Added
