@@ -1,3 +1,9 @@
+## 1.6.17 2021-09-23 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix artisan shortcut alias
+
+
 ## 1.6.16 2021-09-23 <dave at tiredofit dot ca>
 
    ### Changed
