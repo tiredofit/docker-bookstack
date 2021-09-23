@@ -482,7 +482,12 @@ EOF
             pdf_export=""
         ;;
         "external" | "EXTERNAL" | "wkhtmltopdf" | "WKHTMLTOPDF" )
-            pdf_export="WKHTMLTOPDF=/usr/bin/wkhtmltopdf"
+            pdf_export=$(
+            cat <<EOF
+WKHTMLTOPDF=/usr/bin/wkhtmltopdf
+ALLOW_UNTRUSTED_SERVER_FETCHING=true
+EOF
+        )
         ;;
     esac
 

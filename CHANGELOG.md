@@ -1,3 +1,9 @@
+## 1.6.16 2021-09-23 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Update what settings are called with WKHTMLPDF exporter selection
+
+
 ## 1.6.15 2021-09-19 <dave at tiredofit dot ca>
 
    ### Changed
