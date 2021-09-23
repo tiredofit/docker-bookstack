@@ -1,3 +1,9 @@
+## 1.6.18 2021-09-23 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Alias reset
+
+
 ## 1.6.17 2021-09-23 <dave at tiredofit dot ca>
 
    ### Changed
