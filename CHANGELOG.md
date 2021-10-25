@@ -1,3 +1,13 @@
+## 1.6.22 2021-10-25 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 21.10
+      - Added Support for OIDC Logins
+
+   ### Changed
+      - Cleanup to SAML2 Code
+
+
 ## 1.6.21 2021-10-15 <dave at tiredofit dot ca>
 
    ### Added

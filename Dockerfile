@@ -2,7 +2,7 @@ FROM docker.io/tiredofit/nginx-php-fpm:8.0
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=v21.08.6 \
+ENV BOOKSTACK_VERSION=v21.10 \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
@@ -14,8 +14,7 @@ ENV BOOKSTACK_VERSION=v21.08.6 \
     PHP_ENABLE_TOKENIZER=TRUE \
     PHP_ENABLE_XMLWRITER=TRUE \
     NGINX_WEBROOT=/www/bookstack \
-    CONTAINER_ENABLE_MESSAGING=TRUE \
-    CONTAINER_NAME=bookstack-app
+    CONTAINER_ENABLE_MESSAGING=TRUE
 
 RUN set -x && \
     apk update && \

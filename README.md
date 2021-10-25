@@ -36,10 +36,13 @@ This will build a Docker image for [Bookstack](https://bookstackapp.com/) - A Kn
     - [Core Options](#core-options)
     - [Bookstack Options](#bookstack-options)
     - [Authentication Settings](#authentication-settings)
+      - [LDAP Options](#ldap-options)
+      - [SAML Options](#saml-options)
+      - [OpenID Connect](#openid-connect)
+    - [External Login Services](#external-login-services)
     - [Cache and Session Settings](#cache-and-session-settings)
     - [Mail Settings](#mail-settings)
     - [Storage Settings](#storage-settings)
-    - [External Login Services](#external-login-services)
   - [Networking](#networking)
 - [Maintenance](#maintenance)
   - [Shell Access](#shell-access)
@@ -165,9 +168,14 @@ Be sure to view the following repositories to understand all the customizable op
 
 #### Authentication Settings
 
+| Parameter             | Description                        | Default    |
+| --------------------- | ---------------------------------- | ---------- |
+| `AUTHENTICATION_TYPE` | `STANDARD`, `LDAP`, `OIDC`, `SAML` | `STANDARD` |
+
+##### LDAP Options
+
 | Parameter                     | Description                                             | Default                              |
 | ----------------------------- | ------------------------------------------------------- | ------------------------------------ |
-| `AUTHENTICATION_TYPE`         | `STANDARD`, `LDAP`, `SAML`                              | `STANDARD`                           |
 | `ENABLE_LDAP_USER_SYNC`       | Enable Scheduled Syncing of LDAP User list              | `TRUE`                               |
 | `LDAP_ATTRIBUTE_DISPLAY_NAME` | Display Name Attribute                                  | `cn`                                 |
 | `LDAP_ATTRIBUTE_GROUP`        | Group Attribute                                         | `memberOf`                           |
@@ -189,71 +197,43 @@ Be sure to view the following repositories to understand all the customizable op
 | `LDAP_TLS_INSECURE`           | Use TLS without verifying                               | `false`                              |
 | `LDAP_USER_TO_GROUPS`         | Add user to Groups                                      | `false`                              |
 | `LDAP_VERSION`                | Version of LDAP                                         | `3`                                  |
-| `SAML2_IDP_ENTITYID`          | URL of SAML IDP entity                                  |                                      |
-| `SAML2_IDP_SLO`               | SAML Single Log off URL                                 |                                      |
-| `SAML2_IDP_SSO`               | SAML Single Sign on URL                                 |                                      |
-| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute                             | `givenName|sn`                       |
-| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute                                    | `groups`                             |
-| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute                                     | `mail`                               |
-| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute                              | `uid`                                |
-| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP                        | `true`                               |
-| `SAML_DUMP_USER_DETAILS`      | Used for debugging                                      | `false`                              |
-| `SAML_NAME`                   | SAML Public Service Name                                | `SSO`                                |
-| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups                                 | `false`                              |
-| `SAML_USER_TO_GROUPS`         | Add user to Groups                                      | `true`                               |
 
 - <https://www.bookstackapp.com/docs/admin/ldap-auth>
+##### SAML Options
+
+| Parameter                     | Description                      | Default        |
+| ----------------------------- | -------------------------------- | -------------- |
+| `SAML_IDP_ENTITYID`           | URL of SAML IDP entity           |                |
+| `SAML_IDP_SLO`                | SAML Single Log off URL          |                |
+| `SAML_IDP_SSO`                | SAML Single Sign on URL          |                |
+| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute      | `givenName|sn` |
+| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute             | `groups`       |
+| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute              | `mail`         |
+| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute       | `uid`          |
+| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP | `true`         |
+| `SAML_DUMP_USER_DETAILS`      | Used for debugging               | `false`        |
+| `SAML_NAME`                   | SAML Public Service Name         | `SSO`          |
+| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups          | `false`        |
+| `SAML_USER_TO_GROUPS`         | Add user to Groups               | `true`         |
+| `SAML_SP_X509`                | SAML SP Public Certificate       | ``             |
+| `SAML_SP_X509_KEY`            | SAML SP Private Key              | ``             |
+
+
 - <https://www.bookstackapp.com/docs/admin/saml2-auth>
 
-#### Cache and Session Settings
+##### OpenID Connect
 
-| Parameter               | Description                                                                    | Default             |
-| ----------------------- | ------------------------------------------------------------------------------ | ------------------- |
-| `CACHE_DRIVER`          | Use what backend for cache `file` `database` `redis` `memcached`               | `file`              |
-| `CACHE_PREFIX`          | Cache Prefix                                                                   | `bookstack`         |
-| `SESSION_COOKIE_NAME`   | Cookie Name                                                                    | `bookstack_session` |
-| `SESSION_DRIVER`        | Use what backend for sesssion management `file` `database` `redis` `memcached` | `FILE`              |
-| `SESSION_LIFETIME`      | How long in minutes for Ssession                                               | `120`               |
-| `SESSION_SECURE_COOKIE` | Deliver HTTPS cookie                                                           | `true`              |
-| `MEMCACHED_HOST`        | Memcached Hostname                                                             |                     |
-| `MEMCACHED_PORT`        | Memcached Port                                                                 | `11211`             |
-| `MEMCACHED_WEIGHT`      | Memcached Weight                                                               | `100`               |
-| `REDIS_DB`              | Redis DB                                                                       | `0`                 |
-| `REDIS_PORT`            | Redis Port                                                                     | `6379`              |
-| `REDIS_HOST`            | Redis Hostname                                                                 |                     |
-
-- <https://www.bookstackapp.com/docs/admin/cache-session-config>
-
-#### Mail Settings
-
-| Parameter        | Description                             | Default                 |
-| ---------------- | --------------------------------------- | ----------------------- |
-| `MAIL_FROM_NAME` | Display name to be sent from Bookstack  | `BookStack`             |
-| `MAIL_FROM`      | Email address to be sent from Bookstack | `bookstack@example.com` |
-| `MAIL_TYPE`      | How to send mail - `SMTP`               | `SMTP`                  |
-| `SMTP_HOST`      | Hostname of SMTP Server                 | `postfix-relay`         |
-| `SMTP_PASS`      | SMTP Password                           | `null`                  |
-| `SMTP_PORT`      | SMTP Port                               | `25`                    |
-| `SMTP_TLS`       | Enable TLS for SMTP Connections         | `FALSE`                 |
-| `SMTP_USER`      | SMTP Username                           | `null`                  |
-
-- <https://www.bookstackapp.com/docs/admin/email-config>
-
-#### Storage Settings
-
-| Parameter                 | Description                                                              | Default        |
-| ------------------------- | ------------------------------------------------------------------------ | -------------- |
-| `STORAGE_TYPE`            | How to store files `local` `local_secure` `s3`                           | `local`        |
-| `STORAGE_ATTACHMENT_TYPE` | Attachment storage type                                                  | `local_secure` |
-| `STORAGE_IMAGE_TYPE`      | Image storage type                                                       | `local`        |
-| `STORAGE_S3_BUCKET`       | S3 Bucket                                                                |                |
-| `STORAGE_S3_KEY`          | S3 Key                                                                   |                |
-| `STORAGE_S3_REGION`       | S3 Region                                                                |                |
-| `STORAGE_S3_SECRET`       | S3 Key                                                                   |                |
-| `STORAGE_URL`             | Set this if you are connecting to a compatible service like Minio/Wasabi |                |
-
-- <https://www.bookstackapp.com/docs/admin/upload-config>
-
+| Parameter                  | Description                                                          | Default |
+| -------------------------- | -------------------------------------------------------------------- | ------- |
+| `OIDC_NAME`                | Name to appear on login screen                                       | `SSO`   |
+| `OIDC_DISPLAY_NAME_CLAIMS` | Claims to use for users display name                                 | `name`  |
+| `OIDC_CLIENT_ID`           | OIDC Client ID                                                       |         |
+| `OIDC_CLIENT_SECRET`       | OIDC Client Secret                                                   |         |
+| `OIDC_ISSUER`              | Issuer URL must start with https://                                  |         |
+| `OIDC_ISSER_DISCOVER`      | Auto Discover endpoints from .well-known                             | `TRUE`  |
+| `OIDC_PUBLIC_KEY`          | (if above false) File path to where Public Key of provicer is stored |         |
+| `OIDC_AUTH_ENDPOINT`       | (if above false) Full URL to Authorize Endpoint                      |         |
+| `OIDC_TOKEN_ENDPOINT`      | (if above false) FulL URL to Token Endpoint                          |         |
 #### External Login Services
 
 | Parameter                     | Description                     | Default |
@@ -314,6 +294,56 @@ Be sure to view the following repositories to understand all the customizable op
 | `TWITTER_AUTO_REGISTER`       | Auto register username          | `false` |
 
 - <https://www.bookstackapp.com/docs/admin/social-auth>
+
+
+#### Cache and Session Settings
+
+| Parameter               | Description                                                                    | Default             |
+| ----------------------- | ------------------------------------------------------------------------------ | ------------------- |
+| `CACHE_DRIVER`          | Use what backend for cache `file` `database` `redis` `memcached`               | `file`              |
+| `CACHE_PREFIX`          | Cache Prefix                                                                   | `bookstack`         |
+| `SESSION_COOKIE_NAME`   | Cookie Name                                                                    | `bookstack_session` |
+| `SESSION_DRIVER`        | Use what backend for sesssion management `file` `database` `redis` `memcached` | `FILE`              |
+| `SESSION_LIFETIME`      | How long in minutes for Ssession                                               | `120`               |
+| `SESSION_SECURE_COOKIE` | Deliver HTTPS cookie                                                           | `true`              |
+| `MEMCACHED_HOST`        | Memcached Hostname                                                             |                     |
+| `MEMCACHED_PORT`        | Memcached Port                                                                 | `11211`             |
+| `MEMCACHED_WEIGHT`      | Memcached Weight                                                               | `100`               |
+| `REDIS_DB`              | Redis DB                                                                       | `0`                 |
+| `REDIS_PORT`            | Redis Port                                                                     | `6379`              |
+| `REDIS_HOST`            | Redis Hostname                                                                 |                     |
+
+- <https://www.bookstackapp.com/docs/admin/cache-session-config>
+
+#### Mail Settings
+
+| Parameter        | Description                             | Default                 |
+| ---------------- | --------------------------------------- | ----------------------- |
+| `MAIL_FROM_NAME` | Display name to be sent from Bookstack  | `BookStack`             |
+| `MAIL_FROM`      | Email address to be sent from Bookstack | `bookstack@example.com` |
+| `MAIL_TYPE`      | How to send mail - `SMTP`               | `SMTP`                  |
+| `SMTP_HOST`      | Hostname of SMTP Server                 | `postfix-relay`         |
+| `SMTP_PASS`      | SMTP Password                           | `null`                  |
+| `SMTP_PORT`      | SMTP Port                               | `25`                    |
+| `SMTP_TLS`       | Enable TLS for SMTP Connections         | `FALSE`                 |
+| `SMTP_USER`      | SMTP Username                           | `null`                  |
+
+- <https://www.bookstackapp.com/docs/admin/email-config>
+
+#### Storage Settings
+
+| Parameter                 | Description                                                              | Default        |
+| ------------------------- | ------------------------------------------------------------------------ | -------------- |
+| `STORAGE_TYPE`            | How to store files `local` `local_secure` `s3`                           | `local`        |
+| `STORAGE_ATTACHMENT_TYPE` | Attachment storage type                                                  | `local_secure` |
+| `STORAGE_IMAGE_TYPE`      | Image storage type                                                       | `local`        |
+| `STORAGE_S3_BUCKET`       | S3 Bucket                                                                |                |
+| `STORAGE_S3_KEY`          | S3 Key                                                                   |                |
+| `STORAGE_S3_REGION`       | S3 Region                                                                |                |
+| `STORAGE_S3_SECRET`       | S3 Key                                                                   |                |
+| `STORAGE_URL`             | Set this if you are connecting to a compatible service like Minio/Wasabi |                |
+
+- <https://www.bookstackapp.com/docs/admin/upload-config>
 
 ### Networking
 

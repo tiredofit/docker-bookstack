@@ -9,11 +9,11 @@ db_ready mariadb
 
 ### Logfile redirection
 create_logrotate bookstack ${LOG_PATH}/${LOG_FILE} none ${NGINX_USER} ${NGINX_GROUP}
-mkdir -p ${LOG_PATH}
-touch ${LOG_PATH}/${LOG_FILE}
-chown -R "${NGINX_USER}":"${NGINX_GROUP}" ${LOG_PATH}
+mkdir -p "${LOG_PATH}"
+touch "${LOG_PATH}"/"${LOG_FILE}"
+chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${LOG_PATH}"
 rm -rf "${NGINX_WEBROOT}"/storage/logs
-ln -sf ${LOG_PATH} "${NGINX_WEBROOT}"/storage/logs
+ln -sf "${LOG_PATH}" "${NGINX_WEBROOT}"/storage/logs
 
 ### Check if New Install
 if [ ! -f "${NGINX_WEBROOT}/server.php" ]; then
@@ -128,8 +128,47 @@ ${authentication_ldap_sync}
 EOF
         )
         ;;
+
+    "OIDC" | "oidc" | "OPENIDCONNECT" | "openidconnect")
+        print_debug "Setting OIDC Authentication"
+        sanity_var OIDC_CLIENT_ID "OIDC Client ID"
+        sanity_var OIDC_CLIENT_SECRET "OIDC Client Secret"
+        sanity_var OIDC_ISSUER "OIDC Issuer Name"
+        authentication=$(
+            cat <<EOF
+AUTH_METHOD=oidc
+OIDC_NAME=${OIDC_NAME}
+OIDC_DISPLAY_NAME_CLAIMS=${OIDC_DISPLAY_NAME_CLAIMS}
+OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
+OIDC_ISSUER=${OIDC_ISSUER}
+OIDC_DUMP_USER_DETAILS=${OIDC_DUMP_USER_DETAILS}
+EOF
+            )
+        if var_false "${OIDC_ISSUER_DISCOVER}" ; then
+            sanity_var OIDC_PUBLIC_KEY "File Path to public key of provider"
+            sanity_var OIDC_AUTH_ENDPOINT "Authorization Endpoint"
+            sanity_var OIDC_TOKEN_ENDPOINT "Token Endpoint"
+            authentication=$(
+                echo "${authentication}"
+                cat <<EOF
+OIDC_ISSUER_DISCOVER=false
+OIDC_PUBLIC_KEY=${OIDC_PUBLIC_KEY}
+OIDC_AUTH_ENDPOINT=${OIDC_AUTH_ENDPOINT}
+OIDC_TOKEN_ENDPOINT=${OIDC_TOKEN_ENDPOINT}
+EOF
+            )
+        else
+            authentication=$(
+                echo "${authentication}"
+                cat <<EOF
+OIDC_ISSUER_DISCOVER=true
+EOF
+            )
+        fi
+        ;;
     "SAML" | "saml" | "SAML2" | "saml2")
-        print_debug "Setting Standard/Local Authentication"
+        print_debug "Setting SAML Authentication"
         sanity_var SAML_IDP_ENTITY_ID "SAML Entity ID"
         authentication=$(
             cat <<EOF
@@ -147,7 +186,7 @@ SAML2_REMOVE_FROM_GROUPS=${SAML_REMOVE_FROM_GROUPS}
 EOF
         )
 
-        if var_false SAML_AUTOLOAD_METADATA; then
+        if var_false "${SAML_AUTOLOAD_METADATA}"; then
             sanity_var SAML_IDP_SSO_URL "SAML IDP SSO URL"
             sanity_var SAML_IDP_SLO_URL "SAML IDP SLO URL"
             sanity_var SAML_IDP_CERT "SAML IDP Certificate"
@@ -166,6 +205,24 @@ EOF
                 echo "${authentication}"
                 cat <<EOF
 SAML2_ONELOGIN_OVERRIDES=${SAML_ONELOGIN_OVERRIDES}
+EOF
+            )
+        fi
+
+        if [ -n "${SAML_SP_X509}" ]; then
+            authentication=$(
+                echo "${authentication}"
+                cat <<EOF
+SAML2_SP_x509=${SAML_SP_X509}
+EOF
+            )
+        fi
+
+        if [ -n "${SAML_SP_X509_KEY}" ]; then
+            authentication=$(
+                echo "${authentication}"
+                cat <<EOF
+SAML2_SP_x509_KEY=${SAML_SP_X509_KEY}
 EOF
             )
         fi
@@ -454,7 +511,7 @@ STORAGE_S3_ENDPOINT=${STORAGE_S3_ENDPOINT}
 EOF
         )
 
-        if [ -n "$STORAGE_URL" ]; then
+        if [ -n "${STORAGE_URL}" ]; then
             STORAGE_URL=${STORAGE_URL}
             storage=$(
                 echo "${storage}"
@@ -619,8 +676,8 @@ silent sudo -u "${NGINX_USER}" php artisan migrate --no-ansi --force
 cat >> /root/.bashrc <<EOF
 function artisan() {
       export oldpwd="\$(pwd)"
-      cd /www/bookstack
-      sudo -u nginx php artisan "\$@"
+      cd ${NGINX_WEBROOT}
+      sudo -u ${NGINX_USER} php artisan "\$@"
       cd "\${oldpwd}"
 }
 EOF
