@@ -1,3 +1,10 @@
+## 1.6.26 2021-11-16 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 21.11
+      - New Environment Variable FILE_UPLOAD_MAX_SIZE (default 50)
+
+
 ## 1.6.25 2021-11-01 <dave at tiredofit dot ca>
 
    ### Added

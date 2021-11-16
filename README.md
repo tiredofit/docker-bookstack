@@ -155,7 +155,8 @@ Be sure to view the following repositories to understand all the customizable op
 | `DISABLE_EXTERNAL_SERVICES`  | Disable every external service                                                                                      | `false`              |
 | `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default                                                             |                      |
 | `ENABLE_DRAWIO`              | Enable DrawIO Functionality                                                                                         | `false`              |
-| `LOG_FILE`                   | Log File                                                                                                            | `bokstack`.log       |
+| `FILE_UPLOAD_MAX_SIZE`       | Max MB of files to upload into the system                                                                           | `50`                 |
+| `LOG_FILE`                   | Log File                                                                                                            | `bokstack.log`       |
 | `LOG_PATH`                   | Log Path                                                                                                            | `/www/logs/bokstack` |
 | `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                                                                                         | `false`              |
 | `PDF_EXPORT`                 | Use `internal` domPDF functions or `external` wkhtmltopdf tool                                                      | `internal`           |
