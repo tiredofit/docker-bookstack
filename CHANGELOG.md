@@ -1,3 +1,9 @@
+## 1.6.30 2021-12-15 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Temporarily remove wkhtmltopdf package
+
+
 ## 1.6.29 2021-12-15 <dave at tiredofit dot ca>
 
    ### Added

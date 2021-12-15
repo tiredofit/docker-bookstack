@@ -27,7 +27,7 @@ RUN set -x && \
                 libmemcached \
                 optipng \
                 ttf-freefont \
-                wkhtmltopdf \
+                #wkhtmltopdf \
                 && \
     \
     mkdir -p /assets/install && \
