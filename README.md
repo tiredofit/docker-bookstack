@@ -160,6 +160,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `LOG_PATH`                   | Log Path                                                                                                            | `/www/logs/bokstack` |
 | `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                                                                                         | `false`              |
 | `PDF_EXPORT`                 | Use `internal` domPDF functions or `external` wkhtmltopdf tool                                                      | `internal`           |
+| `PDF_EXPORT_PAGE_SIZE`       | When using wkhtmlpdf choose which size you want `a4` or `letter`                                                    | `A4`                 |
 | `QUEUE_CONNECTION`           | Queue Connection                                                                                                    | `sync`               |
 | `RECYCLE_BIN_LIFETIME`       | How Many days Recycle Bin should wait before auto deleting. `0` for no feature, `-1` for unlimited                  | `30`                 |
 | `REVISION_LIMIT`             | Default Revision Limit for pages                                                                                    | `50`                 |

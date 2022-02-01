@@ -1,3 +1,10 @@
+## 1.6.35 2022-02-01 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 21.12.4
+      - Added PDF_EXPORT_PAGE_SIZE environment variable (Default: a4)
+
+
 ## 1.6.34 2022-01-24 <dave at tiredofit dot ca>
 
    ### Added
