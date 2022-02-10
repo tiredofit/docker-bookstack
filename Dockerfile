@@ -14,7 +14,9 @@ ENV BOOKSTACK_VERSION=v21.12.5 \
     PHP_ENABLE_TOKENIZER=TRUE \
     PHP_ENABLE_XMLWRITER=TRUE \
     NGINX_WEBROOT=/www/bookstack \
-    CONTAINER_ENABLE_MESSAGING=TRUE
+    CONTAINER_ENABLE_MESSAGING=TRUE \
+    IMAGE_NAME="tiredofit/bookstack" \
+    IMAGE_REPO_URL="https://github.com/tiredofit/docker-bookstack/"
 
 RUN set -x && \
     apk update && \

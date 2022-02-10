@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/command/with-contenv bash
 
 ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@admin.com"}
 ADMIN_NAME=${ADMIN_NAME:-"BookStack Admin"}
