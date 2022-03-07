@@ -1,3 +1,10 @@
+## 1.6.41 2022-03-07 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 21.02.3
+      - Add ALLOWED_IFRAME_SOURCES environment variable to limit what websites can be loaded in an iframe
+
+
 ## 1.6.40 2022-03-01 <dave at tiredofit dot ca>
 
    ### Added
