@@ -54,5 +54,5 @@ if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; 
     sleep $(($LDAP_SYNC_INTERVAL*60))
   done
 else
-  s6-svc -d /var/run/s6/services/30-bookstack-ldap
+  s6-svc -d /var/run/s6/legacy-services/30-bookstack-ldap
 fi

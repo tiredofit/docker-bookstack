@@ -1,3 +1,9 @@
+## 1.6.42 2022-03-14 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix issues relating to S6 overlay dropping use of /var/run/s6/services
+
+
 ## 1.6.41 2022-03-07 <dave at tiredofit dot ca>
 
    ### Added
