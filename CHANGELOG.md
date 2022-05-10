@@ -1,3 +1,9 @@
+## 1.6.47 2022-05-09 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 22.04.2
+
+
 ## 1.6.46 2022-05-04 <dave at tiredofit dot ca>
 
    ### Added
