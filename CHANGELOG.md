@@ -1,3 +1,9 @@
+## 1.6.48 2022-05-12 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Version bump to build multiple PHP versions
+
+
 ## 1.6.47 2022-05-09 <dave at tiredofit dot ca>
 
    ### Added
