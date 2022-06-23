@@ -14,6 +14,7 @@ ENV BOOKSTACK_VERSION=v22.04.2 \
     PHP_ENABLE_TOKENIZER=TRUE \
     PHP_ENABLE_XMLWRITER=TRUE \
     NGINX_WEBROOT=/www/bookstack \
+    NGINX_SITE_ENABLED=bookstack \
     CONTAINER_ENABLE_MESSAGING=TRUE \
     IMAGE_NAME="tiredofit/bookstack" \
     IMAGE_REPO_URL="https://github.com/tiredofit/docker-bookstack/"
