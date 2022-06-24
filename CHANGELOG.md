@@ -1,3 +1,12 @@
+## 1.6.50 2022-06-24 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 22.06
+      - Update to support custom DB Port for database migrations
+      - Code cleanup
+      - ENABLE_AUTO_LOGIN environment variable should SAML or OIDC be the only authentication choice available
+
+
 ## 1.6.49 2022-06-23 <dave at tiredofit dot ca>
 
    ### Added

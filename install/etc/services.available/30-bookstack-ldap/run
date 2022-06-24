@@ -9,8 +9,7 @@ check_service_initialized init 30-bookstack
 liftoff
 
 ### Perform LDAP Sync to populate user table
-if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; then
-  date >/dev/null
+if [ "${AUTHENTICATION_TYPE,,}" = "ldap" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; then
   print_debug "LDAP Sync routines Initialized on $(date)"
 
 ### Wait for Next time to start Syncing
@@ -44,11 +43,10 @@ if [ "$AUTHENTICATION_TYPE" = "LDAP" ] && var_true "${ENABLE_LDAP_SYNC_USER}" ; 
       /assets/custom-scripts/ldapsync.sh
     else
       print_notice "Synchronizing LDAP at $(date)"
-      cd ${NGINX_WEBROOT}
-      silent sudo -u ${NGINX_USER} php artisan bookstack:syncldap
+      cd "${NGINX_WEBROOT}"
+      silent sudo -u "${NGINX_USER}" php artisan bookstack:syncldap
       print_notice "Completed synchronizing LDAP at $(date)"
     fi
-
 
     ### Go back to Sleep until next Backup time
     sleep $(($LDAP_SYNC_INTERVAL*60))

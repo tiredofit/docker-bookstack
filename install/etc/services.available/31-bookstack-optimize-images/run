@@ -10,7 +10,6 @@ liftoff
 
 ### Perform Image Optimization on uploaded assets
 if var_true "${ENABLE_OPTIMIZE_IMAGES}" ] ; then
-  date >/dev/null
   print_debug "Image Optimization routines initialized on $(date)"
 
 ### Wait for Next time to start image optimization

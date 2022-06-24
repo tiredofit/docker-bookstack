@@ -16,7 +16,7 @@ rm -rf "${NGINX_WEBROOT}"/storage/logs
 ln -sf "${LOG_PATH}" "${NGINX_WEBROOT}"/storage/logs
 
 ### Check if New Install
-if [ ! -f "${NGINX_WEBROOT}/server.php" ]; then
+if [ ! -f "${NGINX_WEBROOT}"/server.php ]; then
     print_warn "Potential New Installation / Standalone Installation Detected - Copying Bookstack Sourcecode"
     cp -R /assets/install/* "${NGINX_WEBROOT}"
 
@@ -51,19 +51,19 @@ if [ ! -f "${NGINX_WEBROOT}/server.php" ]; then
 
     ### Auto Upgrade functionality
     if [ ! -f "${NGINX_WEBROOT}/.bookstack-version" ]; then
-        echo "${BOOKSTACK_VERSION} first installed on $(date)" >>"${NGINX_WEBROOT}"/.bookstack-version
+        echo "${BOOKSTACK_VERSION} first installed on $(date)" >> "${NGINX_WEBROOT}"/.bookstack-version
     fi
     chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"
 else
-    if var_true "$ENABLE_AUTO_UPDATE"; then
-        if [ "$BOOKSTACK_VERSION" != $(head -n 1 "${NGINX_WEBROOT}"/.bookstack-version | awk '{print $1'}) ]; then
+    if var_true "${ENABLE_AUTO_UPDATE}"; then
+        if [ "${BOOKSTACK_VERSION}" != $(head -n 1 "${NGINX_WEBROOT}"/.bookstack-version | awk '{print $1'}) ]; then
             print_warn "Detected in place Bookstack version $(head -n 1 "${NGINX_WEBROOT}"/.bookstack-version | awk "{print $1"}) - Upgrading to ${BOOKSTACK_VERSION}"
             cp -R /assets/install/* "${NGINX_WEBROOT}"
             chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"
             cd "${NGINX_WEBROOT}" || exit
             silent sudo -u "${NGINX_USER}" sudo -u "${NGINX_USER}" php artisan migrate --force
             sed -i --follow-symlinks "1 i\
-            ${BOOKSTACK_VERSION} upgraded on $(date)" ${NGINX_WEBROOT}/.bookstack-version
+            ${BOOKSTACK_VERSION} upgraded on $(date)" "${NGINX_WEBROOT}"/.bookstack-version
         fi
     fi
 fi
@@ -72,8 +72,8 @@ if [ "$SETUP_TYPE" = "AUTO" ]; then
     print_notice "Generating Configuration"
 
     ### Authentication
-    case "$AUTHENTICATION_TYPE" in
-    "STANDARD" | "standard" )
+    case "${AUTHENTICATION_TYPE,,}" in
+    "standard" )
         print_debug "Setting Standard/Local Authentication"
         authentication=$(
             cat <<EOF
@@ -129,7 +129,7 @@ EOF
         )
         ;;
 
-    "OIDC" | "oidc" | "OPENIDCONNECT" | "openidconnect")
+       "oidc" | "openidconnect")
         print_debug "Setting OIDC Authentication"
         sanity_var OIDC_CLIENT_ID "OIDC Client ID"
         sanity_var OIDC_CLIENT_SECRET "OIDC Client Secret"
@@ -167,7 +167,7 @@ EOF
             )
         fi
         ;;
-    "SAML" | "saml" | "SAML2" | "saml2")
+    "saml" | "saml2")
         print_debug "Setting SAML Authentication"
         sanity_var SAML_IDP_ENTITY_ID "SAML Entity ID"
         authentication=$(
@@ -246,7 +246,7 @@ EOF
         fi
 
     ### Avatars
-    if [ -n "$AVATAR_URL" ]; then
+    if [ -n "${AVATAR_URL}" ]; then
         avatar=$(
             cat <<EOF
 AVATAR_URL=${AVATAR_URL}
@@ -255,7 +255,7 @@ EOF
     fi
 
     ### Cache And Sessions
-    if [ "$CACHE_DRIVER" = "MEMCACHED" ] || [ "$CACHE_DRIVER" = "memcached" ] || [ "$SESSION_DRIVER" = "MEMCACHED" ] || [ "$SESSION_DRIVER" = "memcached" ]; then
+    if [ "${CACHE_DRIVER,,}" = "memcached" ] || [ "${SESSION_DRIVER,,}" = "memcached" ]; then
         sanity_var MEMCACHED_HOST "Memcached Hostname"
         driver_options=$(
             echo "${driver_options}"
@@ -265,7 +265,7 @@ EOF
         )
     fi
 
-    if [ "$CACHE_DRIVER" = "REDIS" ] || [ "$CACHE_DRIVER" = "redis" ] || [ "$SESSION_DRIVER" = "REDIS" ] || [ "$SESSION_DRIVER" = "redis" ]; then
+    if [ "${CACHE_DRIVER,,}" = "redis" ] || [ "${SESSION_DRIVER,,}" = "redis" ]; then
         sanity_var REDIS_HOST "Redis Hostname"
         db_ready redis
         driver_options=$(
@@ -277,7 +277,7 @@ EOF
     fi
 
     ### DrawIO
-    if var_true "$ENABLE_DRAWIO"; then
+    if var_true "${ENABLE_DRAWIO}"; then
         if [ -z "${DRAWIO_HOST}" ]; then
             drawio=true
         else
@@ -288,7 +288,7 @@ EOF
     fi
 
     ### External Logins
-    if var_true "$ENABLE_LOGIN_AZURE"; then
+    if var_true "${ENABLE_LOGIN_AZURE}"; then
         sanity_var AZURE_APP_ID "Azure App ID"
         sanity_var AZURE_APP_SECRET "Azure App Secret"
         sanity_var AZURE_TENANT "Azure Tenant ID"
@@ -304,7 +304,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_DISCORD"; then
+    if var_true "${ENABLE_LOGIN_DISCORD}"; then
         sanity_var DISCORD_APP_ID "Discord App ID"
         sanity_var DISCORD_APP_SECRET "Discord App Secret"
         login=$(
@@ -318,7 +318,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_FACEBOOK"; then
+    if var_true "${ENABLE_LOGIN_FACEBOOK}"; then
         sanity_var FACEBOOK_APP_ID "Facebook App ID"
         sanity_var FACEBOOK_APP_SECRET "Facebook App Secret"
         login=$(
@@ -332,7 +332,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_GITHUB"; then
+    if var_true "${ENABLE_LOGIN_GITHUB}"; then
         sanity_var GITHUB_APP_ID "Github App ID"
         sanity_var GITHUB_APP_SECRET "Github App Secret"
         login=$(
@@ -346,7 +346,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_GITLAB"; then
+    if var_true "${ENABLE_LOGIN_GITLAB}"; then
         sanity_var GITLAB_APP_ID "Gitlab App ID"
         sanity_var GITLAB_APP_SECRET "Gitlab App Secret"
         sanity_var GITLAB_BASE_URI "Gitlab Base URI"
@@ -362,7 +362,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_GOOGLE"; then
+    if var_true "${ENABLE_LOGIN_GOOGLE}"; then
         sanity_var GOOGLE_APP_ID "Google App ID"
         sanity_var GOOGLE_APP_SECRET "Google App Secret"
         sanity_var GOOGLE_SELECT_ACCOUNT "Google Account Selection"
@@ -378,7 +378,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_OKTA"; then
+    if var_true "${ENABLE_LOGIN_OKTA}"; then
         sanity_var OKTA_APP_ID "Okta App ID"
         sanity_var OKTA_APP_SECRET "Okta App Secret"
         sanity_var OKTA_BASE_URL "Okta Base URL"
@@ -394,7 +394,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_SLACK"; then
+    if var_true "${ENABLE_LOGIN_SLACK}"; then
         sanity_var SLACK_APP_ID "Slack App ID"
         sanity_var SLACK_APP_SECRET "Slack App Secret"
         login=$(
@@ -408,7 +408,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_TWITCH"; then
+    if var_true "${ENABLE_LOGIN_TWITCH}"; then
         sanity_var TWITCH_APP_ID "Twitch App ID"
         sanity_var TWITCH_APP_SECRET "Twitch App Secret"
         login=$(
@@ -422,7 +422,7 @@ EOF
         )
     fi
 
-    if var_true "$ENABLE_LOGIN_TWITTER"; then
+    if var_true "${ENABLE_LOGIN_TWITTER}"; then
         sanity_var TWITTER_APP_ID "Twitter App ID"
         sanity_var TWITTER_APP_SECRET "Twitter App Secret"
         login=$(
@@ -437,8 +437,8 @@ EOF
     fi
 
     ### Mail Setup
-    case "$MAIL_TYPE" in
-    "CONTAINER" | "container" | "php" | "PHP" | "sendmail" | "SENDMAIL")
+    case "${MAIL_TYPE,,}" in
+    "container" | "php" | "sendmail" )
         mail=$(
             cat <<EOF
 MAIL_DRIVER=sendmail
@@ -447,7 +447,7 @@ MAIL_FROM_NAME=${MAIL_FROM_NAME}
 EOF
         )
         ;;
-    "SMTP" | "smtp")
+    "smtp")
         sanity_var SMTP_HOST "SMTP Host"
         mail=$(
             cat <<EOF
@@ -496,8 +496,8 @@ EOF
     esac
 
     ### Storage Setup
-    case "$STORAGE_TYPE" in
-    "s3" | "S3" | "MINIO" | "minio")
+    case "${STORAGE_TYPE,,}" in
+    "s3" | "minio" )
         sanity_var STORAGE_S3_KEY "S3 Key"
         sanity_var STORAGE_S3_SECRET "S3 Secret"
         sanity_var STORAGE_S3_KEY "S3 Key"
@@ -534,11 +534,11 @@ EOF
     esac
 
     ### PDF Export Options
-    case "$PDF_EXPORT" in
-        "internal" | "INTERNAL" | "dompdf" | "DOMPDF" )
+    case "${PDF_EXPORT,,}" in
+        "internal" | "dompdf" )
             pdf_export=""
         ;;
-        "external" | "EXTERNAL" | "wkhtmltopdf" | "WKHTMLTOPDF" )
+        "external" | "wkhtmltopdf" )
             pdf_export=$(
             cat <<EOF
 WKHTMLTOPDF=/usr/bin/wkhtmltopdf
@@ -555,7 +555,7 @@ EOF
     fi
 
     ### Write the Configuration File
-    cat >"${NGINX_WEBROOT}/.env" <<EOF
+    cat >"${NGINX_WEBROOT}"/.env <<EOF
 ## Custom Generated Bookstack Configuration! Do not edit, instead set ENV Vars
 ## If you want to use your own configuration files set SETUP_TYPE=MANUAL when starting container
 ## Last Generated on $(date)
@@ -596,6 +596,7 @@ API_DEFAULT_ITEM_COUNT=${API_DEFAULT_ITEM_COUNT}
 API_MAX_ITEM_COUNT=${API_DEFAULT_MAX_ITEM_COUNT}
 API_REQUESTS_PER_MIN=${API_REQUESTS_PER_MIN}
 ALLOWED_IFRAME_SOURCES="${ALLOWED_IFRAME_SOURCES}"
+AUTH_AUTO_INITIATE=${ENABLE_AUTO_LOGIN,,}
 ${storage}
 ${authentication}
 ${sso}
@@ -620,7 +621,7 @@ silent sudo -u "${NGINX_USER}" php artisan view:clear
 
 ### Check to see if DB is populated
 db_ready mariadb
-mysql -u "$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -e "use ""$DB_NAME""; SELECT * FROM users;" >/dev/null 2>&1
+mysql -u "$DB_USER" -p"$DB_PASS" -P"${DB_PORT}" -h"$DB_HOST" -e "use ""$DB_NAME""; SELECT * FROM users;" >/dev/null 2>&1
 if [ $? -gt 0 ]; then
     ### Perform Database Installation Routines
     print_warn "Detected empty Database - Setting up - Please wait.."
@@ -631,7 +632,7 @@ if [ $? -gt 0 ]; then
 
     ### Create Admin User
     print_notice "Creating Administrative User"
-    mysql -u "$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -e "use ""$DB_NAME""; DELETE FROM users where id=1;"
+    mysql -u "$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -P"${DB_PORT}" -e "use ""$DB_NAME""; DELETE FROM users where id=1;"
     silent /usr/bin/expect <<EOD
 spawn sudo -u "${NGINX_USER}" php ${NGINX_WEBROOT}/artisan bookstack:create-admin --no-ansi
 set timeout 30
