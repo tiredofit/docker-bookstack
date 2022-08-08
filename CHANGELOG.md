@@ -1,3 +1,9 @@
+## 1.6.56 2022-08-08 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Change bookstack log file name from bookstack to default laravel.log
+
+
 ## 1.6.55 2022-08-06 <dave at tiredofit dot ca>
 
    ### Added

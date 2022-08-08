@@ -8,9 +8,9 @@ sanity_db
 db_ready mariadb
 
 ### Logfile redirection
-create_logrotate bookstack ${LOG_PATH}/${LOG_FILE} none ${NGINX_USER} ${NGINX_GROUP}
 mkdir -p "${LOG_PATH}"
 touch "${LOG_PATH}"/"${LOG_FILE}"
+create_logrotate bookstack ${LOG_PATH}/${LOG_FILE} none ${NGINX_USER} ${NGINX_GROUP}
 chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${LOG_PATH}"
 rm -rf "${NGINX_WEBROOT}"/storage/logs
 ln -sf "${LOG_PATH}" "${NGINX_WEBROOT}"/storage/logs
