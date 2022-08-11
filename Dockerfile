@@ -2,7 +2,7 @@ FROM docker.io/tiredofit/nginx-php-fpm:8.0
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=v22.07.2 \
+ENV BOOKSTACK_VERSION=v22.07.3 \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
