@@ -1,3 +1,10 @@
+## 1.6.60 2022-09-11 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 22.09
+      - Additional OIDC Group Syncing options
+
+
 ## 1.6.59 2022-08-11 <dave at tiredofit dot ca>
 
    ### Added
