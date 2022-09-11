@@ -164,7 +164,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `PDF_EXPORT_PAGE_SIZE`       | When using wkhtmlpdf choose which size you want `a4` or `letter`                                   | `A4`                                                                                         |
 | `QUEUE_CONNECTION`           | Queue Connection                                                                                   | `sync`                                                                                       |
 | `RECYCLE_BIN_LIFETIME`       | How Many days Recycle Bin should wait before auto deleting. `0` for no feature, `-1` for unlimited | `30`                                                                                         |
-| `REVISION_LIMIT`             | Default Revision Limit for pages                                                                   | `50`                                                                                         |
+| `REVISION_LIMIT`             | Default Revision Limit for pages                                                                   | `100`                                                                                        |
 | `THEME`                      | Drop themes in /data/themes and set value here                                                     | `false`                                                                                      |
 | `VIEW_BOOKS`                 | View books in either `list` or `grid` format                                                       | `list`                                                                                       |
 | `VIEW_SHELVES`               | View shelves in either `list` or `grid` format                                                     | `grid`                                                                                       |
@@ -204,39 +204,44 @@ Be sure to view the following repositories to understand all the customizable op
 - <https://www.bookstackapp.com/docs/admin/ldap-auth>
 ##### SAML Options
 
-| Parameter                     | Description                      | Default        |
-| ----------------------------- | -------------------------------- | -------------- |
-| `SAML_IDP_ENTITYID`           | URL of SAML IDP entity           |                |
-| `SAML_IDP_SLO`                | SAML Single Log off URL          |                |
-| `SAML_IDP_SSO`                | SAML Single Sign on URL          |                |
-| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute      | `givenName|sn` |
-| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute             | `groups`       |
-| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute              | `mail`         |
-| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute       | `uid`          |
-| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP | `true`         |
-| `SAML_DUMP_USER_DETAILS`      | Used for debugging               | `false`        |
-| `SAML_NAME`                   | SAML Public Service Name         | `SSO`          |
-| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups          | `false`        |
-| `SAML_USER_TO_GROUPS`         | Add user to Groups               | `true`         |
-| `SAML_SP_X509`                | SAML SP Public Certificate       | ``             |
-| `SAML_SP_X509_KEY`            | SAML SP Private Key              | ``             |
+| Parameter                     | Description                      | Default    |
+| ----------------------------- | -------------------------------- | ---------- |
+| `SAML_IDP_ENTITYID`           | URL of SAML IDP entity           |            |
+| `SAML_IDP_SLO`                | SAML Single Log off URL          |            |
+| `SAML_IDP_SSO`                | SAML Single Sign on URL          |            |
+| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute      | `givenName | sn` |
+| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute             | `groups`   |
+| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute              | `mail`     |
+| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute       | `uid`      |
+| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP | `true`     |
+| `SAML_DUMP_USER_DETAILS`      | Used for debugging               | `false`    |
+| `SAML_NAME`                   | SAML Public Service Name         | `SSO`      |
+| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups          | `false`    |
+| `SAML_USER_TO_GROUPS`         | Add user to Groups               | `true`     |
+| `SAML_SP_X509`                | SAML SP Public Certificate       | ``         |
+| `SAML_SP_X509_KEY`            | SAML SP Private Key              | ``         |
 
 
 - <https://www.bookstackapp.com/docs/admin/saml2-auth>
 
 ##### OpenID Connect
 
-| Parameter                  | Description                                                          | Default |
-| -------------------------- | -------------------------------------------------------------------- | ------- |
-| `OIDC_NAME`                | Name to appear on login screen                                       | `SSO`   |
-| `OIDC_DISPLAY_NAME_CLAIMS` | Claims to use for users display name                                 | `name`  |
-| `OIDC_CLIENT_ID`           | OIDC Client ID                                                       |         |
-| `OIDC_CLIENT_SECRET`       | OIDC Client Secret                                                   |         |
-| `OIDC_ISSUER`              | Issuer URL must start with https://                                  |         |
-| `OIDC_ISSER_DISCOVER`      | Auto Discover endpoints from .well-known                             | `TRUE`  |
-| `OIDC_PUBLIC_KEY`          | (if above false) File path to where Public Key of provicer is stored |         |
-| `OIDC_AUTH_ENDPOINT`       | (if above false) Full URL to Authorize Endpoint                      |         |
-| `OIDC_TOKEN_ENDPOINT`      | (if above false) FulL URL to Token Endpoint                          |         |
+| Parameter                  | Description                                                          | Default  |
+| -------------------------- | -------------------------------------------------------------------- | -------- |
+| `OIDC_NAME`                | Name to appear on login screen                                       | `SSO`    |
+| `OIDC_DISPLAY_NAME_CLAIMS` | Claims to use for users display name                                 | `name`   |
+| `OIDC_CLIENT_ID`           | OIDC Client ID                                                       |          |
+| `OIDC_CLIENT_SECRET`       | OIDC Client Secret                                                   |          |
+| `OIDC_ISSUER`              | Issuer URL must start with https://                                  |          |
+| `OIDC_ISSER_DISCOVER`      | Auto Discover endpoints from .well-known                             | `TRUE`   |
+| `OIDC_PUBLIC_KEY`          | (if above false) File path to where Public Key of provicer is stored |          |
+| `OIDC_AUTH_ENDPOINT`       | (if above false) Full URL to Authorize Endpoint                      |          |
+| `OIDC_TOKEN_ENDPOINT`      | (if above false) FulL URL to Token Endpoint                          |          |
+| `OIDC_ADDITIONAL_SCOPES`   | OIDC Additional Scopes                                               | `null`   |
+| `OIDC_USER_TO_GROUPS`      | Add user to Groups                                                   | `false`  |
+| `OIDC_ATTRIBUTE_GROUP`     | Groups Attribute passed from OIDC Server                             | `groups` |
+| `OIDC_REMOVE_FROM_GROUPS`  | Remove user from groups                                              | `false`  |
+
 #### External Login Services
 
 | Parameter                     | Description                     | Default |
