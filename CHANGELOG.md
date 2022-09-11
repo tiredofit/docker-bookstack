@@ -1,3 +1,10 @@
+## 1.6.61 2022-09-11 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Update defaults
+      - Change revision count to 100 as per upstream
+
+
 ## 1.6.60 2022-09-11 <dave at tiredofit dot ca>
 
    ### Added
