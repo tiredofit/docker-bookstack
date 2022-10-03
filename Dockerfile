@@ -19,7 +19,8 @@ ENV BOOKSTACK_VERSION=v22.09.1 \
     IMAGE_NAME="tiredofit/bookstack" \
     IMAGE_REPO_URL="https://github.com/tiredofit/docker-bookstack/"
 
-RUN set -x && \
+RUN source /assets/functions/00-container \
+    set -x && \
     apk update && \
     apk upgrade && \
     apk add -t .bookstack-run-deps \
@@ -33,13 +34,10 @@ RUN set -x && \
                 #wkhtmltopdf \
                 && \
     \
-    mkdir -p /assets/install && \
-    git clone ${BOOKSTACK_REPO_URL} /assets/install && \
-    cd /assets/install && \
-    git checkout ${BOOKSTACK_VERSION} && \
+    clone_git_repo "${BOOKSTACK_REPO_URL}" "${BOOKSTACK_VERSION}" /assets/install && \
+    cd ${GIT_REPO_SRC} && \
     composer install && \
     \
-    cd /assets/install/ && \
     rm -rf *.yml dev php*.xml tests && \
     rm -rf /root/.composer && \
     rm -rf /var/cache/apk/*
