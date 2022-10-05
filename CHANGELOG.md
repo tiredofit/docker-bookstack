@@ -1,3 +1,9 @@
+## 1.6.63 2022-10-05 <dave at tiredofit dot ca>
+
+   ### Added
+      - Migrate legacy nginx configuration
+
+
 ## 1.6.62 2022-09-20 <dave at tiredofit dot ca>
 
    ### Added
