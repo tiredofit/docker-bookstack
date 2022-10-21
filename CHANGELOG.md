@@ -1,3 +1,15 @@
+## 1.6.64 2022-10-21 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 22.10
+      - Add IP_PRECISION environment variable
+      - Added LOG_FAILED_LOGIN_* environment variable for log tracking
+
+   ### Changed
+      - Change OIDC Group Claim environment variable
+      - Code cleanup
+
+
 ## 1.6.63 2022-10-05 <dave at tiredofit dot ca>
 
    ### Added

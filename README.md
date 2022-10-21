@@ -157,8 +157,11 @@ Be sure to view the following repositories to understand all the customizable op
 | `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default                                            |                                                                                              |
 | `ENABLE_DRAWIO`              | Enable DrawIO Functionality                                                                        | `false`                                                                                      |
 | `FILE_UPLOAD_MAX_SIZE`       | Max MB of files to upload into the system                                                          | `50`                                                                                         |
+| `IP_ADDRESS_PRECISION`       | Alter precision of IP Addresses stored by bookstack `0` to `4`                                     | `4`                                                                                          |
 | `LOG_FILE`                   | Log File                                                                                           | `bokstack.log`                                                                               |
 | `LOG_PATH`                   | Log Path                                                                                           | `/www/logs/bokstack`                                                                         |
+| `LOG_FAILED_LOGIN_MESSAGE`   | Enable logging of fdailed email and password logins with given message                             | `false`                                                                                      |
+| `LOG_FAILED_LOGIN_CHANNEL`   | Default log channel uses php_error_log function                                                    | `errorlog_plain_webserver`                                                                   |
 | `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                                                                        | `false`                                                                                      |
 | `PDF_EXPORT`                 | Use `internal` domPDF functions or `external` wkhtmltopdf tool                                     | `internal`                                                                                   |
 | `PDF_EXPORT_PAGE_SIZE`       | When using wkhtmlpdf choose which size you want `a4` or `letter`                                   | `A4`                                                                                         |
@@ -184,6 +187,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `LDAP_ATTRIBUTE_GROUP`        | Group Attribute                                         | `memberOf`                           |
 | `LDAP_ATTRIBUTE_ID`           | Unique Identifier Attribute                             | `uid`                                |
 | `LDAP_ATTRIBUTE_MAIL`         | Mail Attribute                                          | `mail`                               |
+| `LDAP_THUMBNAIL_ATTRIBUTE`    | Thumb nail attribute                                    |                                      |
 | `LDAP_BASE_DN`                | Base DN to search                                       |                                      |
 | `LDAP_BIND_PASS`              | Bind password for authentication                        |                                      |
 | `LDAP_BIND_USER`              | Bind User for authentication                            |                                      |
@@ -204,22 +208,23 @@ Be sure to view the following repositories to understand all the customizable op
 - <https://www.bookstackapp.com/docs/admin/ldap-auth>
 ##### SAML Options
 
-| Parameter                     | Description                      | Default    |
-| ----------------------------- | -------------------------------- | ---------- |
-| `SAML_IDP_ENTITYID`           | URL of SAML IDP entity           |            |
-| `SAML_IDP_SLO`                | SAML Single Log off URL          |            |
-| `SAML_IDP_SSO`                | SAML Single Sign on URL          |            |
-| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute      | `givenName | sn` |
-| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute             | `groups`   |
-| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute              | `mail`     |
-| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute       | `uid`      |
-| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP | `true`     |
-| `SAML_DUMP_USER_DETAILS`      | Used for debugging               | `false`    |
-| `SAML_NAME`                   | SAML Public Service Name         | `SSO`      |
-| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups          | `false`    |
-| `SAML_USER_TO_GROUPS`         | Add user to Groups               | `true`     |
-| `SAML_SP_X509`                | SAML SP Public Certificate       | ``         |
-| `SAML_SP_X509_KEY`            | SAML SP Private Key              | ``         |
+| Parameter                     | Description                      | Default        |
+| ----------------------------- | -------------------------------- | -------------- |
+| `SAML_IDP_ENTITYID`           | URL of SAML IDP entity           |                |
+| `SAML_IDP_SLO`                | SAML Single Log off URL          |                |
+| `SAML_IDP_SSO`                | SAML Single Sign on URL          |                |
+| `SAML_ATTRIBUTE_DISPLAY_NAME` | SAML Display Name attribute      | `givenName sn` |
+| `SAML_ATTRIBUTE_GROUP`        | SAML Group attribute             | `groups`       |
+| `SAML_ATTRIBUTE_MAIL`         | SAML Mail attribute              | `mail`         |
+| `SAML_ATTRIBUTE_EXTERNAL_ID`  | SAML External ID attribute       | `uid`          |
+| `SAML_AUTOLOAD_METADATA`      | Auto Load Metadata from SAML IDP | `true`         |
+| `SAML_DUMP_USER_DETAILS`      | Used for debugging               | `false`        |
+| `SAML_NAME`                   | SAML Public Service Name         | `SSO`          |
+| `SAML_REMOVE_FROM_GROUPS`     | Remove user from Groups          | `false`        |
+| `SAML_USER_TO_GROUPS`         | Add user to Groups               | `true`         |
+| `SAML2_IDP_AUTHNCONTEXT`      | AuthN Context                    | `true`         |
+| `SAML_SP_X509`                | SAML SP Public Certificate       | ``             |
+| `SAML_SP_X509_KEY`            | SAML SP Private Key              | ``             |
 
 
 - <https://www.bookstackapp.com/docs/admin/saml2-auth>
@@ -233,7 +238,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `OIDC_CLIENT_ID`           | OIDC Client ID                                                       |          |
 | `OIDC_CLIENT_SECRET`       | OIDC Client Secret                                                   |          |
 | `OIDC_ISSUER`              | Issuer URL must start with https://                                  |          |
-| `OIDC_ISSER_DISCOVER`      | Auto Discover endpoints from .well-known                             | `TRUE`   |
+| `OIDC_ISSUER_DISCOVER`     | Auto Discover endpoints from .well-known                             | `TRUE`   |
 | `OIDC_PUBLIC_KEY`          | (if above false) File path to where Public Key of provicer is stored |          |
 | `OIDC_AUTH_ENDPOINT`       | (if above false) Full URL to Authorize Endpoint                      |          |
 | `OIDC_TOKEN_ENDPOINT`      | (if above false) FulL URL to Token Endpoint                          |          |
