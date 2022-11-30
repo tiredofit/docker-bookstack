@@ -1,8 +1,13 @@
-FROM docker.io/tiredofit/nginx-php-fpm:8.0
+ARG PHP_BASE=8.0
+ARG DISTRO="alpine"
+
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_BASE}-${DISTRO}
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
+ARG BOOKSTACK_VERSION
+
 ### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=v22.10.2 \
+ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v22.11"} \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
@@ -21,9 +26,9 @@ ENV BOOKSTACK_VERSION=v22.10.2 \
 
 RUN source /assets/functions/00-container \
     set -x && \
-    apk update && \
-    apk upgrade && \
-    apk add -t .bookstack-run-deps \
+    package update && \
+    package upgrade && \
+    package install .bookstack-run-deps \
                 expect \
                 fontconfig \
                 git \
@@ -38,9 +43,12 @@ RUN source /assets/functions/00-container \
     cd ${GIT_REPO_SRC} && \
     composer install && \
     \
-    rm -rf .git *.yml dev php*.xml tests && \
-    rm -rf /root/.composer && \
-    rm -rf /var/cache/apk/*
+    package cleanup && \
+    rm -rf /assets/install/.git \
+           /assets/install/*.yml \
+           /assets/install/dev \
+           /assets/install/php*.xml \
+           /assets/install/tests \
+           /root/.composer
 
-### Assets
 COPY install /

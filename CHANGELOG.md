@@ -1,3 +1,10 @@
+## 1.7.0 2022-11-30 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 22.11
+      - Rework Dockerfile and Github Actions
+
+
 ## 1.6.66 2022-11-02 <dave at tiredofit dot ca>
 
    ### Added
