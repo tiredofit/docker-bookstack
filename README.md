@@ -1,7 +1,7 @@
 # github.com/tiredofit/docker-bookstack
 
 [![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-bookstack?style=flat-square)](https://github.com/tiredofit/docker-bookstack/releases/latest)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/tiredofit/docker-bookstack.git/main.yml?branch=main&style=flat-square)](https://github.com/tiredofit/docker-bookstack.git/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tiredofit/docker-bookstackmain.yml?branch=main&style=flat-square)](https://github.com/tiredofit/docker-bookstack.git/actions)
 [![Docker Stars](https://img.shields.io/docker/stars/tiredofit/bookstack.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/bookstack/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/bookstack.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/bookstack/)
 [![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
