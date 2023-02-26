@@ -1,3 +1,9 @@
+## 1.7.4 2023-02-26 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 23.02
+
+
 ## 1.7.3 2023-02-02 <dave at tiredofit dot ca>
 
    ### Added
