@@ -1,7 +1,7 @@
-ARG PHP_BASE=8.1
+ARG PHP_VERSION=8.1
 ARG DISTRO="alpine"
 
-FROM docker.io/tiredofit/nginx-php-fpm:${PHP_BASE}-${DISTRO}
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO}
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG BOOKSTACK_VERSION
@@ -40,6 +40,8 @@ RUN source /assets/functions/00-container \
                 && \
     \
     clone_git_repo "${BOOKSTACK_REPO_URL}" "${BOOKSTACK_VERSION}" /assets/install && \
+    if [ -d "/build-assets/src" ] ; then cp -Rp /build-assets/src/* /assets/install ; fi; \
+    if [ -d "/build-assets/scripts" ] ; then for script in /build-assets/scripts/*.sh; do echo "** Applying $script"; bash $script; done && \ ; fi ; \
     composer install && \
     \
     package cleanup && \

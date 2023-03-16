@@ -1,3 +1,9 @@
+## 1.7.6 2023-03-16 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add build_assets folder and functionality to inject code and scripts into the build process
+
+
 ## 1.7.5 2023-02-27 <dave at tiredofit dot ca>
 
    ### Added
