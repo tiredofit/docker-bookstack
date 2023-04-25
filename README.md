@@ -73,11 +73,11 @@ Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tired
 docker pull docker.io/tiredofdit/bookstack:(imagetag)
 ```
 
-Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-bookstack/pkgs/container/docker-bookstack) 
- 
+Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-bookstack/pkgs/container/docker-bookstack)
+
 ```
 docker pull ghcr.io/tiredofit/docker-bookstack:(imagetag)
-``` 
+```
 
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
@@ -126,30 +126,30 @@ Be sure to view the following repositories to understand all the customizable op
 | [PHP-FPM](https://github.com/tiredofit/docker-nginx-php-fpm/) | PHP Interpreter                        |
 #### Core Options
 
-| Parameter                  | Description                                                      | Default           |
-| -------------------------- | ---------------------------------------------------------------- | ----------------- |
-| `ADMIN_NAME`               | Full name of Administrator Account                               | `BookStack Admin` |
-| `ADMIN_PASS`               | Password of Administrator account                                | `password`        |
-| `ADMIN_EMAIL`              | Email address of Administrator Account                           | `admin@admin.com` |
-| `DB_HOST`                  | Host or container name of MariaDB Server e.g. `bookstack-db`     |                   |
-| `DB_NAME`                  | MariaDB Database name e.g. `bookstack`                           |                   |
-| `DB_PASS`                  | MariaDB Password for above Database e.g. `password`              |                   |
-| `DB_PORT`                  | MariaDB Port                                                     | `3306`            |
-| `DB_USER`                  | MariaDB Username for above Database e.g. `bookstack`             |                   |
-| `ENABLE_OPTMIZE_IMAGES`    | Enable automatic image optimizations using optipng and jpegoptim | `TRUE`            |
-| `OPTIMIZE_IMAGES_BEGIN`    | When to start image optimization use military time HHMM          | `0300`            |
-| `OPTIMIZE_IMAGES_INTERVAL` | How often to perform image optimization in minutes               | `1440`            |
-| `LANGUAGE`                 | Language for Application                                         | `en`              |
-| `SETUP_TYPE`               | `AUTO` generate configuration. `MANUAL` don't do anything        | `AUTO`            |
-| `SITE_URL`                 | The full URL that you are serving this application from          | `null`            |
-| `TIMEZONE`                 | Timezone - Use Unix Style                                        | `Etc/UTC`         |
+| Parameter                  | Description                                                      | Default           | `_FILE` |
+| -------------------------- | ---------------------------------------------------------------- | ----------------- | ------- |
+| `ADMIN_NAME`               | Full name of Administrator Account                               | `BookStack Admin` | x       |
+| `ADMIN_PASS`               | Password of Administrator account                                | `password`        | x       |
+| `ADMIN_EMAIL`              | Email address of Administrator Account                           | `admin@admin.com` | x       |
+| `DB_HOST`                  | Host or container name of MariaDB Server e.g. `bookstack-db`     |                   | x       |
+| `DB_NAME`                  | MariaDB Database name e.g. `bookstack`                           |                   | x       |
+| `DB_PASS`                  | MariaDB Password for above Database e.g. `password`              |                   | x       |
+| `DB_PORT`                  | MariaDB Port                                                     | `3306`            | x       |
+| `DB_USER`                  | MariaDB Username for above Database e.g. `bookstack`             |                   | x       |
+| `ENABLE_OPTMIZE_IMAGES`    | Enable automatic image optimizations using optipng and jpegoptim | `TRUE`            |         |
+| `OPTIMIZE_IMAGES_BEGIN`    | When to start image optimization use military time HHMM          | `0300`            |         |
+| `OPTIMIZE_IMAGES_INTERVAL` | How often to perform image optimization in minutes               | `1440`            |         |
+| `LANGUAGE`                 | Language for Application                                         | `en`              |         |
+| `SETUP_TYPE`               | `AUTO` generate configuration. `MANUAL` don't do anything        | `AUTO`            |         |
+| `SITE_URL`                 | The full URL that you are serving this application from          | `null`            |         |
+| `TIMEZONE`                 | Timezone - Use Unix Style                                        | `Etc/UTC`         |         |
 
 - <https://www.bookstackapp.com/docs/admin/language-config>
 
 #### Bookstack Options
 
-| Parameter                    | Description                                                                                        | Default                                                                                      |
-| ---------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Parameter                    | Description                                                                                        | Default                                                                                      | `_NAME` |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------- |
 | `ALLOWED_IFRAME_HOSTS`       | Allow serving Bookstack via an IFrame  - Multiple can be used seperated by a line                  |                                                                                              |
 | `ALLOWED_IFRAME_SOURCES`     | Allow IFrames from specific domains `*` for All                                                    | `https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com` |
 | `ALLOW_CONTENT_SCRIPTS`      | Allow javascript within content                                                                    | `false`                                                                                      |
@@ -186,30 +186,30 @@ Be sure to view the following repositories to understand all the customizable op
 
 ##### LDAP Options
 
-| Parameter                     | Description                                             | Default                              |
-| ----------------------------- | ------------------------------------------------------- | ------------------------------------ |
-| `ENABLE_LDAP_USER_SYNC`       | Enable Scheduled Syncing of LDAP User list              | `TRUE`                               |
-| `LDAP_ATTRIBUTE_DISPLAY_NAME` | Display Name Attribute                                  | `cn`                                 |
-| `LDAP_ATTRIBUTE_GROUP`        | Group Attribute                                         | `memberOf`                           |
-| `LDAP_ATTRIBUTE_ID`           | Unique Identifier Attribute                             | `uid`                                |
-| `LDAP_ATTRIBUTE_MAIL`         | Mail Attribute                                          | `mail`                               |
-| `LDAP_THUMBNAIL_ATTRIBUTE`    | Thumb nail attribute                                    |                                      |
-| `LDAP_BASE_DN`                | Base DN to search                                       |                                      |
-| `LDAP_BIND_PASS`              | Bind password for authentication                        |                                      |
-| `LDAP_BIND_USER`              | Bind User for authentication                            |                                      |
-| `LDAP_DUMP_USER_DETAILS`      | Used for Debugging                                      | `false`                              |
-| `LDAP_FILTER_USER`            | User Filter                                             | `(&(${LDAP_ATTRIBUTE_ID}=\${user}))` |
-| `LDAP_FILTER_SYNC`            | Filter for syncing users from LDAP                      | `false`                              |
-| `LDAP_FOLLOW_REFERRALS`       | Follow LDAP Referrals                                   | `true`                               |
-| `LDAP_HOST`                   | LDAP Hostname                                           |                                      |
-| `LDAP_SYNC_BEGIN`             | When to start syncing in military time HHMM             | `+0` (immediate)                     |
-| `LDAP_SYNC_EXCLUDE_EMAIL`     | Comma seperated values of emails to ignore when syncing |                                      |
-| `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync        | `60`                                 |
-| `LDAP_SYNC_RECURSIVE`         | Recursively search through LDAP Groups                  | `true`                               |
-| `LDAP_REMOVE_FROM_GROUPS`     | Remove user from Groups                                 | `false`                              |
-| `LDAP_TLS_INSECURE`           | Use TLS without verifying                               | `false`                              |
-| `LDAP_USER_TO_GROUPS`         | Add user to Groups                                      | `false`                              |
-| `LDAP_VERSION`                | Version of LDAP                                         | `3`                                  |
+| Parameter                     | Description                                             | Default                              | `_NAME` |
+| ----------------------------- | ------------------------------------------------------- | ------------------------------------ | ------- |
+| `ENABLE_LDAP_USER_SYNC`       | Enable Scheduled Syncing of LDAP User list              | `TRUE`                               |         |
+| `LDAP_ATTRIBUTE_DISPLAY_NAME` | Display Name Attribute                                  | `cn`                                 |         |
+| `LDAP_ATTRIBUTE_GROUP`        | Group Attribute                                         | `memberOf`                           |         |
+| `LDAP_ATTRIBUTE_ID`           | Unique Identifier Attribute                             | `uid`                                |         |
+| `LDAP_ATTRIBUTE_MAIL`         | Mail Attribute                                          | `mail`                               |         |
+| `LDAP_THUMBNAIL_ATTRIBUTE`    | Thumb nail attribute                                    |                                      |         |
+| `LDAP_BASE_DN`                | Base DN to search                                       |                                      | x       |
+| `LDAP_BIND_PASS`              | Bind password for authentication                        |                                      | x       |
+| `LDAP_BIND_USER`              | Bind User for authentication                            |                                      | x       |
+| `LDAP_DUMP_USER_DETAILS`      | Used for Debugging                                      | `false`                              |         |
+| `LDAP_FILTER_USER`            | User Filter                                             | `(&(${LDAP_ATTRIBUTE_ID}=\${user}))` |         |
+| `LDAP_FILTER_SYNC`            | Filter for syncing users from LDAP                      | `false`                              |         |
+| `LDAP_FOLLOW_REFERRALS`       | Follow LDAP Referrals                                   | `true`                               |         |
+| `LDAP_HOST`                   | LDAP Hostname                                           |                                      | x       |
+| `LDAP_SYNC_BEGIN`             | When to start syncing in military time HHMM             | `+0` (immediate)                     |         |
+| `LDAP_SYNC_EXCLUDE_EMAIL`     | Comma seperated values of emails to ignore when syncing |                                      |         |
+| `LDAP_SYNC_INTERVAL`          | In minutes amount of time to reperform LDAP Sync        | `60`                                 |         |
+| `LDAP_SYNC_RECURSIVE`         | Recursively search through LDAP Groups                  | `true`                               |         |
+| `LDAP_REMOVE_FROM_GROUPS`     | Remove user from Groups                                 | `false`                              |         |
+| `LDAP_TLS_INSECURE`           | Use TLS without verifying                               | `false`                              |         |
+| `LDAP_USER_TO_GROUPS`         | Add user to Groups                                      | `false`                              |         |
+| `LDAP_VERSION`                | Version of LDAP                                         | `3`                                  |         |
 
 - <https://www.bookstackapp.com/docs/admin/ldap-auth>
 ##### SAML Options
@@ -237,130 +237,130 @@ Be sure to view the following repositories to understand all the customizable op
 
 ##### OpenID Connect
 
-| Parameter                  | Description                                                          | Default  |
-| -------------------------- | -------------------------------------------------------------------- | -------- |
-| `OIDC_NAME`                | Name to appear on login screen                                       | `SSO`    |
-| `OIDC_DISPLAY_NAME_CLAIMS` | Claims to use for users display name                                 | `name`   |
-| `OIDC_CLIENT_ID`           | OIDC Client ID                                                       |          |
-| `OIDC_CLIENT_SECRET`       | OIDC Client Secret                                                   |          |
-| `OIDC_ISSUER`              | Issuer URL must start with https://                                  |          |
-| `OIDC_ISSUER_DISCOVER`     | Auto Discover endpoints from .well-known                             | `TRUE`   |
-| `OIDC_PUBLIC_KEY`          | (if above false) File path to where Public Key of provicer is stored |          |
-| `OIDC_AUTH_ENDPOINT`       | (if above false) Full URL to Authorize Endpoint                      |          |
-| `OIDC_TOKEN_ENDPOINT`      | (if above false) FulL URL to Token Endpoint                          |          |
-| `OIDC_ADDITIONAL_SCOPES`   | OIDC Additional Scopes                                               | `null`   |
-| `OIDC_USER_TO_GROUPS`      | Add user to Groups                                                   | `false`  |
-| `OIDC_ATTRIBUTE_GROUP`     | Groups Attribute passed from OIDC Server                             | `groups` |
-| `OIDC_REMOVE_FROM_GROUPS`  | Remove user from groups                                              | `false`  |
-
+| Parameter                  | Description                                                          | Default  | `_FILE` |
+| -------------------------- | -------------------------------------------------------------------- | -------- | ------- |
+| `OIDC_NAME`                | Name to appear on login screen                                       | `SSO`    |         |
+| `OIDC_DISPLAY_NAME_CLAIMS` | Claims to use for users display name                                 | `name`   | x       |
+| `OIDC_CLIENT_ID`           | OIDC Client ID                                                       |          | x       |
+| `OIDC_CLIENT_SECRET`       | OIDC Client Secret                                                   |          | x       |
+| `OIDC_ISSUER`              | Issuer URL must start with https://                                  |          | x       |
+| `OIDC_ISSUER_DISCOVER`     | Auto Discover endpoints from .well-known                             | `TRUE`   |         |
+| `OIDC_PUBLIC_KEY`          | (if above false) File path to where Public Key of provicer is stored |          | x       |
+| `OIDC_AUTH_ENDPOINT`       | (if above false) Full URL to Authorize Endpoint                      |          | x       |
+| `OIDC_TOKEN_ENDPOINT`      | (if above false) FulL URL to Token Endpoint                          |          | x       |
+| `OIDC_ADDITIONAL_SCOPES`   | OIDC Additional Scopes                                               | `null`   |         |
+| `OIDC_USER_TO_GROUPS`      | Add user to Groups                                                   | `false`  |         |
+| `OIDC_ATTRIBUTE_GROUP`     | Groups Attribute passed from OIDC Server                             | `groups` |         |
+| `OIDC_REMOVE_FROM_GROUPS`  | Remove user from groups                                              | `false`  |         |
+|                            |
 #### External Login Services
 
-| Parameter                     | Description                     | Default |
-| ----------------------------- | ------------------------------- | ------- |
-| `ENABLE_LOGIN_AZURE`          | Enable Logging in from Azure    | `false` |
-| `AZURE_APP_ID`                | Application ID                  |         |
-| `AZURE_APP_SECRET`            | Application Secret              |         |
-| `AZURE_AUTO_CONFIRM_EMAIL`    | Auto confirm email address      | `false` |
-| `AZURE_AUTO_REGISTER`         | Auto register username          | `false` |
-| `AZURE_TENANT`                | Tenant ID                       |         |
-| `ENABLE_LOGIN_DISCORD`        | Enable Logging in from Discord  | `false` |
-| `DISCORD_APP_ID`              | Application ID                  |         |
-| `DISCORD_APP_SECRET`          | Application Secret              |         |
-| `DISCORD_AUTO_CONFIRM_EMAIL`  | Auto confirm email address      | `false` |
-| `DISCORD_AUTO_REGISTER`       | Auto register username          | `false` |
-| `ENABLE_LOGIN_FACEBOOK`       | Enable Logging in from Facebook | `false` |
-| `FACEBOOK_APP_ID`             | Application ID                  |         |
-| `FACEBOOK_APP_SECRET`         | Application Secret              |         |
-| `FACEBOOK_AUTO_CONFIRM_EMAIL` | Auto confirm email address      | `false` |
-| `FACEBOOK_AUTO_REGISTER`      | Auto register username          | `false` |
-| `ENABLE_LOGIN_GITHUB`         | Enable Logging in from Github   | `false` |
-| `GITHUB_APP_ID`               | Application ID                  |         |
-| `GITHUB_APP_SECRET`           | Application Secret              |         |
-| `GITHUB_AUTO_CONFIRM_EMAIL`   | Auto confirm email address      | `false` |
-| `GITHUB_AUTO_REGISTER`        | Auto register username          | `false` |
-| `ENABLE_LOGIN_GITLAB`         | Enable Logging in from Gitlab   | `false` |
-| `GITLAB_APP_ID`               | Application ID                  |         |
-| `GITLAB_APP_SECRET`           | Application Secret              |         |
-| `GITLAB_AUTO_CONFIRM_EMAIL`   | Auto confirm email address      | `false` |
-| `GITLAB_AUTO_REGISTER`        | Auto register username          | `false` |
-| `GITLAB_BASE_URI`             | Gitlab URI                      |         |
-| `ENABLE_LOGIN_GOOGLE`         | Enable Logging in from Google   | `false` |
-| `GOOGLE_APP_ID`               | Application ID                  |         |
-| `GOOGLE_APP_SECRET`           | Application Secret              |         |
-| `GOOGLE_AUTO_CONFIRM_EMAIL`   | Auto confirm email address      | `false` |
-| `GOOGLE_AUTO_REGISTER`        | Auto register username          | `false` |
-| `GOOGLE_SELECT_ACCOUNT`       | Select Google Account           |         |
-| `ENABLE_LOGIN_OKTA`           | Enable Logging in from OKTA     | `false` |
-| `OKTA_APP_ID`                 | Application ID                  |         |
-| `OKTA_APP_SECRET`             | Application Secret              |         |
-| `OKTA_AUTO_CONFIRM_EMAIL`     | Auto confirm email address      | `false` |
-| `OKTA_AUTO_REGISTER`          | Auto register username          | `false` |
-| `OKTA_BASE_URL`               | OKTA Base URI                   |         |
-| `ENABLE_LOGIN_SLACK`          | Enable Logging in from Slack    | `false` |
-| `SLACK_APP_ID`                | Application ID                  |         |
-| `SLACK_APP_SECRET`            | Application Secret              |         |
-| `SLACK_AUTO_CONFIRM_EMAIL`    | Auto confirm email address      | `false` |
-| `SLACK_AUTO_REGISTER`         | Auto register username          | `false` |
-| `ENABLE_LOGIN_TWITCH`         | Enable Logging in from Twitch   | `false` |
-| `TWITCH_APP_ID`               | Application ID                  |         |
-| `TWITCH_APP_SECRET`           | Application Secret              |         |
-| `TWITCH_AUTO_CONFIRM_EMAIL`   | Auto confirm email address      | `false` |
-| `TWITCH_AUTO_REGISTER`        | Auto register username          | `false` |
-| `ENABLE_LOGIN_TWITTER`        | Enable Logging in from Twitter  | `false` |
-| `TWITTER_APP_ID`              | Application ID                  |         |
-| `TWITTER_APP_SECRET`          | Application Secret              |         |
-| `TWITTER_AUTO_CONFIRM_EMAIL`  | Auto confirm email address      | `false` |
-| `TWITTER_AUTO_REGISTER`       | Auto register username          | `false` |
-
-- <https://www.bookstackapp.com/docs/admin/social-auth>
+| Parameter                                               | Description                     | Default | `_FILE` |
+| ------------------------------------------------------- | ------------------------------- | ------- | ------- |
+| `ENABLE_LOGIN_AZURE`                                    | Enable Logging in from Azure    | `false` |         |
+| `AZURE_APP_ID`                                          | Application ID                  |         | x       |
+| `AZURE_APP_SECRET`                                      | Application Secret              |         | x       |
+| `AZURE_AUTO_CONFIRM_EMAIL`                              | Auto confirm email address      | `false` |         |
+| `AZURE_AUTO_REGISTER`                                   | Auto register username          | `false` | x       |
+| `AZURE_TENANT`                                          | Tenant ID                       |         |         |
+| `ENABLE_LOGIN_DISCORD`                                  | Enable Logging in from Discord  | `false` |         |
+| `DISCORD_APP_ID`                                        | Application ID                  |         | x       |
+| `DISCORD_APP_SECRET`                                    | Application Secret              |         | x       |
+| `DISCORD_AUTO_CONFIRM_EMAIL`                            | Auto confirm email address      | `false` |         |
+| `DISCORD_AUTO_REGISTER`                                 | Auto register username          | `false` |         |
+| `ENABLE_LOGIN_FACEBOOK`                                 | Enable Logging in from Facebook | `false` |         |
+| `FACEBOOK_APP_ID`                                       | Application ID                  |         | x       |
+| `FACEBOOK_APP_SECRET`                                   | Application Secret              |         | x       |
+| `FACEBOOK_AUTO_CONFIRM_EMAIL`                           | Auto confirm email address      | `false` |         |
+| `FACEBOOK_AUTO_REGISTER`                                | Auto register username          | `false` |         |
+| `ENABLE_LOGIN_GITHUB`                                   | Enable Logging in from Github   | `false` |         |
+| `GITHUB_APP_ID`                                         | Application ID                  |         | x       |
+| `GITHUB_APP_SECRET`                                     | Application Secret              |         | x       |
+| `GITHUB_AUTO_CONFIRM_EMAIL`                             | Auto confirm email address      | `false` |         |
+| `GITHUB_AUTO_REGISTER`                                  | Auto register username          | `false` |         |
+| `ENABLE_LOGIN_GITLAB`                                   | Enable Logging in from Gitlab   | `false` |         |
+| `GITLAB_APP_ID`                                         | Application ID                  |         | x       |
+| `GITLAB_APP_SECRET`                                     | Application Secret              |         | x       |
+| `GITLAB_AUTO_CONFIRM_EMAIL`                             | Auto confirm email address      | `false` |         |
+| `GITLAB_AUTO_REGISTER`                                  | Auto register username          | `false` |         |
+| `GITLAB_BASE_URI`                                       | Gitlab URI                      |         | x       |
+| `ENABLE_LOGIN_GOOGLE`                                   | Enable Logging in from Google   | `false` |         |
+| `GOOGLE_APP_ID`                                         | Application ID                  |         | x       |
+| `GOOGLE_APP_SECRET`                                     | Application Secret              |         | x       |
+| `GOOGLE_AUTO_CONFIRM_EMAIL`                             | Auto confirm email address      | `false` |         |
+| `GOOGLE_AUTO_REGISTER`                                  | Auto register username          | `false` |         |
+| `GOOGLE_SELECT_ACCOUNT`                                 | Select Google Account           |         | x       |
+| `ENABLE_LOGIN_OKTA`                                     | Enable Logging in from OKTA     | `false` |         |
+| `OKTA_APP_ID`                                           | Application ID                  |         | x       |
+| `OKTA_APP_SECRET`                                       | Application Secret              |         | x       |
+| `OKTA_AUTO_CONFIRM_EMAIL`                               | Auto confirm email address      | `false` |         |
+| `OKTA_AUTO_REGISTER`                                    | Auto register username          | `false` |         |
+| `OKTA_BASE_URL`                                         | OKTA Base URI                   |         | x       |
+| `ENABLE_LOGIN_SLACK`                                    | Enable Logging in from Slack    | `false` |         |
+| `SLACK_APP_ID`                                          | Application ID                  |         | x       |
+| `SLACK_APP_SECRET`                                      | Application Secret              |         | x       |
+| `SLACK_AUTO_CONFIRM_EMAIL`                              | Auto confirm email address      | `false` |         |
+| `SLACK_AUTO_REGISTER`                                   | Auto register username          | `false` |         |
+| `ENABLE_LOGIN_TWITCH`                                   | Enable Logging in from Twitch   | `false` |         |
+| `TWITCH_APP_ID`                                         | Application ID                  |         | x       |
+| `TWITCH_APP_SECRET`                                     | Application Secret              |         | x       |
+| `TWITCH_AUTO_CONFIRM_EMAIL`                             | Auto confirm email address      | `false` |         |
+| `TWITCH_AUTO_REGISTER`                                  | Auto register username          | `false` |         |
+| `ENABLE_LOGIN_TWITTER`                                  | Enable Logging in from Twitter  | `false` |         |
+| `TWITTER_APP_ID`                                        | Application ID                  |         | x       |
+| `TWITTER_APP_SECRET`                                    | Application Secret              |         | x       |
+| `TWITTER_AUTO_CONFIRM_EMAIL`                            | Auto confirm email address      | `false` |         |
+| `TWITTER_AUTO_REGISTER`                                 | Auto register username          | `false` |         |
+|                                                         |
+| - <https://www.bookstackapp.com/docs/admin/social-auth> |
 
 
 #### Cache and Session Settings
 
-| Parameter               | Description                                                                    | Default             |
-| ----------------------- | ------------------------------------------------------------------------------ | ------------------- |
-| `CACHE_DRIVER`          | Use what backend for cache `file` `database` `redis` `memcached`               | `file`              |
-| `CACHE_PREFIX`          | Cache Prefix                                                                   | `bookstack`         |
-| `SESSION_COOKIE_NAME`   | Cookie Name                                                                    | `bookstack_session` |
-| `SESSION_DRIVER`        | Use what backend for sesssion management `file` `database` `redis` `memcached` | `FILE`              |
-| `SESSION_LIFETIME`      | How long in minutes for Ssession                                               | `120`               |
-| `SESSION_SECURE_COOKIE` | Deliver HTTPS cookie                                                           | `true`              |
-| `MEMCACHED_HOST`        | Memcached Hostname                                                             |                     |
-| `MEMCACHED_PORT`        | Memcached Port                                                                 | `11211`             |
-| `MEMCACHED_WEIGHT`      | Memcached Weight                                                               | `100`               |
-| `REDIS_DB`              | Redis DB                                                                       | `0`                 |
-| `REDIS_PORT`            | Redis Port                                                                     | `6379`              |
-| `REDIS_HOST`            | Redis Hostname                                                                 |                     |
+| Parameter               | Description                                                                    | Default             | `_FILE` |
+| ----------------------- | ------------------------------------------------------------------------------ | ------------------- | ------- |
+| `CACHE_DRIVER`          | Use what backend for cache `file` `database` `redis` `memcached`               | `file`              |         |
+| `CACHE_PREFIX`          | Cache Prefix                                                                   | `bookstack`         |         |
+| `SESSION_COOKIE_NAME`   | Cookie Name                                                                    | `bookstack_session` |         |
+| `SESSION_DRIVER`        | Use what backend for sesssion management `file` `database` `redis` `memcached` | `FILE`              |         |
+| `SESSION_LIFETIME`      | How long in minutes for Ssession                                               | `120`               |         |
+| `SESSION_SECURE_COOKIE` | Deliver HTTPS cookie                                                           | `true`              |         |
+| `MEMCACHED_HOST`        | Memcached Hostname                                                             |                     | x       |
+| `MEMCACHED_PORT`        | Memcached Port                                                                 | `11211`             |         |
+| `MEMCACHED_WEIGHT`      | Memcached Weight                                                               | `100`               |         |
+| `REDIS_DB`              | Redis DB                                                                       | `0`                 | x       |
+| `REDIS_PORT`            | Redis Port                                                                     | `6379`              | x       |
+| `REDIS_HOST`            | Redis Hostname                                                                 |                     | x       |
 
 - <https://www.bookstackapp.com/docs/admin/cache-session-config>
 
 #### Mail Settings
 
-| Parameter        | Description                             | Default                 |
-| ---------------- | --------------------------------------- | ----------------------- |
-| `MAIL_FROM_NAME` | Display name to be sent from Bookstack  | `BookStack`             |
-| `MAIL_FROM`      | Email address to be sent from Bookstack | `bookstack@example.com` |
-| `MAIL_TYPE`      | How to send mail - `SMTP`               | `SMTP`                  |
-| `SMTP_HOST`      | Hostname of SMTP Server                 | `postfix-relay`         |
-| `SMTP_PASS`      | SMTP Password                           | `null`                  |
-| `SMTP_PORT`      | SMTP Port                               | `25`                    |
-| `SMTP_TLS`       | Enable TLS for SMTP Connections         | `FALSE`                 |
-| `SMTP_USER`      | SMTP Username                           | `null`                  |
+| Parameter        | Description                             | Default                 | `_FILE` |
+| ---------------- | --------------------------------------- | ----------------------- | ------- |
+| `MAIL_FROM_NAME` | Display name to be sent from Bookstack  | `BookStack`             |         |
+| `MAIL_FROM`      | Email address to be sent from Bookstack | `bookstack@example.com` |         |
+| `MAIL_TYPE`      | How to send mail - `SMTP`               | `SMTP`                  |         |
+| `SMTP_HOST`      | Hostname of SMTP Server                 | `postfix-relay`         | x       |
+| `SMTP_PASS`      | SMTP Password                           | `null`                  | x       |
+| `SMTP_PORT`      | SMTP Port                               | `25`                    | x       |
+| `SMTP_TLS`       | Enable TLS for SMTP Connections         | `FALSE`                 |         |
+| `SMTP_USER`      | SMTP Username                           | `null`                  | x       |
 
 - <https://www.bookstackapp.com/docs/admin/email-config>
 
 #### Storage Settings
 
-| Parameter                 | Description                                                              | Default        |
-| ------------------------- | ------------------------------------------------------------------------ | -------------- |
-| `STORAGE_TYPE`            | How to store files `local` `local_secure` `s3`                           | `local`        |
-| `STORAGE_ATTACHMENT_TYPE` | Attachment storage type                                                  | `local_secure` |
-| `STORAGE_IMAGE_TYPE`      | Image storage type                                                       | `local`        |
-| `STORAGE_S3_BUCKET`       | S3 Bucket                                                                |                |
-| `STORAGE_S3_KEY`          | S3 Key                                                                   |                |
-| `STORAGE_S3_REGION`       | S3 Region                                                                |                |
-| `STORAGE_S3_SECRET`       | S3 Key                                                                   |                |
-| `STORAGE_URL`             | Set this if you are connecting to a compatible service like Minio/Wasabi |                |
+| Parameter                 | Description                                                              | Default        | `FILE` |
+| ------------------------- | ------------------------------------------------------------------------ | -------------- | ------ |
+| `STORAGE_TYPE`            | How to store files `local` `local_secure` `s3`                           | `local`        |        |
+| `STORAGE_ATTACHMENT_TYPE` | Attachment storage type                                                  | `local_secure` |        |
+| `STORAGE_IMAGE_TYPE`      | Image storage type                                                       | `local`        |        |
+| `STORAGE_S3_BUCKET`       | S3 Bucket                                                                |                | x      |
+| `STORAGE_S3_KEY`          | S3 Key                                                                   |                | x      |
+| `STORAGE_S3_REGION`       | S3 Region                                                                |                | x      |
+| `STORAGE_S3_SECRET`       | S3 Key                                                                   |                | x      |
+| `STORAGE_URL`             | Set this if you are connecting to a compatible service like Minio/Wasabi |                | x      |
 
 - <https://www.bookstackapp.com/docs/admin/upload-config>
 

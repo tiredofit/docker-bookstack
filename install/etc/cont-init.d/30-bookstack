@@ -83,6 +83,11 @@ EOF
         ;;
     "LDAP" | "ldap" )
         print_debug "Setting LDAP Authentication"
+        transform_var \
+                        LDAP_BASE_DN \
+                        LDAP_BIND_PASS \
+                        LDAP_BIND_USER \
+                        LDAP_HOST
         sanity_var LDAP_HOST "LDAP Hostname"
         sanity_var LDAP_BASE_DN "LDAP Base DN"
         sanity_var LDAP_BIND_USER "LDAP Bind User"
@@ -131,11 +136,15 @@ EOF
         ;;
 
        "oidc" | "openidconnect")
-        print_debug "Setting OIDC Authentication"
-        sanity_var OIDC_CLIENT_ID "OIDC Client ID"
-        sanity_var OIDC_CLIENT_SECRET "OIDC Client Secret"
-        sanity_var OIDC_ISSUER "OIDC Issuer Name"
-        authentication=$(
+            print_debug "Setting OIDC Authentication"
+            transform_var \
+                            OIDC_CLIENT_ID \
+                            OIDC_CLIENT_SECRET \
+                            OIDC_ISSUER
+            sanity_var OIDC_CLIENT_ID "OIDC Client ID"
+            sanity_var OIDC_CLIENT_SECRET "OIDC Client Secret"
+            sanity_var OIDC_ISSUER "OIDC Issuer Name"
+            authentication=$(
             cat <<EOF
 AUTH_METHOD=oidc
 OIDC_NAME=${OIDC_NAME}
@@ -151,6 +160,7 @@ OIDC_REMOVE_FROM_GROUPS=${OIDC_REMOVE_FROM_GROUPS}
 EOF
             )
         if var_false "${OIDC_ISSUER_DISCOVER}" ; then
+            transform_var OIDC_PUBLIC_KEY
             sanity_var OIDC_PUBLIC_KEY "File Path to public key of provider"
             sanity_var OIDC_AUTH_ENDPOINT "Authorization Endpoint"
             sanity_var OIDC_TOKEN_ENDPOINT "Token Endpoint"
@@ -243,6 +253,9 @@ EOF
     esac
 
         if var_true "${ENABLE_SSO}" ; then
+            transform_var \
+                            APP_SSO_DISCOVER \
+                            APP_SSO_KEY
             sso=$(
                 cat <<EOF
 APP_SSO_KEY=${SSO_HEADER}
@@ -262,6 +275,7 @@ EOF
 
     ### Cache And Sessions
     if [ "${CACHE_DRIVER,,}" = "memcached" ] || [ "${SESSION_DRIVER,,}" = "memcached" ]; then
+        transform_var MEMCACHED_HOST
         sanity_var MEMCACHED_HOST "Memcached Hostname"
         driver_options=$(
             echo "${driver_options}"
@@ -272,6 +286,10 @@ EOF
     fi
 
     if [ "${CACHE_DRIVER,,}" = "redis" ] || [ "${SESSION_DRIVER,,}" = "redis" ]; then
+        transform_var \
+                        REDIS_HOST \
+                        REDIS_PORT \
+                        REDIS_DB
         sanity_var REDIS_HOST "Redis Hostname"
         db_ready redis
         driver_options=$(
@@ -284,6 +302,8 @@ EOF
 
     ### DrawIO
     if var_true "${ENABLE_DRAWIO}"; then
+        transform_var \
+                        DRAWIO_HOST
         if [ -z "${DRAWIO_HOST}" ]; then
             drawio=true
         else
@@ -295,6 +315,10 @@ EOF
 
     ### External Logins
     if var_true "${ENABLE_LOGIN_AZURE}"; then
+        transform_var \
+                        AZURE_APP_ID \
+                        AZURE_APP_SECRET \
+                        AZURE_TENANT
         sanity_var AZURE_APP_ID "Azure App ID"
         sanity_var AZURE_APP_SECRET "Azure App Secret"
         sanity_var AZURE_TENANT "Azure Tenant ID"
@@ -311,6 +335,9 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_DISCORD}"; then
+        transform_var \
+                        DISCORD_APP_ID \
+                        DISCORD_APP_SECRET
         sanity_var DISCORD_APP_ID "Discord App ID"
         sanity_var DISCORD_APP_SECRET "Discord App Secret"
         login=$(
@@ -325,6 +352,9 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_FACEBOOK}"; then
+        transform_var \
+                        FACEBOOK_APP_ID \
+                        FACEBOOK_APP_SECRET
         sanity_var FACEBOOK_APP_ID "Facebook App ID"
         sanity_var FACEBOOK_APP_SECRET "Facebook App Secret"
         login=$(
@@ -339,6 +369,9 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GITHUB}"; then
+        transform_var \
+                        GITHUB_APP_ID \
+                        GITHUB_APP_SECRET
         sanity_var GITHUB_APP_ID "Github App ID"
         sanity_var GITHUB_APP_SECRET "Github App Secret"
         login=$(
@@ -353,6 +386,10 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GITLAB}"; then
+        transform_var \
+                        GITLAB_APP_ID \
+                        GITLAB_APP_SECRET \
+                        GITLAB_BASE_URI
         sanity_var GITLAB_APP_ID "Gitlab App ID"
         sanity_var GITLAB_APP_SECRET "Gitlab App Secret"
         sanity_var GITLAB_BASE_URI "Gitlab Base URI"
@@ -369,6 +406,10 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GOOGLE}"; then
+        transform_var \
+                        GOOGLE_APP_ID \
+                        GOOGLE_APP_SECRET \
+                        GOOGLE_SELECT_ACCOUNT
         sanity_var GOOGLE_APP_ID "Google App ID"
         sanity_var GOOGLE_APP_SECRET "Google App Secret"
         sanity_var GOOGLE_SELECT_ACCOUNT "Google Account Selection"
@@ -385,6 +426,10 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_OKTA}"; then
+        transform_var \
+                OKTA_APP_ID \
+                OKTA_APP_SECRET \
+                OKTA_BASE_URL
         sanity_var OKTA_APP_ID "Okta App ID"
         sanity_var OKTA_APP_SECRET "Okta App Secret"
         sanity_var OKTA_BASE_URL "Okta Base URL"
@@ -401,6 +446,9 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_SLACK}"; then
+        transform_var \
+                        SLACK_APP_ID \
+                        SLACK_APP_SECRET
         sanity_var SLACK_APP_ID "Slack App ID"
         sanity_var SLACK_APP_SECRET "Slack App Secret"
         login=$(
@@ -415,6 +463,9 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_TWITCH}"; then
+        transform_var \
+                        TWITCH_APP_ID \
+                        TWITCH_APP_SECRET
         sanity_var TWITCH_APP_ID "Twitch App ID"
         sanity_var TWITCH_APP_SECRET "Twitch App Secret"
         login=$(
@@ -429,6 +480,9 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_TWITTER}"; then
+        transform_var \
+                        TWITTER_APP_ID \
+                        TWITTER_APP_SECRET
         sanity_var TWITTER_APP_ID "Twitter App ID"
         sanity_var TWITTER_APP_SECRET "Twitter App Secret"
         login=$(
@@ -454,6 +508,11 @@ EOF
         )
         ;;
     "smtp")
+        transform_var \
+                        SMTP_HOST \
+                        SMTP_PASS \
+                        SMTP_PORT \
+                        SMTP_USER
         sanity_var SMTP_HOST "SMTP Host"
         mail=$(
             cat <<EOF
@@ -466,6 +525,7 @@ EOF
         )
 
         if [ -n "${SMTP_USER}" ]; then
+
             mail=$(
                 echo "${mail}"
                 cat <<EOF
@@ -504,6 +564,12 @@ EOF
     ### Storage Setup
     case "${STORAGE_TYPE,,}" in
     "s3" | "minio" )
+        transform_var \
+                        STORAGE_S3_BUCKET \
+                        STORAGE_S3_ENDPOINT \
+                        STORAGE_S3_KEY \
+                        STORAGE_S3_REGION \
+                        STORAGE_S3_SECRET
         sanity_var STORAGE_S3_KEY "S3 Key"
         sanity_var STORAGE_S3_SECRET "S3 Secret"
         storage=$(
@@ -560,6 +626,7 @@ EOF
     fi
 
     ### Write the Configuration File
+    transform_var APP_KEY
     cat >"${NGINX_WEBROOT}"/.env <<EOF
 ## Custom Generated Bookstack Configuration! Do not edit, instead set ENV Vars
 ## If you want to use your own configuration files set SETUP_TYPE=MANUAL when starting container
@@ -628,7 +695,14 @@ silent sudo -u "${NGINX_USER}" php artisan cache:clear
 silent sudo -u "${NGINX_USER}" php artisan view:clear
 
 ### Check to see if DB is populated
+transform_var \
+                DB_HOST \
+                DB_NAME \
+                DB_PASS \
+                DB_PORT \
+                DB_USER
 db_ready mariadb
+
 mysql -u "$DB_USER" -p"$DB_PASS" -P"${DB_PORT}" -h"$DB_HOST" -e "use ""$DB_NAME""; SELECT * FROM users;" >/dev/null 2>&1
 if [ $? -gt 0 ]; then
     ### Perform Database Installation Routines
@@ -641,23 +715,11 @@ if [ $? -gt 0 ]; then
     ### Create Admin User
     print_notice "Creating Administrative User"
     mysql -u "$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -P"${DB_PORT}" -e "use ""$DB_NAME""; DELETE FROM users where id=1;"
-    silent /usr/bin/expect <<EOD
-spawn sudo -u "${NGINX_USER}" php ${NGINX_WEBROOT}/artisan bookstack:create-admin --no-ansi
-set timeout 30
-expect -exact "\r
- Please specify an email address for the new admin user:\r
- > "
-send -- "${ADMIN_EMAIL}\r"
-expect -exact "\r
- Please specify an name for the new admin user:\r
- > "
-send -- "${ADMIN_NAME}\r"
-expect -exact "\r
- Please specify a password for the new admin user:\r
- > "
-send -- "${ADMIN_PASS}\r"
-expect "successfully created!"
-EOD
+    transform_var \
+                    ADMIN_EMAIL \
+                    ADMIN_NAME \
+                    ADMIN_PASS
+    sudo -u "${NGINX_USER}" php ${NGINX_WEBROOT}/artisan bookstack:create-admin --no-ansi --email="${ADMIN_EMAIL}" --name="${ADMIN_NAME}" --password="${ADMIN_PASS}"
 fi
 
 custom_files "${CONTAINER_CUSTOM_PATH}" "${NGINX_WEBROOT}" "${NGINX_USER}" "${NGINX_GROUP}"
