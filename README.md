@@ -148,8 +148,8 @@ Be sure to view the following repositories to understand all the customizable op
 
 #### Bookstack Options
 
-| Parameter                    | Description                                                                                        | Default                                                                                      | `_NAME` |
-| ---------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------- |
+| Parameter                    | Description                                                                                        | Default                                                                                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `ALLOWED_IFRAME_HOSTS`       | Allow serving Bookstack via an IFrame  - Multiple can be used seperated by a line                  |                                                                                              |
 | `ALLOWED_IFRAME_SOURCES`     | Allow IFrames from specific domains `*` for All                                                    | `https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com` |
 | `ALLOW_CONTENT_SCRIPTS`      | Allow javascript within content                                                                    | `false`                                                                                      |
@@ -186,7 +186,7 @@ Be sure to view the following repositories to understand all the customizable op
 
 ##### LDAP Options
 
-| Parameter                     | Description                                             | Default                              | `_NAME` |
+| Parameter                     | Description                                             | Default                              | `_FILE` |
 | ----------------------------- | ------------------------------------------------------- | ------------------------------------ | ------- |
 | `ENABLE_LDAP_USER_SYNC`       | Enable Scheduled Syncing of LDAP User list              | `TRUE`                               |         |
 | `LDAP_ATTRIBUTE_DISPLAY_NAME` | Display Name Attribute                                  | `cn`                                 |         |

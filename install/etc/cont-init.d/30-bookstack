@@ -83,7 +83,7 @@ EOF
         ;;
     "LDAP" | "ldap" )
         print_debug "Setting LDAP Authentication"
-        transform_var \
+        transform_file_var \
                         LDAP_BASE_DN \
                         LDAP_BIND_PASS \
                         LDAP_BIND_USER \
@@ -137,7 +137,7 @@ EOF
 
        "oidc" | "openidconnect")
             print_debug "Setting OIDC Authentication"
-            transform_var \
+            transform_file_var \
                             OIDC_CLIENT_ID \
                             OIDC_CLIENT_SECRET \
                             OIDC_ISSUER
@@ -160,7 +160,7 @@ OIDC_REMOVE_FROM_GROUPS=${OIDC_REMOVE_FROM_GROUPS}
 EOF
             )
         if var_false "${OIDC_ISSUER_DISCOVER}" ; then
-            transform_var OIDC_PUBLIC_KEY
+            transform_file_var OIDC_PUBLIC_KEY
             sanity_var OIDC_PUBLIC_KEY "File Path to public key of provider"
             sanity_var OIDC_AUTH_ENDPOINT "Authorization Endpoint"
             sanity_var OIDC_TOKEN_ENDPOINT "Token Endpoint"
@@ -253,7 +253,7 @@ EOF
     esac
 
         if var_true "${ENABLE_SSO}" ; then
-            transform_var \
+            transform_file_var \
                             APP_SSO_DISCOVER \
                             APP_SSO_KEY
             sso=$(
@@ -275,7 +275,7 @@ EOF
 
     ### Cache And Sessions
     if [ "${CACHE_DRIVER,,}" = "memcached" ] || [ "${SESSION_DRIVER,,}" = "memcached" ]; then
-        transform_var MEMCACHED_HOST
+        transform_file_var MEMCACHED_HOST
         sanity_var MEMCACHED_HOST "Memcached Hostname"
         driver_options=$(
             echo "${driver_options}"
@@ -286,7 +286,7 @@ EOF
     fi
 
     if [ "${CACHE_DRIVER,,}" = "redis" ] || [ "${SESSION_DRIVER,,}" = "redis" ]; then
-        transform_var \
+        transform_file_var \
                         REDIS_HOST \
                         REDIS_PORT \
                         REDIS_DB
@@ -302,7 +302,7 @@ EOF
 
     ### DrawIO
     if var_true "${ENABLE_DRAWIO}"; then
-        transform_var \
+        transform_file_var \
                         DRAWIO_HOST
         if [ -z "${DRAWIO_HOST}" ]; then
             drawio=true
@@ -315,7 +315,7 @@ EOF
 
     ### External Logins
     if var_true "${ENABLE_LOGIN_AZURE}"; then
-        transform_var \
+        transform_file_var \
                         AZURE_APP_ID \
                         AZURE_APP_SECRET \
                         AZURE_TENANT
@@ -335,7 +335,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_DISCORD}"; then
-        transform_var \
+        transform_file_var \
                         DISCORD_APP_ID \
                         DISCORD_APP_SECRET
         sanity_var DISCORD_APP_ID "Discord App ID"
@@ -352,7 +352,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_FACEBOOK}"; then
-        transform_var \
+        transform_file_var \
                         FACEBOOK_APP_ID \
                         FACEBOOK_APP_SECRET
         sanity_var FACEBOOK_APP_ID "Facebook App ID"
@@ -369,7 +369,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GITHUB}"; then
-        transform_var \
+        transform_file_var \
                         GITHUB_APP_ID \
                         GITHUB_APP_SECRET
         sanity_var GITHUB_APP_ID "Github App ID"
@@ -386,7 +386,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GITLAB}"; then
-        transform_var \
+        transform_file_var \
                         GITLAB_APP_ID \
                         GITLAB_APP_SECRET \
                         GITLAB_BASE_URI
@@ -406,7 +406,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GOOGLE}"; then
-        transform_var \
+        transform_file_var \
                         GOOGLE_APP_ID \
                         GOOGLE_APP_SECRET \
                         GOOGLE_SELECT_ACCOUNT
@@ -426,7 +426,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_OKTA}"; then
-        transform_var \
+        transform_file_var \
                 OKTA_APP_ID \
                 OKTA_APP_SECRET \
                 OKTA_BASE_URL
@@ -446,7 +446,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_SLACK}"; then
-        transform_var \
+        transform_file_var \
                         SLACK_APP_ID \
                         SLACK_APP_SECRET
         sanity_var SLACK_APP_ID "Slack App ID"
@@ -463,7 +463,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_TWITCH}"; then
-        transform_var \
+        transform_file_var \
                         TWITCH_APP_ID \
                         TWITCH_APP_SECRET
         sanity_var TWITCH_APP_ID "Twitch App ID"
@@ -480,7 +480,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_TWITTER}"; then
-        transform_var \
+        transform_file_var \
                         TWITTER_APP_ID \
                         TWITTER_APP_SECRET
         sanity_var TWITTER_APP_ID "Twitter App ID"
@@ -508,7 +508,7 @@ EOF
         )
         ;;
     "smtp")
-        transform_var \
+        transform_file_var \
                         SMTP_HOST \
                         SMTP_PASS \
                         SMTP_PORT \
@@ -564,7 +564,7 @@ EOF
     ### Storage Setup
     case "${STORAGE_TYPE,,}" in
     "s3" | "minio" )
-        transform_var \
+        transform_file_var \
                         STORAGE_S3_BUCKET \
                         STORAGE_S3_ENDPOINT \
                         STORAGE_S3_KEY \
@@ -626,7 +626,7 @@ EOF
     fi
 
     ### Write the Configuration File
-    transform_var APP_KEY
+    transform_file_var APP_KEY
     cat >"${NGINX_WEBROOT}"/.env <<EOF
 ## Custom Generated Bookstack Configuration! Do not edit, instead set ENV Vars
 ## If you want to use your own configuration files set SETUP_TYPE=MANUAL when starting container
@@ -695,7 +695,7 @@ silent sudo -u "${NGINX_USER}" php artisan cache:clear
 silent sudo -u "${NGINX_USER}" php artisan view:clear
 
 ### Check to see if DB is populated
-transform_var \
+transform_file_var \
                 DB_HOST \
                 DB_NAME \
                 DB_PASS \
@@ -715,7 +715,7 @@ if [ $? -gt 0 ]; then
     ### Create Admin User
     print_notice "Creating Administrative User"
     mysql -u "$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -P"${DB_PORT}" -e "use ""$DB_NAME""; DELETE FROM users where id=1;"
-    transform_var \
+    transform_file_var \
                     ADMIN_EMAIL \
                     ADMIN_NAME \
                     ADMIN_PASS
