@@ -554,7 +554,7 @@ EOF
             mail=$(
                 echo "${mail}"
                 cat <<EOF
-MAIL_ENCRYPTION=
+MAIL_ENCRYPTION=none
 EOF
             )
         fi
