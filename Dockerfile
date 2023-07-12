@@ -6,8 +6,7 @@ LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG BOOKSTACK_VERSION
 
-### Default Runtime Environment Variables
-ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v23.06.1"} \
+ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v23.06.2"} \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
