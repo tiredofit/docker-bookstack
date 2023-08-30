@@ -1,3 +1,9 @@
+## 1.9.0 2023-08-30 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add ALLOWED_SSR_HOSTS to protect server side requests with webhooks as part of new feature of 23.08
+
+
 ## 1.8.8 2023-08-30 <dave at tiredofit dot ca>
 
    ### Added

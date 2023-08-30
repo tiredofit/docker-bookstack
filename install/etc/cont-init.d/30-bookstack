@@ -625,6 +625,11 @@ EOF
         iframehosts="ALLOWED_IFRAME_HOSTS=${ALLOWED_IFRAME_HOSTS}"
     fi
 
+    ### IFrame Security
+    if [ -n "${ALLOWED_SSR_HOSTS_HOSTS}" ] ; then
+        ssrhosts="ALLOWED_SSR_HOSTS=\"${ALLOWED_SSR_HOSTS}\""
+    fi
+
     ### Write the Configuration File
     transform_file_var APP_KEY
     cat >"${NGINX_WEBROOT}"/.env <<EOF
@@ -679,6 +684,7 @@ ${pdf_export}
 ${login}
 ${avatar}
 ${iframehosts}
+${ssrhosts}
 EOF
 
     chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"/.env
