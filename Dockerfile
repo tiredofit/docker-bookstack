@@ -6,7 +6,7 @@ LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG BOOKSTACK_VERSION
 
-ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v24.02.3"} \
+ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v24.05"} \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
@@ -33,8 +33,6 @@ RUN source /assets/functions/00-container \
                 jpegoptim \
                 libmemcached \
                 optipng \
-                ttf-freefont \
-                #wkhtmltopdf \
                 && \
     \
     clone_git_repo "${BOOKSTACK_REPO_URL}" "${BOOKSTACK_VERSION}" /assets/install && \

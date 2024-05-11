@@ -604,22 +604,6 @@ EOF
         ;;
     esac
 
-    ### PDF Export Options
-    case "${PDF_EXPORT,,}" in
-        "internal" | "dompdf" )
-            pdf_export=""
-        ;;
-        "external" | "wkhtmltopdf" )
-            pdf_export=$(
-            cat <<EOF
-WKHTMLTOPDF=/usr/bin/wkhtmltopdf
-ALLOW_UNTRUSTED_SERVER_FETCHING=true
-EXPORT_PAGE_SIZE=${PDF_EXPORT_PAGE_SIZE}
-EOF
-        )
-        ;;
-    esac
-
     ### IFrame Security
     if [ -n "${ALLOWED_IFRAME_HOSTS}" ] ; then
         iframehosts="ALLOWED_IFRAME_HOSTS=${ALLOWED_IFRAME_HOSTS}"
@@ -680,7 +664,6 @@ IP_ADDRESS_PRECISION=4
 ${storage}
 ${authentication}
 ${sso}
-${pdf_export}
 ${login}
 ${avatar}
 ${iframehosts}
