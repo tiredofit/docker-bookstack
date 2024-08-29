@@ -6,7 +6,7 @@ LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG BOOKSTACK_VERSION
 
-ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v24.05.3"} \
+ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v24.05.4"} \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
@@ -41,7 +41,8 @@ RUN source /assets/functions/00-container \
     composer install && \
     \
     package cleanup && \
-    rm -rf /assets/install/.git \
+    rm -rf \
+           /assets/install/.git \
            /assets/install/*.yml \
            /assets/install/dev \
            /assets/install/php*.xml \
