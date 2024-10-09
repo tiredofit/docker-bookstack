@@ -1,12 +1,12 @@
 ARG PHP_VERSION=8.2
 ARG DISTRO="alpine"
 
-FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO}
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO}:7.7.12
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG BOOKSTACK_VERSION
 
-ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v24.05.4"} \
+ENV BOOKSTACK_VERSION=${BOOKSTACK_VERSION:-"v24.10"} \
     BOOKSTACK_REPO_URL=https://github.com/BookStackApp/BookStack \
     PHP_ENABLE_CREATE_SAMPLE_PHP=FALSE \
     PHP_ENABLE_LDAP=TRUE \
