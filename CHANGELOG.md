@@ -1,3 +1,9 @@
+## 1.9.23 2024-10-09 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix previous release
+
+
 ## 1.9.22 2024-10-09 <dave at tiredofit dot ca>
 
    ### Added
