@@ -1,3 +1,10 @@
+## 1.9.24 2024-11-13 <dave at tiredofit dot ca>
+
+   ### Added
+      - Bookstack 24.10.2
+      - Pin to tiredofit/nginx-php-fpm:7.7.13
+
+
 ## 1.9.23 2024-10-09 <dave at tiredofit dot ca>
 
    ### Changed
