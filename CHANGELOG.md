@@ -1,3 +1,9 @@
+## 1.9.25 2024-11-29 <dave at tiredofit dot ca>
+
+   ### Added
+      - BookStack 24.10.3
+
+
 ## 1.9.24 2024-11-13 <dave at tiredofit dot ca>
 
    ### Added
