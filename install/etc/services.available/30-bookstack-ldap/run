@@ -2,7 +2,7 @@
 
 source /assets/functions/00-container
 prepare_service defaults 30-bookstack
-PROCESS_NAME="bookstack-ldap-sync"
+SERVICE_NAME="bookstack-ldap-sync"
 
 check_container_initialized
 check_service_initialized init 30-bookstack

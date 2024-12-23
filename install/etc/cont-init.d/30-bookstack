@@ -2,7 +2,7 @@
 
 source /assets/functions/00-container
 prepare_service
-PROCESS_NAME="bookstack"
+SERVICE_NAME="bookstack"
 
 sanity_db
 db_ready mariadb
