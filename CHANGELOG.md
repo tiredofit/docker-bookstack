@@ -1,3 +1,10 @@
+## 1.9.28 2025-02-26 <dave at tiredofit dot ca>
+
+   ### Added
+      - Change to PHP 8.3 Base
+      - BookStack 25.02
+
+
 ## 1.9.27 2025-01-06 <dave at tiredofit dot ca>
 
    ### Added
