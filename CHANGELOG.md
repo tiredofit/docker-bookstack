@@ -1,3 +1,9 @@
+## 1.9.32 2025-04-24 <fermion2020@github>
+
+   ### Added
+      - Add support for REDIS_PASS variable
+
+
 ## 1.9.31 2025-04-24 <fermion2020 at github dot com>
 
    ### Added
