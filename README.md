@@ -330,6 +330,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `REDIS_DB`              | Redis DB                                                                       | `0`                 | x       |
 | `REDIS_PORT`            | Redis Port                                                                     | `6379`              | x       |
 | `REDIS_HOST`            | Redis Hostname                                                                 |                     | x       |
+| `REDIS_PASS`            | Redis password                                                                 |                     | x       |
 
 - <https://www.bookstackapp.com/docs/admin/cache-session-config>
 

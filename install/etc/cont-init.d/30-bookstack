@@ -289,13 +289,15 @@ EOF
         transform_file_var \
                         REDIS_HOST \
                         REDIS_PORT \
-                        REDIS_DB
+                        REDIS_DB \
+                        REDIS_PASS
         sanity_var REDIS_HOST "Redis Hostname"
+        sanity_var REDIS_HOST "Redis Password"
         db_ready redis
         driver_options=$(
             echo "${driver_options}"
             cat <<EOF
-REDIS_SERVERS=${REDIS_HOST}:${REDIS_PORT}:${REDIS_DB}
+REDIS_SERVERS=${REDIS_HOST:-localhost}:${REDIS_PORT:-6379}:${REDIS_DB:-0}${REDIS_PASS:+:${REDIS_PASS}}
 EOF
         )
     fi

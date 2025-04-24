@@ -1,3 +1,8 @@
+## 1.9.31 2025-04-24 <fermion2020 at github dot com>
+
+   ### Added
+      - feat: Conditionally add Redis password to connection string
+
 ## 1.9.30 2025-04-02 <dave at tiredofit dot ca>
 
    ### Added
