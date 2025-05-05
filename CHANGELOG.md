@@ -1,3 +1,10 @@
+## 1.9.33 2025-05-05 <dave at tiredofit dot ca>
+
+   ### Added
+      - Pin to tiredofit/nginx-php-fpm:7.7.19
+      - BookStack 25.02.3
+
+
 ## 1.9.32 2025-04-24 <fermion2020@github>
 
    ### Added
