@@ -35,6 +35,9 @@ RUN source /assets/functions/00-container \
                 optipng \
                 && \
     \
+    php-ext prepare && \
+    php-ext reset && \
+    php-ext enable core && \
     clone_git_repo "${BOOKSTACK_REPO_URL}" "${BOOKSTACK_VERSION}" /assets/install && \
     if [ -d "/build-assets/src" ] ; then cp -Rp /build-assets/src/* /assets/install ; fi; \
     if [ -d "/build-assets/scripts" ] ; then for script in /build-assets/scripts/*.sh; do echo "** Applying $script"; bash $script; done && \ ; fi ; \

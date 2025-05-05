@@ -1,3 +1,9 @@
+## 1.9.34 2025-05-05 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Handle old base image upgrade scenarios
+
+
 ## 1.9.33 2025-05-05 <dave at tiredofit dot ca>
 
    ### Added
