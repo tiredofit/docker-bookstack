@@ -1,3 +1,10 @@
+## 1.9.37 2025-05-17 <dave at tiredofit dot ca>
+
+   ### Added
+      - Change github actions to PHP8.3
+      - Enable ZIP PHP module at buildtime
+
+
 ## 1.9.36 2025-05-17 <dave at tiredofit dot ca>
 
    ### Added
