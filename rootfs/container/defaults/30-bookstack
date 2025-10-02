@@ -1,5 +1,8 @@
 
-#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
 ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@admin.com"}
 ADMIN_NAME=${ADMIN_NAME:-"BookStack Admin"}
 ADMIN_PASS=${ADMIN_PASS:-"password"}
@@ -15,6 +18,7 @@ AUTHENTICATION_TYPE=${AUTHENTICATION_TYPE:-"standard"}
 AZURE_AUTO_CONFIRM_EMAIL=${AZURE_AUTO_CONFIRM_EMAIL:-"false"}
 AZURE_AUTO_REGISTER=${AZURE_AUTO_REGISTER:-"false"}
 AZURE_TENANT=${AZURE_TENANT:-"false"}
+BOOKSTACK_VERSION="$(grep -o "ADD: BookStack .* |" /container/build/${IMAGE_NAME/\//_}/build.log | awk '{print $3}')"}
 CACHE_DRIVER=${CACHE_DRIVER:-"file"}
 CACHE_PREFIX=${CACHE_PREFIX:-"bookstack"}
 DB_PORT=${DB_PORT:-3306}
@@ -65,7 +69,7 @@ LDAP_TLS_INSECURE=${LDAP_TLS_INSECURE:-"false"}
 LDAP_USER_TO_GROUPS=${LDAP_USER_TO_GROUPS:-"false"}
 LDAP_VERSION=${LDAP_VERSION:-"3"}
 LOG_FILE=${LOG_FILE:-"laravel.log"}
-LOG_PATH=${LOG_PATH:-"/www/logs/bookstack"}
+LOG_PATH=${LOG_PATH:-"/logs/bookstack"}
 LOG_FAILED_LOGIN_MESSAGE=${LOG_FAILED_LOGIN_MESSAGE:-"false"}
 LOG_FAILED_LOGIN_CHANNEL=${LOG_FAILED_LOGIN_CHANNEL:-"errorlog_plain_webserver"}
 MAIL_FROM=${MAIL_FROM:-"bookstack@example.com"}

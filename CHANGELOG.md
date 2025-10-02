@@ -1,3 +1,8 @@
+## 1.10.0pre 2024-08-08 <code at nfrastack dot com>
+
+   ### Changed
+      - Changed Base Image to nfrastack/nginx-php-fpm
+
 ## 1.9.43 2025-09-23 <dave at tiredofit dot ca>
 
    ### Added

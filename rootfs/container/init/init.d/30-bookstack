@@ -1,34 +1,11 @@
 #!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
 
-source /assets/functions/00-container
-prepare_service
+source /container/base/functions/container/init
+prepare_service 30-bookstack
 SERVICE_NAME="bookstack"
-
-cat <<EOF
-
-*******************************************************************************************
-*                                                                                         *
-*                    END OF LIFE NOTICE AUGUST 18, 2025                                   *
-*                               tiredofit/bookstack                                       *
-*                                                                                         *
-* This image is no longer maintained as of and will not receive updates.                  *
-*                                                                                         *
-* A successor image is available at:                                                      *
-*                                                                                         *
-* Repository | Documentation:                                                             *
-*   - https://github.com/nfrastack/container-bookstack                                    *
-*                                                                                         *
-* Image Registries:                                                                       *
-*   - https://hub.docker.com/r/nfrastack/bookstack                                        *
-*   - https://github.com/nfrastack/container-bookstack/pkgs/container/container-bookstack *
-*                                                                                         *
-* Please visit https://nfrastack.com for more information.                                *
-*                                                                                         *
-*******************************************************************************************
-
-EOF
-
-sleep 15
 
 sanity_db
 db_ready mariadb
@@ -44,7 +21,7 @@ ln -sf "${LOG_PATH}" "${NGINX_WEBROOT}"/storage/logs
 ### Check if New Install
 if [ ! -f "${NGINX_WEBROOT}"/server.php ]; then
     print_warn "Potential New Installation / Standalone Installation Detected - Copying Bookstack Sourcecode"
-    cp -R /assets/install/* "${NGINX_WEBROOT}"
+    cp -R /container/data/bookstack-install/* "${NGINX_WEBROOT}"
 
     ### If running with /www/html or NGINX_WEBROOT mapped, then create persistent storage
     ### Storage redirection
@@ -84,7 +61,7 @@ else
     if var_true "${ENABLE_AUTO_UPDATE}"; then
         if [ "${BOOKSTACK_VERSION}" != $(head -n 1 "${NGINX_WEBROOT}"/.bookstack-version | awk '{print $1'}) ]; then
             print_warn "Detected in place Bookstack version $(head -n 1 "${NGINX_WEBROOT}"/.bookstack-version | awk "{print $1"}) - Upgrading to ${BOOKSTACK_VERSION}"
-            cp -R /assets/install/* "${NGINX_WEBROOT}"
+            cp -aR /container/data/bookstack-install/* "${NGINX_WEBROOT}"
             chown -R "${NGINX_USER}":"${NGINX_GROUP}" "${NGINX_WEBROOT}"
             cd "${NGINX_WEBROOT}" || exit
             silent sudo -u "${NGINX_USER}" sudo -u "${NGINX_USER}" php artisan migrate --force
@@ -109,7 +86,7 @@ EOF
         ;;
     "LDAP" | "ldap" )
         print_debug "Setting LDAP Authentication"
-        transform_file_var \
+        transform_var file \
                         LDAP_BASE_DN \
                         LDAP_BIND_PASS \
                         LDAP_BIND_USER \
@@ -163,7 +140,7 @@ EOF
 
        "oidc" | "openidconnect")
             print_debug "Setting OIDC Authentication"
-            transform_file_var \
+            transform_var file \
                             OIDC_CLIENT_ID \
                             OIDC_CLIENT_SECRET \
                             OIDC_ISSUER
@@ -186,7 +163,7 @@ OIDC_REMOVE_FROM_GROUPS=${OIDC_REMOVE_FROM_GROUPS}
 EOF
             )
         if var_false "${OIDC_ISSUER_DISCOVER}" ; then
-            transform_file_var OIDC_PUBLIC_KEY
+            transform_var file OIDC_PUBLIC_KEY
             sanity_var OIDC_PUBLIC_KEY "File Path to public key of provider"
             sanity_var OIDC_AUTH_ENDPOINT "Authorization Endpoint"
             sanity_var OIDC_TOKEN_ENDPOINT "Token Endpoint"
@@ -279,7 +256,7 @@ EOF
     esac
 
         if var_true "${ENABLE_SSO}" ; then
-            transform_file_var \
+            transform_var file \
                             APP_SSO_DISCOVER \
                             APP_SSO_KEY
             sso=$(
@@ -301,7 +278,7 @@ EOF
 
     ### Cache And Sessions
     if [ "${CACHE_DRIVER,,}" = "memcached" ] || [ "${SESSION_DRIVER,,}" = "memcached" ]; then
-        transform_file_var MEMCACHED_HOST
+        transform_var file MEMCACHED_HOST
         sanity_var MEMCACHED_HOST "Memcached Hostname"
         driver_options=$(
             echo "${driver_options}"
@@ -312,25 +289,23 @@ EOF
     fi
 
     if [ "${CACHE_DRIVER,,}" = "redis" ] || [ "${SESSION_DRIVER,,}" = "redis" ]; then
-        transform_file_var \
+        transform_var file \
                         REDIS_HOST \
                         REDIS_PORT \
-                        REDIS_DB \
-                        REDIS_PASS
+                        REDIS_DB
         sanity_var REDIS_HOST "Redis Hostname"
-        sanity_var REDIS_HOST "Redis Password"
         db_ready redis
         driver_options=$(
             echo "${driver_options}"
             cat <<EOF
-REDIS_SERVERS=${REDIS_HOST:-localhost}:${REDIS_PORT:-6379}:${REDIS_DB:-0}${REDIS_PASS:+:${REDIS_PASS}}
+REDIS_SERVERS=${REDIS_HOST}:${REDIS_PORT}:${REDIS_DB}
 EOF
         )
     fi
 
     ### DrawIO
     if var_true "${ENABLE_DRAWIO}"; then
-        transform_file_var \
+        transform_var file \
                         DRAWIO_HOST
         if [ -z "${DRAWIO_HOST}" ]; then
             drawio=true
@@ -343,7 +318,7 @@ EOF
 
     ### External Logins
     if var_true "${ENABLE_LOGIN_AZURE}"; then
-        transform_file_var \
+        transform_var file \
                         AZURE_APP_ID \
                         AZURE_APP_SECRET \
                         AZURE_TENANT
@@ -363,7 +338,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_DISCORD}"; then
-        transform_file_var \
+        transform_var file \
                         DISCORD_APP_ID \
                         DISCORD_APP_SECRET
         sanity_var DISCORD_APP_ID "Discord App ID"
@@ -380,7 +355,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_FACEBOOK}"; then
-        transform_file_var \
+        transform_var file \
                         FACEBOOK_APP_ID \
                         FACEBOOK_APP_SECRET
         sanity_var FACEBOOK_APP_ID "Facebook App ID"
@@ -397,7 +372,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GITHUB}"; then
-        transform_file_var \
+        transform_var file \
                         GITHUB_APP_ID \
                         GITHUB_APP_SECRET
         sanity_var GITHUB_APP_ID "Github App ID"
@@ -414,7 +389,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GITLAB}"; then
-        transform_file_var \
+        transform_var file \
                         GITLAB_APP_ID \
                         GITLAB_APP_SECRET \
                         GITLAB_BASE_URI
@@ -434,7 +409,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_GOOGLE}"; then
-        transform_file_var \
+        transform_var file \
                         GOOGLE_APP_ID \
                         GOOGLE_APP_SECRET \
                         GOOGLE_SELECT_ACCOUNT
@@ -454,7 +429,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_OKTA}"; then
-        transform_file_var \
+        transform_var file \
                 OKTA_APP_ID \
                 OKTA_APP_SECRET \
                 OKTA_BASE_URL
@@ -474,7 +449,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_SLACK}"; then
-        transform_file_var \
+        transform_var file \
                         SLACK_APP_ID \
                         SLACK_APP_SECRET
         sanity_var SLACK_APP_ID "Slack App ID"
@@ -491,7 +466,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_TWITCH}"; then
-        transform_file_var \
+        transform_var file \
                         TWITCH_APP_ID \
                         TWITCH_APP_SECRET
         sanity_var TWITCH_APP_ID "Twitch App ID"
@@ -508,7 +483,7 @@ EOF
     fi
 
     if var_true "${ENABLE_LOGIN_TWITTER}"; then
-        transform_file_var \
+        transform_var file \
                         TWITTER_APP_ID \
                         TWITTER_APP_SECRET
         sanity_var TWITTER_APP_ID "Twitter App ID"
@@ -536,7 +511,7 @@ EOF
         )
         ;;
     "smtp")
-        transform_file_var \
+        transform_var file \
                         SMTP_HOST \
                         SMTP_PASS \
                         SMTP_PORT \
@@ -592,7 +567,7 @@ EOF
     ### Storage Setup
     case "${STORAGE_TYPE,,}" in
     "s3" | "minio" )
-        transform_file_var \
+        transform_var file \
                         STORAGE_S3_BUCKET \
                         STORAGE_S3_ENDPOINT \
                         STORAGE_S3_KEY \
@@ -643,7 +618,7 @@ EOF
     fi
 
     ### Write the Configuration File
-    transform_file_var APP_KEY
+    transform_var file APP_KEY
     cat >"${NGINX_WEBROOT}"/.env <<EOF
 ## Custom Generated Bookstack Configuration! Do not edit, instead set ENV Vars
 ## If you want to use your own configuration files set SETUP_TYPE=MANUAL when starting container
@@ -712,7 +687,7 @@ silent sudo -u "${NGINX_USER}" php artisan cache:clear
 silent sudo -u "${NGINX_USER}" php artisan view:clear
 
 ### Check to see if DB is populated
-transform_file_var \
+transform_var file \
                 DB_HOST \
                 DB_NAME \
                 DB_PASS \
@@ -732,7 +707,7 @@ if [ $? -gt 0 ]; then
     ### Create Admin User
     print_notice "Creating Administrative User"
     mysql -u "$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -P"${DB_PORT}" -e "use ""$DB_NAME""; DELETE FROM users where id=1;"
-    transform_file_var \
+    transform_var file \
                     ADMIN_EMAIL \
                     ADMIN_NAME \
                     ADMIN_PASS
@@ -751,7 +726,7 @@ cd "${NGINX_WEBROOT}"
 silent sudo -u "${NGINX_USER}" php artisan migrate --no-ansi --force
 
 ### Add alias for running artisan
-cat >> /root/.bashrc <<EOF
+cat <<EOF | silent tee -a /root/.bashrc
 function artisan() {
       export oldpwd="\$(pwd)"
       cd ${NGINX_WEBROOT}

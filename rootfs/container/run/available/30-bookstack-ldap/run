@@ -1,7 +1,10 @@
 #!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
 
-source /assets/functions/00-container
-prepare_service defaults 30-bookstack
+source /container/base/functions/container/init
+prepare_service 30-bookstack
 SERVICE_NAME="bookstack-ldap-sync"
 
 check_container_initialized
@@ -39,8 +42,8 @@ if [ "${AUTHENTICATION_TYPE,,}" = "ldap" ] && var_true "${ENABLE_LDAP_SYNC_USER}
     now_time=$(date +"%H:%M:%S")
     now_date=$(date +"%Y-%m-%d")
 
-    if [ -f "/assets/custom-scripts/ldapsync.sh" ] ; then
-      /assets/custom-scripts/ldapsync.sh
+    if [ -f "/override/custom-scripts/ldapsync.sh" ] ; then
+      /override/custom-scripts/ldapsync.sh
     else
       print_notice "Synchronizing LDAP at $(date)"
       cd "${NGINX_WEBROOT}"

@@ -1,7 +1,10 @@
 #!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
 
-source /assets/functions/00-container
-prepare_service defaults 30-bookstack
+source /container/base/functions/container/init
+prepare_service 30-bookstack
 SERVICE_NAME="bookstack-optimize images"
 
 check_container_initialized
@@ -9,7 +12,7 @@ check_service_initialized init 30-bookstack
 liftoff
 
 ### Perform Image Optimization on uploaded assets
-if var_true "${ENABLE_OPTIMIZE_IMAGES}" ] ; then
+if var_true "${ENABLE_OPTIMIZE_IMAGES}" ; then
   print_debug "Image Optimization routines initialized on $(date)"
 
 ### Wait for Next time to start image optimization

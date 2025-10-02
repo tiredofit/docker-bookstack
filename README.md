@@ -1,130 +1,109 @@
-# github.com/tiredofit/docker-bookstack
-
-[![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-bookstack?style=flat-square)](https://github.com/tiredofit/docker-bookstack/releases/latest)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/tiredofit/docker-bookstackmain.yml?branch=main&style=flat-square)](https://github.com/tiredofit/docker-bookstack.git/actions)
-[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/bookstack.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/bookstack/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/bookstack.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/bookstack/)
-[![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
-[![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
-
-* * *
+# nfrastack/container-bookstack
 
 ## About
 
-This will build a Docker image for [Bookstack](https://bookstackapp.com/) - A Knowledge Base/Information Manager.
-
-- Automatically installs and sets up installation upon first start
+This repository will build a conatiner image for running [BookStack](https://bookstack.net/) - A knowledge base/information manager.
 
 ## Maintainer
 
-- [Dave Conroy](https://github.com/tiredofit)
+* [Nfrastack](https://www.nfrastack.com)
 
 ## Table of Contents
 
-- [About](#about)
-- [Maintainer](#maintainer)
-- [Table of Contents](#table-of-contents)
-- [Prerequisites and Assumptions](#prerequisites-and-assumptions)
-- [Installation](#installation)
-  - [Build from Source](#build-from-source)
-  - [Prebuilt Images](#prebuilt-images)
-- [Configuration](#configuration)
-  - [Quick Start](#quick-start)
-  - [Persistent Storage](#persistent-storage)
-  - [Environment Variables](#environment-variables)
-    - [Base Images used](#base-images-used)
-    - [Core Options](#core-options)
-    - [Bookstack Options](#bookstack-options)
-    - [Authentication Settings](#authentication-settings)
-      - [LDAP Options](#ldap-options)
-      - [SAML Options](#saml-options)
-      - [OpenID Connect](#openid-connect)
-    - [External Login Services](#external-login-services)
-    - [Cache and Session Settings](#cache-and-session-settings)
-    - [Mail Settings](#mail-settings)
-    - [Storage Settings](#storage-settings)
-  - [Networking](#networking)
-- [Maintenance](#maintenance)
-  - [Shell Access](#shell-access)
-- [Support](#support)
-  - [Usage](#usage)
-  - [Bugfixes](#bugfixes)
-  - [Feature Requests](#feature-requests)
-  - [Updates](#updates)
-- [License](#license)
-- [References](#references)
-
-## Prerequisites and Assumptions
-*  Assumes you are using some sort of SSL terminating reverse proxy such as:
-   *  [Traefik](https://github.com/tiredofit/docker-traefik)
-   *  [Nginx](https://github.com/jc21/nginx-proxy-manager)
-   *  [Caddy](https://github.com/caddyserver/caddy)
-* Requires access to a MySQL/MariaDB Database server
+* [About](#about)
+* [Maintainer](#maintainer)
+* [Table of Contents](#table-of-contents)
+* [Installation](#installation)
+  * [Prebuilt Images](#prebuilt-images)
+  * [Quick Start](#quick-start)
+  * [Persistent Storage](#persistent-storage)
+* [Configuration](#configuration)
+  * [Environment Variables](#environment-variables)
+    * [Base Images used](#base-images-used)
+    * [Core Configuration](#core-configuration)
+  * [Users and Groups](#users-and-groups)
+  * [Networking](#networking)
+* [Maintenance](#maintenance)
+  * [Shell Access](#shell-access)
+* [Support & Maintenance](#support--maintenance)
+* [License](#license)
+* [References](#references)
 
 ## Installation
 
-### Build from Source
-Clone this repository and build the image with `docker build -t (imagename) .`
-
 ### Prebuilt Images
-Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/bookstack)
 
-```bash
-docker pull docker.io/tiredofit/bookstack:(imagetag)
+Feature limited builds of the image are available on the [Github Container Registry](https://github.com/nfrastack/container-bookstack/pkgs/container/container-bookstack) and [Docker Hub](https://hub.docker.com/r/nfrastack/bookstack).
+
+To unlock advanced features, one must provide a code to be able to change specific environment variables from defaults. Support the development to gain access to a code.
+
+To get access to the image use your container orchestrator to pull from the following locations:
+
+```
+ghcr.io/nfrastack/container-bookstack:(image_tag)
+docker.io/nfrastack/bookstack:(image_tag)
 ```
 
-Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-bookstack/pkgs/container/docker-bookstack)
+Image tag syntax is:
 
-```
-docker pull ghcr.io/tiredofit/docker-bookstack:(imagetag)
-```
+`<image>:<optional tag>-<optional phpversion>`
 
-The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
+Example:
 
-| Container OS | Tag       |
-| ------------ | --------- |
-| Alpine       | `:latest` |
+`docker.io/nfrastack/container-bookstack:latest` or
 
-## Configuration
+`ghcr.io/nfrastack/container-bookstack:1.0-php84`
+
+* `latest` will be the most recent commit
+
+* An optional `tag` may exist that matches the [CHANGELOG](CHANGELOG.md) - These are the safest
+
+
+Have a look at the container registries and see what tags are available.
+
+#### Multi-Architecture Support
+
+Images are built for `amd64` by default, with optional support for `arm64` and other architectures.
 
 ### Quick Start
 
-- The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [docker-compose.yml](examples/docker-compose.yml) that can be modified for development or production use.
+* The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [compose.yml](examples/compose.yml) that can be modified for your use.
 
-- Set various [environment variables](#environment-variables) to understand the capabilities of this image.
-- Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
-- Make [networking ports](#networking) available for public access if necessary
+* Map [persistent storage](#persistent-storage) for access to configuration and data files for backup.
+* Set various [environment variables](#environment-variables) to understand the capabilities of this image.
 
 **The first boot can take from 2 minutes - 5 minutes depending on your CPU to setup the proper schemas.**
 
-- Login to the web server and enter in your admin email address, admin password and start configuring the system!
-
-
 ### Persistent Storage
 
-The following directories are used for configuration and can be mapped for persistent storage.
+The following directories/files should be mapped for persistent storage in order to utilize the container effectively.
 
 | Directory        | Description                                                                  |
 | ---------------- | ---------------------------------------------------------------------------- |
-| `/www/logs`      | Nginx and PHP Log files                                                      |
+| `/logs`          | Nginx and PHP Log files                                                      |
 | `/www/bookstack` | (Optional) If you want to expose the bookstack sourcecode expose this volume |
 | **OR**           |                                                                              |
 | `/data`          | Hold onto your persistent sessions and cache between container restarts      |
+
 
 ### Environment Variables
 
 #### Base Images used
 
-This image relies on an [Alpine Linux](https://hub.docker.com/r/tiredofit/alpine) or [Debian Linux](https://hub.docker.com/r/tiredofit/debian) base image that relies on an [init system](https://github.com/just-containers/s6-overlay) for added capabilities. Outgoing SMTP capabilities are handlded via `msmtp`. Individual container performance monitoring is performed by [zabbix-agent](https://zabbix.org). Additional tools include: `bash`,`curl`,`less`,`logrotate`,`nano`.
-
+This image relies on a customized base image in order to work.
 Be sure to view the following repositories to understand all the customizable options:
 
-| Image                                                         | Description                            |
-| ------------------------------------------------------------- | -------------------------------------- |
-| [OS Base](https://github.com/tiredofit/docker-alpine/)        | Customized Image based on Alpine Linux |
-| [Nginx](https://github.com/tiredofit/docker-nginx/)           | Nginx webserver                        |
-| [PHP-FPM](https://github.com/tiredofit/docker-nginx-php-fpm/) | PHP Interpreter                        |
-#### Core Options
+| Image                                                                 | Description         |
+| --------------------------------------------------------------------- | ------------------- |
+| [OS Base](https://github.com/nfrastack/container-base/)               | Base Image          |
+| [Nginx](https://github.com/nfrastack/container-nginx/)                | Nginx Webserver     |
+| [Nginx PHP-FPM](https://github.com/nfrastack/container-nginx-php-fpm) | PHP-FPM Interpreter |
+
+Below is the complete list of available options that can be used to customize your installation.
+
+* Variables showing an 'x' under the `Advanced` column can only be set if the containers advanced functionality is enabled.
+
+#### Core Configuration
 
 | Parameter                  | Description                                                      | Default           | `_FILE` |
 | -------------------------- | ---------------------------------------------------------------- | ----------------- | ------- |
@@ -144,38 +123,41 @@ Be sure to view the following repositories to understand all the customizable op
 | `SITE_URL`                 | The full URL that you are serving this application from          | `null`            |         |
 | `TIMEZONE`                 | Timezone - Use Unix Style                                        | `Etc/UTC`         |         |
 
-- <https://www.bookstackapp.com/docs/admin/language-config>
+* <https://www.bookstackapp.com/docs/admin/language-config>
 
 #### Bookstack Options
 
-| Parameter                    | Description                                                                                        | Default                                                                                      |
-| ---------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `ALLOWED_IFRAME_HOSTS`       | Allow serving Bookstack via an IFrame  - Multiple can be used seperated by a line                  |                                                                                              |
-| `ALLOWED_IFRAME_SOURCES`     | Allow IFrames from specific domains `*` for All                                                    | `https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com` |
-| `ALLOWED_SSR_HOSTS`          | Allowed Server Side Request List (Webhooks)                                                        | `*`                                                                                          |
-| `ALLOW_CONTENT_SCRIPTS`      | Allow javascript within content                                                                    | `false`                                                                                      |
-| `ALLOW_ROBOTS`               | Allow robots to Index site                                                                         | `false`                                                                                      |
-| `API_DEFAULT_ITEM_COUNT`     | API Default Return Items Count                                                                     | `100`                                                                                        |
-| `API_DEFAULT_MAX_ITEM_COUNT` | API Default Maximum Items Count                                                                    | `500`                                                                                        |
-| `API_REQUESTS_PER_MIN`       | API Requests per minute limit                                                                      | `180`                                                                                        |
-| `AVATAR_URL`                 | Set URL for external Avatar fetching                                                               |                                                                                              |
-| `DEFAULT_DARK_MODE`          | Use Dark mode by default                                                                           | `false`                                                                                      |
-| `DISABLE_EXTERNAL_SERVICES`  | Disable every external service                                                                     | `false`                                                                                      |
-| `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default                                            |                                                                                              |
-| `ENABLE_DRAWIO`              | Enable DrawIO Functionality                                                                        | `false`                                                                                      |
-| `FILE_UPLOAD_MAX_SIZE`       | Max MB of files to upload into the system                                                          | `50`                                                                                         |
-| `IP_ADDRESS_PRECISION`       | Alter precision of IP Addresses stored by bookstack `0` to `4`                                     | `4`                                                                                          |
-| `LOG_FILE`                   | Log File                                                                                           | `bokstack.log`                                                                               |
-| `LOG_PATH`                   | Log Path                                                                                           | `/www/logs/bokstack`                                                                         |
-| `LOG_FAILED_LOGIN_MESSAGE`   | Enable logging of fdailed email and password logins with given message                             | `false`                                                                                      |
-| `LOG_FAILED_LOGIN_CHANNEL`   | Default log channel uses php_error_log function                                                    | `errorlog_plain_webserver`                                                                   |
-| `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                                                                        | `false`                                                                                      |
-| `QUEUE_CONNECTION`           | Queue Connection                                                                                   | `sync`                                                                                       |
-| `RECYCLE_BIN_LIFETIME`       | How Many days Recycle Bin should wait before auto deleting. `0` for no feature, `-1` for unlimited | `30`                                                                                         |
-| `REVISION_LIMIT`             | Default Revision Limit for pages                                                                   | `100`                                                                                        |
-| `THEME`                      | Drop themes in /data/themes and set value here                                                     | `false`                                                                                      |
-| `VIEW_BOOKS`                 | View books in either `list` or `grid` format                                                       | `list`                                                                                       |
-| `VIEW_SHELVES`               | View shelves in either `list` or `grid` format                                                     | `grid`                                                                                       |
+| Parameter                    | Description                                                                                        | Default                          |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `ALLOWED_IFRAME_HOSTS`       | Allow serving Bookstack via an IFrame  - Multiple can be used seperated by a line                  |                                  |
+| `ALLOWED_IFRAME_SOURCES`     | Allow IFrames from specific domains `*` for All                                                    | `https://*.draw.io`              |
+|                              |                                                                                                    | `https://*.youtube.com`          |
+|                              |                                                                                                    | `https://*.youtube-nocookie.com` |
+|                              |                                                                                                    | `https://*.vimeo.com`            |
+| `ALLOWED_SSR_HOSTS`          | Allowed Server Side Request List (Webhooks)                                                        | `*`                              |
+| `ALLOW_CONTENT_SCRIPTS`      | Allow javascript within content                                                                    | `false`                          |
+| `ALLOW_ROBOTS`               | Allow robots to Index site                                                                         | `false`                          |
+| `API_DEFAULT_ITEM_COUNT`     | API Default Return Items Count                                                                     | `100`                            |
+| `API_DEFAULT_MAX_ITEM_COUNT` | API Default Maximum Items Count                                                                    | `500`                            |
+| `API_REQUESTS_PER_MIN`       | API Requests per minute limit                                                                      | `180`                            |
+| `AVATAR_URL`                 | Set URL for external Avatar fetching                                                               |                                  |
+| `DEFAULT_DARK_MODE`          | Use Dark mode by default                                                                           | `false`                          |
+| `DISABLE_EXTERNAL_SERVICES`  | Disable every external service                                                                     | `false`                          |
+| `DRAWIO_HOST`                | Full URL of DrawIO server if not wanting to use default                                            |                                  |
+| `ENABLE_DRAWIO`              | Enable DrawIO Functionality                                                                        | `false`                          |
+| `FILE_UPLOAD_MAX_SIZE`       | Max MB of files to upload into the system                                                          | `50`                             |
+| `IP_ADDRESS_PRECISION`       | Alter precision of IP Addresses stored by bookstack `0` to `4`                                     | `4`                              |
+| `LOG_FILE`                   | Log File                                                                                           | `bokstack.log`                   |
+| `LOG_PATH`                   | Log Path                                                                                           | `/www/logs/bokstack`             |
+| `LOG_FAILED_LOGIN_MESSAGE`   | Enable logging of fdailed email and password logins with given message                             | `false`                          |
+| `LOG_FAILED_LOGIN_CHANNEL`   | Default log channel uses php_error_log function                                                    | `errorlog_plain_webserver`       |
+| `LANGUAGE_AUTO_DETECT`       | Detect Language via Browser                                                                        | `false`                          |
+| `QUEUE_CONNECTION`           | Queue Connection                                                                                   | `sync`                           |
+| `RECYCLE_BIN_LIFETIME`       | How Many days Recycle Bin should wait before auto deleting. `0` for no feature, `-1` for unlimited | `30`                             |
+| `REVISION_LIMIT`             | Default Revision Limit for pages                                                                   | `100`                            |
+| `THEME`                      | Drop themes in /data/themes and set value here                                                     | `false`                          |
+| `VIEW_BOOKS`                 | View books in either `list` or `grid` format                                                       | `list`                           |
+| `VIEW_SHELVES`               | View shelves in either `list` or `grid` format                                                     | `grid`                           |
 
 #### Authentication Settings
 
@@ -210,7 +192,8 @@ Be sure to view the following repositories to understand all the customizable op
 | `LDAP_USER_TO_GROUPS`         | Add user to Groups                                      | `false`                              |         |
 | `LDAP_VERSION`                | Version of LDAP                                         | `3`                                  |         |
 
-- <https://www.bookstackapp.com/docs/admin/ldap-auth>
+* <https://www.bookstackapp.com/docs/admin/ldap-auth>
+
 ##### SAML Options
 
 | Parameter                     | Description                      | Default        |
@@ -231,8 +214,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `SAML_SP_X509`                | SAML SP Public Certificate       | ``             |
 | `SAML_SP_X509_KEY`            | SAML SP Private Key              | ``             |
 
-
-- <https://www.bookstackapp.com/docs/admin/saml2-auth>
+* <https://www.bookstackapp.com/docs/admin/saml2-auth>
 
 ##### OpenID Connect
 
@@ -311,7 +293,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `TWITTER_AUTO_CONFIRM_EMAIL`                            | Auto confirm email address      | `false` |         |
 | `TWITTER_AUTO_REGISTER`                                 | Auto register username          | `false` |         |
 |                                                         |
-| - <https://www.bookstackapp.com/docs/admin/social-auth> |
+| * <https://www.bookstackapp.com/docs/admin/social-auth> |
 
 
 #### Cache and Session Settings
@@ -330,9 +312,8 @@ Be sure to view the following repositories to understand all the customizable op
 | `REDIS_DB`              | Redis DB                                                                       | `0`                 | x       |
 | `REDIS_PORT`            | Redis Port                                                                     | `6379`              | x       |
 | `REDIS_HOST`            | Redis Hostname                                                                 |                     | x       |
-| `REDIS_PASS`            | Redis password                                                                 |                     | x       |
 
-- <https://www.bookstackapp.com/docs/admin/cache-session-config>
+* <https://www.bookstackapp.com/docs/admin/cache-session-config>
 
 #### Mail Settings
 
@@ -347,7 +328,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `SMTP_TLS`       | Enable TLS for SMTP Connections         | `FALSE`                 |         |
 | `SMTP_USER`      | SMTP Username                           | `null`                  | x       |
 
-- <https://www.bookstackapp.com/docs/admin/email-config>
+* <https://www.bookstackapp.com/docs/admin/email-config>
 
 #### Storage Settings
 
@@ -362,46 +343,29 @@ Be sure to view the following repositories to understand all the customizable op
 | `STORAGE_S3_SECRET`       | S3 Key                                                                   |                | x      |
 | `STORAGE_URL`             | Set this if you are connecting to a compatible service like Minio/Wasabi |                | x      |
 
-- <https://www.bookstackapp.com/docs/admin/upload-config>
-
-### Networking
-
-The following ports are exposed.
-
-| Port | Description |
-| ---- | ----------- |
-| `80` | HTTP        |
+* <https://www.bookstackapp.com/docs/admin/upload-config>
 
 * * *
+
 ## Maintenance
 
 ### Shell Access
 
-For debugging and maintenance purposes you may want access the containers shell.
+For debugging and maintenance, `bash` and `sh` are available in the container.
 
-``bash
-docker exec -it (whatever your container name is) bash
-``
-## Support
+## Support & Maintenance
 
-These images were built to serve a specific need in a production environment and gradually have had more functionality added based on requests from the community.
-### Usage
-- The [Discussions board](../../discussions) is a great place for working with the community on tips and tricks of using this image.
-- [Sponsor me](https://tiredofit.ca/sponsor) for personalized support
-### Bugfixes
-- Please, submit a [Bug Report](issues/new) if something isn't working as expected. I'll do my best to issue a fix in short order.
-
-### Feature Requests
-- Feel free to submit a feature request, however there is no guarantee that it will be added, or at what timeline.
-- [Sponsor me](https://tiredofit.ca/sponsor) regarding development of features.
-
-### Updates
-- Best effort to track upstream changes, More priority if I am actively using the image in a production environment.
-- [Sponsor me](https://tiredofit.ca/sponsor) for up to date releases.
-
-## License
-MIT. See [LICENSE](LICENSE) for more details.
+* For community help, tips, and community discussions, visit the [Discussions board](/discussions).
+* For personalized support or a support agreement, see [Nfrastack Support](https://nfrastack.com/).
+* To report bugs, submit a [Bug Report](issues/new). Usage questions will be closed as not-a-bug.
+* Feature requests are welcome, but not guaranteed. For prioritized development, consider a support agreement.
+* Updates are best-effort, with priority given to active production use and support agreements.
 
 ## References
 
-- <https://www.bookstackapp.com/docs>
+* <https://www.bookstackapp.com/docs>
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
