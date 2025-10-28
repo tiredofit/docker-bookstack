@@ -56,6 +56,9 @@ RUN echo "" && \
     package install \
                     BOOKSTACK_RUN_DEPS \
                     && \
+    php-ext prepare && \
+    php-ext reset && \
+    php-ext enable core && \
     \
     clone_git_repo "${BOOKSTACK_REPO_URL}" "${BOOKSTACK_VERSION}" /container/data/bookstack-install && \
     if [ -d "/build-assets/src" ] ; then cp -Rp /build-assets/src/* /container/data/bookstack-install ; fi; \
