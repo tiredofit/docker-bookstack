@@ -8,7 +8,7 @@ services:
       - traefik.http.services.bookstack.loadbalancer.server.port=80
     volumes:
       - ./data:/data
-      - ./logs:/www/logs/
+      - ./logs:/logs/
     environment:
       - CONTAINER_NAME=bookstack-app
 
@@ -25,10 +25,10 @@ services:
     restart: always
 
   bookstack-db:
-    image: docker.io/tiredofit/mariadb
+    image: docker.io/nfrastack/mariadb:11.8
     container_name: bookstack-db
     volumes:
-      - ./db:/var/lib/mysql
+      - ./db:/data
     environment:
       - ROOT_PASS=password
       - DB_NAME=bookstack
@@ -46,7 +46,6 @@ services:
     volumes:
       - ./dbbackup:/backup
     environment:
-      - CONTAINER_NAME=bookstack-db-backup
       - DB01_HOST=bookstack-db
       - DB01_TYPE=mariadb
       - DB01_NAME=bookstack
@@ -54,7 +53,7 @@ services:
       - DB01_PASS=bookstackpass
       - DB01_BACKUP_INTERVAL=1440
       - DB01_BACKUP_BEGIN=0000
-      - DB_CLEANUP_TIME=8640
+      - DB01_CLEANUP_TIME=8640
     networks:
       - services
     restart: always

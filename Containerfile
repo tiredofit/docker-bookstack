@@ -17,7 +17,7 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG \
-    BOOKSTACK_VERSION="v25.11" \
+    BOOKSTACK_VERSION="v25.11.1" \
     BOOKSTACK_REPO_URL="https://github.com/BookStackApp/BookStack"
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
@@ -41,6 +41,10 @@ ENV \
     IMAGE_REPO_URL="https://github.com/nfrastack/container-bookstack/"
 
 RUN echo "" && \
+    BOOKSTACK_BUILD_DEPS_ALPINE=" \
+                                    git \
+                                " \
+                                && \
     BOOKSTACK_RUN_DEPS_ALPINE=" \
                                 fontconfig \
                                 git \
@@ -54,6 +58,7 @@ RUN echo "" && \
     package update && \
     package upgrade && \
     package install \
+                    BOOKSTACK_BUILD_DEPS \
                     BOOKSTACK_RUN_DEPS \
                     && \
     php-ext prepare && \
@@ -73,6 +78,7 @@ RUN echo "" && \
            && \
     container_build_log add "BookStack ${BOOKSTACK_VERSION}" "${BOOKSTACK_REPO_URL}" && \
     \
+    package remove BOOKSTACK_BUILD_DEPS && \
     package cleanup
 
 COPY rootfs /
