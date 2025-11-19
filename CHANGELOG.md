@@ -2,7 +2,7 @@
 
    ### Changed
       - Changed Base Image to nfrastack/nginx-php-fpm
-      - BookStack 2025.11.1
+      - BookStack 2025.11.2
 
 ## 1.9.43 2025-09-23 <dave at tiredofit dot ca>
 
